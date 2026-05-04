@@ -6,7 +6,6 @@
     <title>Loester - Portfólio</title>
 
     <style>
-      /* RESET */
       * {
         margin: 0;
         padding: 0;
@@ -20,7 +19,6 @@
         line-height: 1.6;
       }
 
-      /* HEADER */
       header {
         background: #222;
         color: #fff;
@@ -33,7 +31,7 @@
         margin-top: 10px;
       }
 
-      nav ul li {
+      nav li {
         display: inline;
         margin: 0 10px;
       }
@@ -48,7 +46,6 @@
         color: #00bcd4;
       }
 
-      /* MAIN */
       main {
         max-width: 900px;
         margin: 30px auto;
@@ -65,36 +62,71 @@
 
       h2 {
         margin-bottom: 15px;
-        color: #222;
       }
 
-      /* IMAGE */
       img {
         width: 120px;
         border-radius: 50%;
-        display: block;
         margin-bottom: 15px;
       }
 
-      /* LIST */
       ul {
         margin-top: 10px;
+        padding-left: 20px;
       }
 
-      li {
-        margin-bottom: 5px;
+      /* FORM STYLE */
+      form {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
 
-      /* LINKS */
-      a {
-        color: #00bcd4;
+      label {
+        font-weight: bold;
       }
 
-      a:hover {
-        text-decoration: underline;
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
       }
 
-      /* FOOTER */
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #00bcd4;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      button {
+        background: #00bcd4;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: #0097a7;
+      }
+
       footer {
         text-align: center;
         padding: 15px;
@@ -125,19 +157,13 @@
 
         <img
           src="https://media.licdn.com/dms/image/v2/D4D03AQECExTT8EMc_Q/profile-displayphoto-scale_200_200/B4DZqslqpgG8AY-/0/1763832147199?e=1779321600&v=beta&t=riPFmIW-ds9bcq67shmoN8nspp68klzGEKRnNE9BrK0"
-          alt="Foto de perfil de Loester"
-          title="Imagem do perfil"
+          alt="Foto de perfil"
         />
 
-        <p>
-          Olá! Eu sou Loester, desenvolvedor de software desde 2011, sempre
-          buscando evoluir.
-        </p>
+        <p>Olá! Eu sou Loester, desenvolvedor desde 2011.</p>
 
         <aside>
           <h3>Habilidades</h3>
-          <br />
-
           <ul>
             <li>HTML</li>
             <li>CSS</li>
@@ -164,43 +190,35 @@
           Email:
           <a href="mailto:loester@loester.com">loester@loester.com</a><br />
           Telefone:
-          <a href="tel:+55479999999999">(47) 99999-9999</a><br />
+          <a href="tel:+55479999999999">(47) 99999-9999</a>
         </address>
 
-        <br />
+        <form>
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required />
 
-        <form action="">
-          <label for="nome">Nome : </label>
-          <input type="text" id="nome" name="nome" required/> <br />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
 
-          <label for="email">Email : </label>
-          <input type="email" id="email" name="email" required/> <br />
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" required />
 
-          <label for="telefone">Telefone : </label>
-          <input type="tel" id="telefone" name="telefone" required/> <br />
-
-          <label for="assunto">Assunto : </label>
-          <select name="assunto" id="assunto">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
             <option value="orcamento">Orçamento</option>
-            <option value="duvida">Dúvidas</option>
-            <option value="outro<option value="orcamento">Orçamento</option>">Outro</option>
+            <option value="duvida">Dúvida</option>
+            <option value="outro">Outro</option>
           </select>
-                    
-          <br>
 
-          <label for="messagem">Messagem : </label>
-          <textarea name="messagem" id="messagem" cols="30" rows="10"></textarea>
-          
-          <br>
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" rows="5"></textarea>
 
-          <input type="checkbox" id="inscricao" name="inscricao">
-          <label for="checkbox">Deseja receber minha newsletter? Fique por dentro. </label>
+          <div class="checkbox-group">
+            <input type="checkbox" id="inscricao" name="inscricao" />
+            <label for="inscricao">Receber newsletter</label>
+          </div>
 
-          <br>
-
-          <input type="submit" value="Enviar Mensagem">
-
- 
+          <button type="submit">Enviar Mensagem</button>
         </form>
       </section>
     </main>
