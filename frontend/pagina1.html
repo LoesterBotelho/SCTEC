@@ -4,6 +4,105 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Loester - Portfólio</title>
+
+    <style>
+      /* RESET */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* HEADER */
+      header {
+        background: #222;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style: none;
+        margin-top: 10px;
+      }
+
+      nav ul li {
+        display: inline;
+        margin: 0 10px;
+      }
+
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        color: #00bcd4;
+      }
+
+      /* MAIN */
+      main {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+      }
+
+      section {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        color: #222;
+      }
+
+      /* IMAGE */
+      img {
+        width: 120px;
+        border-radius: 50%;
+        display: block;
+        margin-bottom: 15px;
+      }
+
+      /* LIST */
+      ul {
+        margin-top: 10px;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      /* LINKS */
+      a {
+        color: #00bcd4;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 15px;
+        background: #222;
+        color: #fff;
+        margin-top: 20px;
+      }
+    </style>
   </head>
 
   <body>
@@ -15,6 +114,7 @@
           <li><a href="#sobre">Sobre Mim</a></li>
           <li><a href="#projetos">Projetos</a></li>
           <li><a href="#contato">Contato</a></li>
+          <li><a href="https://www.google.com" target="_blank">Google</a></li>          
         </ul>
       </nav>
     </header>
@@ -26,17 +126,18 @@
         <img
           src="https://media.licdn.com/dms/image/v2/D4D03AQECExTT8EMc_Q/profile-displayphoto-scale_200_200/B4DZqslqpgG8AY-/0/1763832147199?e=1779321600&v=beta&t=riPFmIW-ds9bcq67shmoN8nspp68klzGEKRnNE9BrK0"
           alt="Foto de perfil de Loester"
+          title="Imagem do perfil"
         />
 
-        <article>
-          <p>
-            Olá! Eu sou Loester, desenvolvedor de software desde 2011,
-            sempre buscando me atualizar e evoluir profissionalmente.
-          </p>
-        </article>
+        <p>
+          Olá! Eu sou Loester, desenvolvedor de software desde 2011, sempre
+          buscando evoluir.
+        </p>
 
         <aside>
           <h3>Habilidades</h3>
+          <br />
+
           <ul>
             <li>HTML</li>
             <li>CSS</li>
@@ -50,29 +151,26 @@
 
         <article>
           <h3>Portfólio</h3>
-          <p>Este foi o primeiro site que desenvolvi, estudando front-end.</p>
+          <p>Meu primeiro projeto de front-end.</p>
         </article>
       </section>
 
       <section id="contato">
         <h2>Contato</h2>
-        <p>Tem um projeto em mente? Entre em contato.</p>
+
+        <p>Tem um projeto? Fale comigo.</p>
 
         <address>
           Email:
           <a href="mailto:loester@loester.com">loester@loester.com</a><br />
           Telefone:
           <a href="tel:+55479999999999">(47) 99999-9999</a><br />
-          Linkedin:
-          <a href="https://www.linkedin.com/in/loesterbotelho" target="_blank">
-            Ver perfil
-          </a>
         </address>
       </section>
     </main>
 
     <footer>
-      <p>&copy; 2026 Loester. Todos os direitos reservados.</p>
+      <p>&copy; 2026 Loester</p>
     </footer>
   </body>
 </html>
