@@ -1,249 +1,338 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Loester - Portfólio</title>
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loester - Portfólio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00bcd4;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: 0.2s;
+    }
+
+    section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    img {
+      width: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid #00bcd4;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    /* TABLE */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .styled-table thead {
+      background: linear-gradient(135deg, #00bcd4, #0097a7);
+      color: #fff;
+    }
+
+    .styled-table th,
+    .styled-table td {
+      padding: 14px;
+      text-align: left;
+    }
+
+    .styled-table tbody tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .styled-table tbody tr:hover {
+      background: #d9f7fa;
+    }
+
+    /* FORM */
+    form {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #00bcd4;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    button {
+      background: #00bcd4;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0097a7;
+      transform: scale(1.03);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #222;
+      color: #fff;
+      margin-top: 20px;
+    }
+
+    /* RESPONSIVE TABLE */
+    @media (max-width: 600px) {
+      .styled-table thead {
+        display: none;
       }
 
-      body {
-        background: #f5f7fa;
-        color: #333;
-        line-height: 1.6;
+      .styled-table tr {
+        display: block;
+        margin-bottom: 10px;
+        background: #fff;
+        border-radius: 8px;
+        padding: 10px;
       }
 
-      header {
-        background: #222;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
+      .styled-table td {
+        display: block;
+        padding: 8px 0;
+        border: none;
       }
 
-      nav ul {
-        list-style: none;
-        margin-top: 10px;
-      }
-
-      nav li {
-        display: inline;
-        margin: 0 10px;
-      }
-
-      nav a {
-        color: #fff;
-        text-decoration: none;
+      .styled-table td::before {
+        content: attr(data-label);
         font-weight: bold;
-      }
-
-      nav a:hover {
+        display: block;
         color: #00bcd4;
       }
+    }
+  </style>
+</head>
 
-      main {
-        max-width: 900px;
-        margin: 30px auto;
-        padding: 20px;
-      }
+<body>
 
-      section {
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
+  <header>
+    <h1>Loester</h1>
 
-      h2 {
-        margin-bottom: 15px;
-      }
+    <nav>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      img {
-        width: 120px;
-        border-radius: 50%;
-        margin-bottom: 15px;
-      }
+  <main>
 
-      ul {
-        margin-top: 10px;
-        padding-left: 20px;
-      }
+    <section id="sobre">
+      <h2>Sobre Mim</h2>
 
-      /* FORM STYLE */
-      form {
-        margin-top: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
+      <img
+        src="https://gravatar.com/avatar/7ebe23f82462d4e4182abf3855ce6b8abb134018c362e86c7bc1096c3c1d1174?v=1777926929000&size=256&d=initials"
+        alt="Foto de Loester desenvolvedor" />
 
-      label {
-        font-weight: bold;
-      }
+      <p>Olá! Eu sou Loester, desenvolvedor desde 2011.</p>
 
-      input,
-      select,
-      textarea {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-      }
-
-      input:focus,
-      textarea:focus,
-      select:focus {
-        outline: none;
-        border-color: #00bcd4;
-      }
-
-      textarea {
-        resize: vertical;
-      }
-
-      .checkbox-group {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      button {
-        background: #00bcd4;
-        color: #fff;
-        border: none;
-        padding: 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-
-      button:hover {
-        background: #0097a7;
-      }
-
-      footer {
-        text-align: center;
-        padding: 15px;
-        background: #222;
-        color: #fff;
-        margin-top: 20px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <h1>Loester</h1>
-
-      <nav>
+      <aside>
+        <h3>Habilidades</h3>
         <ul>
-          <li><a href="#sobre">Sobre Mim</a></li>
-          <li><a href="#projetos">Projetos</a></li>
-          <li><a href="#contato">Contato</a></li>
-          <li><a href="https://www.google.com" target="_blank">Google</a></li>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
         </ul>
-      </nav>
-    </header>
+      </aside>
+    </section>
 
-    <main>
-      <section id="sobre">
-        <h2>Sobre Mim</h2>
+    <section id="projetos">
+      <h2>Projetos</h2>
 
-        <img
-          src="https://media.licdn.com/dms/image/v2/D4D03AQECExTT8EMc_Q/profile-displayphoto-scale_200_200/B4DZqslqpgG8AY-/0/1763832147199?e=1779321600&v=beta&t=riPFmIW-ds9bcq67shmoN8nspp68klzGEKRnNE9BrK0"
-          alt="Foto de perfil"
-        />
+      <article>
+        <h3>Portfólio</h3>
+        <p>Meu primeiro projeto front-end.</p>
+      </article>
+    </section>
 
-        <p>Olá! Eu sou Loester, desenvolvedor desde 2011.</p>
+    <section id="habilidades">
+      <h2>Habilidades Técnicas</h2>
 
-        <aside>
-          <h3>Habilidades</h3>
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section id="projetos">
-        <h2>Projetos</h2>
-
-        <article>
-          <h3>Portfólio</h3>
-          <p>Meu primeiro projeto de front-end.</p>
-        </article>
-      </section>
-
-      <section id="habilidades">
-        <table>
-          <thread>
+      <table class="styled-table">
+        <thead>
           <tr>
             <th>Tecnologia</th>
             <th>Nível</th>
             <th>Descrição</th>
           </tr>
-          <td>
-            <th>Tecnologia</th>
-            <th>Nível</th>
-            <th>Descrição</th>
-          </td>          
-          </thread>          
-        </table>
+        </thead>
 
-      </section>
-        
+        <tbody>
+          <tr>
+            <td data-label="Tecnologia">HTML</td>
+            <td data-label="Nível">Iniciante</td>
+            <td data-label="Descrição">Criação de páginas semânticas e responsivas.</td>
+          </tr>
 
-      <section id="contato">
-        <h2>Contato</h2>
+          <tr>
+            <td data-label="Tecnologia">CSS</td>
+            <td data-label="Nível">Intermediário</td>
+            <td data-label="Descrição">Flexbox, Grid e animações modernas.</td>
+          </tr>
 
-        <p>Tem um projeto? Fale comigo.</p>
+          <tr>
+            <td data-label="Tecnologia">JavaScript</td>
+            <td data-label="Nível">Básico</td>
+            <td data-label="Descrição">Interações no navegador.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-        <address>
-          Email:
-          <a href="mailto:loester@loester.com">loester@loester.com</a><br />
-          Telefone:
-          <a href="tel:+55479999999999">(47) 99999-9999</a>
-        </address>
+    <section id="contato">
+      <h2>Contato</h2>
 
-        <form>
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" required />
+      <p>Tem um projeto? Fale comigo.</p>
 
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
+      <address>
+        Email: <a href="mailto:loester@loester.com">loester@loester.com</a><br />
+        Telefone: <a href="tel:+55479999999999">(47) 99999-9999</a>
+      </address>
 
-          <label for="telefone">Telefone</label>
-          <input type="tel" id="telefone" name="telefone" required />
+      <form>
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" required />
 
-          <label for="assunto">Assunto</label>
-          <select id="assunto" name="assunto">
-            <option value="orcamento">Orçamento</option>
-            <option value="duvida">Dúvida</option>
-            <option value="outro">Outro</option>
-          </select>
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
 
-          <label for="mensagem">Mensagem</label>
-          <textarea id="mensagem" name="mensagem" rows="5"></textarea>
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" required />
 
-          <div class="checkbox-group">
-            <input type="checkbox" id="inscricao" name="inscricao" />
-            <label for="inscricao">Receber newsletter</label>
-          </div>
+        <label for="assunto">Assunto</label>
+        <select id="assunto">
+          <option>Orçamento</option>
+          <option>Dúvida</option>
+          <option>Outro</option>
+        </select>
 
-          <button type="submit">Enviar Mensagem</button>
-        </form>
-      </section>
-    </main>
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" rows="5"></textarea>
 
-    <footer>
-      <p>&copy; 2026 Loester</p>
-    </footer>
-  </body>
+        <div class="checkbox-group">
+          <input type="checkbox" id="inscricao" />
+          <label for="inscricao">Receber newsletter</label>
+        </div>
+
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Loester</p>
+  </footer>
+
+</body>
+
 </html>
