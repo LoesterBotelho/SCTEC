@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loester - Portfólio</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-
-  </style>
 </head>
 
 <body>
@@ -16,7 +13,7 @@
   <header>
     <h1>Loester</h1>
 
-    <nav>
+    <nav aria-label="Menu principal">
       <ul>
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#projetos">Projetos</a></li>
@@ -28,17 +25,18 @@
 
   <main>
 
+    <!-- SOBRE -->
     <section id="sobre">
-      <h2>Sobre Mim</h2>
+      <h2>Sobre mim</h2>
 
       <img
         src="https://gravatar.com/avatar/7ebe23f82462d4e4182abf3855ce6b8abb134018c362e86c7bc1096c3c1d1174?v=1777926929000&size=256&d=initials"
-        alt="Foto de Loester desenvolvedor" />
+        alt="Foto de perfil de Loester, desenvolvedor" />
 
       <p>Olá! Eu sou Loester, desenvolvedor desde 2011.</p>
 
       <aside>
-        <h3>Habilidades</h3>
+        <h3>Habilidades principais</h3>
         <ul>
           <li>HTML</li>
           <li>CSS</li>
@@ -47,6 +45,7 @@
       </aside>
     </section>
 
+    <!-- PROJETOS -->
     <section id="projetos">
       <h2>Projetos</h2>
 
@@ -56,15 +55,18 @@
       </article>
     </section>
 
+    <!-- HABILIDADES -->
     <section id="habilidades">
-      <h2>Habilidades Técnicas</h2>
+      <h2>Habilidades técnicas</h2>
 
       <table class="styled-table">
+        <caption>Lista de habilidades técnicas</caption>
+
         <thead>
           <tr>
-            <th>Tecnologia</th>
-            <th>Nível</th>
-            <th>Descrição</th>
+            <th scope="col">Tecnologia</th>
+            <th scope="col">Nível</th>
+            <th scope="col">Descrição</th>
           </tr>
         </thead>
 
@@ -90,42 +92,53 @@
       </table>
     </section>
 
+    <!-- CONTATO -->
     <section id="contato">
-      <h2>Contato</h2>
+      <h2 id="contato-titulo">Contato</h2>
 
       <p>Tem um projeto? Fale comigo.</p>
 
       <address>
-        Email: <a href="mailto:loester@loester.com">loester@loester.com</a><br />
-        Telefone: <a href="tel:+55479999999999">(47) 99999-9999</a>
+        Email:
+        <a href="mailto:loester@loester.com">loester@loester.com</a><br />
+        Telefone:
+        <a href="tel:+55479999999999">(47) 99999-9999</a>
       </address>
 
-      <form>
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" required />
+      <form aria-labelledby="contato-titulo">
 
-        <label for="email">Email</label>
-        <input type="email" id="email" required />
+        <fieldset>
+          <legend>Dados de contato</legend>
 
-        <label for="telefone">Telefone</label>
-        <input type="tel" id="telefone" required />
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required />
 
-        <label for="assunto">Assunto</label>
-        <select id="assunto">
-          <option>Orçamento</option>
-          <option>Dúvida</option>
-          <option>Outro</option>
-        </select>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
 
-        <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" rows="5"></textarea>
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" required />
 
-        <div class="checkbox-group">
-          <input type="checkbox" id="inscricao" />
-          <label for="inscricao">Receber newsletter</label>
-        </div>
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
+            <option value="">Selecione</option>
+            <option value="orcamento">Orçamento</option>
+            <option value="duvida">Dúvida</option>
+            <option value="outro">Outro</option>
+          </select>
 
-        <button type="submit">Enviar Mensagem</button>
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" rows="5"></textarea>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="inscricao" name="inscricao" />
+            <label for="inscricao">Receber newsletter</label>
+          </div>
+
+        </fieldset>
+
+        <button type="submit">Enviar mensagem</button>
+
       </form>
     </section>
 
