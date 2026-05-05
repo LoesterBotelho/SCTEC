@@ -4,6 +4,7 @@ SCTEC
 ### minha primeira pagina html
 ```
 https://loesterbotelho.github.io/SCTEC/frontend/pagina1.html
+https://loesterbotelho.github.io/SCTEC/frontend/pagina2.html
 ```
 
 ### site de documentações

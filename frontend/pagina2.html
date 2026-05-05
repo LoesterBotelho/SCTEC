@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário - Loester</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Loester</h1>
+    </header>
+
+    <main>
+
+        <section id="formulario">
+            <h2>Formulário</h2>
+
+            <form>
+
+                <label for="nomeCompleto">Nome Completo</label>
+                <input type="text" id="nomeCompleto" name="nomeCompleto" required minlength="3">
+
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="contato@gmail.com" required>
+
+                <label for="idade">Idade</label>
+                <input type="number" id="idade" name="idade" required min="18" max="80">
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" name="telefone" placeholder="(47) 99888-8888" pattern="\(\d{2}\)\s\d{5}-\d{4}"
+                    required>
+
+                <label for="materia">Matéria</label>
+                <select id="materia" name="materia" required>
+                    <option value="">Selecione</option>
+                    <option>Matemática</option>
+                    <option>Português</option>
+                    <option>Biologia</option>
+                    <option>Ciências</option>
+                    <option>História</option>
+                    <option>Geografia</option>
+                    <option>Artes</option>
+                </select>
+
+                <label for="escolaridade">Escolaridade</label>
+                <select id="escolaridade" name="escolaridade" required>
+                    <option value="">Selecione</option>
+                    <option>Ensino Superior Completo</option>
+                    <option>Cursando Mestrado</option>
+                    <option>Mestrado Completo</option>
+                    <option>Cursando Doutorado</option>
+                    <option>Doutorado Completo</option>
+                </select>
+
+                <label for="descricaoSelf">Sobre você</label>
+                <textarea id="descricaoSelf" name="descricaoSelf" rows="5" required minlength="10"></textarea>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="inscricao" name="inscricao">
+                    <label for="inscricao">Receber newsletter</label>
+                </div>
+
+                <button type="submit">Enviar</button>
+
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Loester</p>
+    </footer>
+
+</body>
+
+</html>
