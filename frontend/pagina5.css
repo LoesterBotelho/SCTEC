@@ -17,3 +17,8 @@ div {
 .in-line {
   display: inline;
 }
+
+.in-line-Block {
+  display: inline-block;
+  margin-top: 20px;
+}
