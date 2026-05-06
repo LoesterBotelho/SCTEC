@@ -1,0 +1,20 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    color: blue;    
+}
+
+#paragrafo2 {
+    font-family: 'Courier New', Courier, monospace;
+    color: red;  
+    size: 10px;
+
+}
+
+.paragrafo3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: blueviolet; 
+    size: 20px;
+}

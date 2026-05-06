@@ -30,3 +30,33 @@ a {
 .negrito {
       font-weight: bold;
 }
+
+/* seletor */
+/* elemento logo em seguida do elemento */
+/* apenas o ultimo */
+p + a {
+    font-weight: bold;
+    color:blueviolet;
+}
+
+/*seletor irmão */
+/* qualquer link depois do paragrafo*/
+p ~ a {
+    font-weight: bold;
+    color:cadetblue;
+}
+
+/* seletor filho*/
+p > a {
+    font-weight: bold;
+    color:chartreuse;
+}
+
+/* seletor descentente */
+/* todos links dentro da div*/
+div a {
+    font-weight: bold;
+    color:coral;
+}
+
+/* organizar css sempre com class */ 
