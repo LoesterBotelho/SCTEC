@@ -1,0 +1,19 @@
+p {
+  margin: 5px;
+  padding: 2px;
+  border: 1px solid #000;
+}
+
+div {
+  margin: 5px;
+  padding: 2px;
+  border: 1px solid #000;
+}
+
+.block {
+  display: block;
+}
+
+.in-line {
+  display: inline;
+}
