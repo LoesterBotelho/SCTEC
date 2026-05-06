@@ -1,0 +1,32 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  color: blue;
+  font-size: 20px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+div {
+  height: 200px;
+  color: black;
+}
+
+a {
+  color: red;
+}
+
+
+/* testes automatizados é importante ser unico*/
+/* id unico */
+/* ID # */
+#paragrafo1 {
+  font-weight: bold;
+}
+
+/* CLASS .*/
+/* pode ser a mesma classe com aparencia semelhante */
+.negrito {
+      font-weight: bold;
+}
