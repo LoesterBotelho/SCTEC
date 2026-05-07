@@ -111,3 +111,10 @@
 - Um gráfico vale mais que 1000 linhas de código  
 
 ---
+
+MinMaxScaller
+
+
+---
+
+
