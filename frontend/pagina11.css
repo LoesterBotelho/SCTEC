@@ -1,0 +1,143 @@
+/* 
+=========================================
+RESET BÁSICO
+=========================================
+Remove margens automáticas do navegador
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*
+=========================================
+BODY
+=========================================
+Centraliza o conteúdo na tela
+*/
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background-color: #f4f4f4;
+
+  /* altura total da tela */
+  min-height: 100vh;
+
+  /* centralização */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+}
+
+/*
+=========================================
+CONTAINER GRID
+=========================================
+*/
+.container {
+  /*
+  Ativa o CSS Grid
+  */
+  display: grid;
+
+  /*
+  Cria 3 colunas
+
+  1fr = 1 fração
+  2fr = ocupa o dobro
+
+  Resultado:
+  | pequena | grande | pequena |
+  */
+  grid-template-columns: 1fr 2fr 1fr;
+
+  /*
+  Cria 2 linhas
+  */
+  grid-template-rows: 150px 150px;
+
+  /*
+  Espaçamento entre itens
+  */
+  gap: 15px;
+
+  /*
+  Visual
+  */
+  background-color: white;
+
+  border: 2px solid #ccc;
+
+  padding: 20px;
+
+  border-radius: 10px;
+
+  width: 100%;
+  max-width: 1000px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*
+=========================================
+ITENS
+=========================================
+*/
+.item {
+  background-color: lightblue;
+
+  border: 2px solid #3498db;
+
+  border-radius: 8px;
+
+  /*
+  Centraliza o texto
+  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: bold;
+
+  transition: 0.3s;
+}
+
+/*
+=========================================
+HOVER
+=========================================
+Quando passa o mouse
+*/
+.item:hover {
+  background-color: #87cefa;
+
+  transform: scale(1.03);
+}
+
+/*
+=========================================
+RESPONSIVIDADE
+=========================================
+*/
+@media (max-width: 768px) {
+  .container {
+    /*
+    No celular:
+    vira apenas 1 coluna
+    */
+    grid-template-columns: 1fr;
+
+    /*
+    altura automática
+    */
+    grid-template-rows: auto;
+  }
+
+  .item {
+    height: 120px;
+  }
+}
