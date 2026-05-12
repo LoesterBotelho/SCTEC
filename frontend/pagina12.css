@@ -1,0 +1,21 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  background-color: blue;
+  padding: 20px;
+  grid-column: 1/-1;
+}
+
+.siderbar {
+  background-color: red;
+  padding: 20px;
+}
+
+.content {
+  background-color: purple;
+  padding: 20px;
+}
