@@ -1,163 +1,279 @@
-// fake database
+let kanbanCards = [];
 
-const tasks = [
-  {
-    id: 1,
-    title: "HTML5",
-    code: "HTML-01",
-    hours: "10h / 80h",
-    points: 400,
-    description: "Learn semantic HTML5 tags and forms.",
-    status: "todo",
-  },
+let currentEditId = null;
 
-  {
-    id: 2,
-    title: "CSS3 Grid",
-    code: "CSS-02",
-    hours: "25h / 80h",
-    points: 650,
-    description: "Practice CSS Grid and responsive layouts.",
-    status: "doing",
-  },
+// load dataset
 
-  {
-    id: 3,
-    title: "JavaScript",
-    code: "JS-03",
-    hours: "60h / 80h",
-    points: 1200,
-    description: "Study DOM manipulation and events.",
-    status: "done",
-  },
+async function loadKanban() {
+  try {
+    const saved = localStorage.getItem("kanban_dataset");
 
-  {
-    id: 4,
-    title: "Drag Drop",
-    code: "JS-04",
-    hours: "12h / 80h",
-    points: 500,
-    description: "Learn Drag and Drop API in HTML5.",
-    status: "todo",
-  },
-];
+    if (saved) {
+      kanbanCards = JSON.parse(saved);
+    } else {
+      const response = await fetch("kanban.json");
 
-// render tasks
+      kanbanCards = await response.json();
 
-function renderTasks() {
-  document.getElementById("todo").innerHTML = "";
+      saveDataset();
+    }
 
-  document.getElementById("doing").innerHTML = "";
+    renderKanban();
+  } catch (error) {
+    console.error("Error loading kanban:", error);
+  }
+}
 
-  document.getElementById("done").innerHTML = "";
+// save dataset
 
-  tasks.forEach((task) => {
-    const card = document.createElement("div");
+function saveDataset() {
+  localStorage.setItem(
+    "kanban_dataset",
 
-    card.classList.add("task");
+    JSON.stringify(kanbanCards),
+  );
+}
 
-    card.classList.add("card-hover");
+// render board
 
-    card.draggable = true;
+function renderKanban() {
+  const todo = document.getElementById("todo");
 
-    card.dataset.id = task.id;
+  const doing = document.getElementById("doing");
 
-    card.innerHTML = `
+  const done = document.getElementById("done");
 
-      <h3>${task.title}</h3>
+  todo.innerHTML = "";
 
-      <div class="task-code">
-        ${task.code}
-      </div>
+  doing.innerHTML = "";
 
-      <div class="task-info">
+  done.innerHTML = "";
 
-        <span>${task.hours}</span>
+  kanbanCards.forEach((card) => {
+    const cardElement = document.createElement("div");
 
-        <span class="points">
-          ${task.points} pts
+    cardElement.classList.add("kanban-card");
+
+    cardElement.draggable = true;
+
+    cardElement.dataset.id = card.id;
+
+    cardElement.innerHTML = `
+
+      <h3>${card.title}</h3>
+
+      <div class="card-info">
+
+        <span class="card-code">
+          ${card.code}
+        </span>
+
+        <span>
+          ⏱ ${card.hours}
+        </span>
+
+        <span class="card-points">
+          ⭐ ${card.points}
         </span>
 
       </div>
 
     `;
 
-    addDragEvents(card);
+    // open modal
 
-    addClickEvent(card, task);
+    cardElement.addEventListener("click", () => {
+      openModal(card);
+    });
 
-    document.getElementById(task.status).appendChild(card);
+    // drag start
+
+    cardElement.addEventListener("dragstart", () => {
+      cardElement.classList.add("dragging");
+    });
+
+    // drag end
+
+    cardElement.addEventListener("dragend", () => {
+      cardElement.classList.remove("dragging");
+    });
+
+    // append
+
+    if (card.status === "todo") {
+      todo.appendChild(cardElement);
+    }
+
+    if (card.status === "doing") {
+      doing.appendChild(cardElement);
+    }
+
+    if (card.status === "done") {
+      done.appendChild(cardElement);
+    }
   });
 }
 
-// drag events
+// drag/drop
 
-function addDragEvents(element) {
-  element.addEventListener("dragstart", () => {
-    element.classList.add("dragging");
-  });
-
-  element.addEventListener("dragend", () => {
-    element.classList.remove("dragging");
-  });
-}
-
-// drop columns
-
-const columns = document.querySelectorAll(".task-list");
-
-columns.forEach((column) => {
+document.querySelectorAll(".kanban-cards").forEach((column) => {
   column.addEventListener("dragover", (e) => {
     e.preventDefault();
   });
 
-  column.addEventListener("drop", () => {
-    const dragged = document.querySelector(".dragging");
+  column.addEventListener("drop", (e) => {
+    e.preventDefault();
 
-    const taskId = Number(dragged.dataset.id);
+    const dragging = document.querySelector(".dragging");
 
-    const task = tasks.find((t) => t.id === taskId);
+    if (!dragging) {
+      return;
+    }
 
-    task.status = column.id;
+    const id = Number(dragging.dataset.id);
 
-    renderTasks();
+    const card = kanbanCards.find((c) => c.id === id);
+
+    if (card) {
+      card.status = column.id;
+    }
+
+    saveDataset();
+
+    renderKanban();
   });
 });
 
-// click card
+// open modal
 
-function addClickEvent(card, task) {
-  card.addEventListener("click", () => {
-    document.getElementById("modal").style.display = "flex";
+function openModal(card) {
+  currentEditId = card.id;
 
-    document.getElementById("modalTitle").innerText = task.title;
+  document.getElementById("modal").classList.remove("hidden");
 
-    document.getElementById("modalCode").innerText = task.code;
+  document.getElementById("editTitle").value = card.title;
 
-    document.getElementById("modalHours").innerText = task.hours;
+  document.getElementById("editCode").value = card.code;
 
-    document.getElementById("modalPoints").innerText = task.points + " pts";
+  document.getElementById("editHours").value = card.hours;
 
-    document.getElementById("modalStatus").innerText = task.status;
+  document.getElementById("editPoints").value = card.points;
 
-    document.getElementById("modalDescription").innerText = task.description;
-  });
+  document.getElementById("editDescription").value = card.description;
+
+  document.getElementById("editStatus").value = card.status;
 }
 
 // close modal
 
 document.getElementById("closeModal").addEventListener("click", () => {
-  document.getElementById("modal").style.display = "none";
+  document.getElementById("modal").classList.add("hidden");
 });
 
-// click outside modal
+// save card
 
-window.addEventListener("click", (e) => {
-  const modal = document.getElementById("modal");
+document.getElementById("saveCardButton").addEventListener("click", () => {
+  const card = kanbanCards.find((c) => c.id === currentEditId);
 
-  if (e.target === modal) {
-    modal.style.display = "none";
+  if (!card) {
+    return;
   }
+
+  card.title = document.getElementById("editTitle").value;
+
+  card.code = document.getElementById("editCode").value;
+
+  card.hours = document.getElementById("editHours").value;
+
+  card.points = Number(document.getElementById("editPoints").value);
+
+  card.description = document.getElementById("editDescription").value;
+
+  card.status = document.getElementById("editStatus").value;
+
+  saveDataset();
+
+  renderKanban();
+
+  document.getElementById("modal").classList.add("hidden");
 });
 
-renderTasks();
+// export json
+
+document.getElementById("exportButton").addEventListener("click", () => {
+  const data = JSON.stringify(kanbanCards, null, 2);
+
+  const blob = new Blob([data], {
+    type: "application/json",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  a.download = "kanban-dataset.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+});
+
+// import json
+
+document.getElementById("importButton").addEventListener("click", () => {
+  document.getElementById("fileInput").click();
+});
+
+document.getElementById("fileInput").addEventListener("change", (event) => {
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    try {
+      const importedData = JSON.parse(e.target.result);
+
+      if (Array.isArray(importedData)) {
+        kanbanCards = importedData;
+
+        saveDataset();
+
+        renderKanban();
+
+        alert("Dataset imported successfully.");
+      } else {
+        alert("Invalid JSON format.");
+      }
+    } catch (error) {
+      alert("Error importing JSON.");
+    }
+  };
+
+  reader.readAsText(file);
+});
+
+// clear dataset
+
+document.getElementById("clearButton").addEventListener("click", () => {
+  const confirmClear = confirm("Remove all cards?");
+
+  if (!confirmClear) {
+    return;
+  }
+
+  kanbanCards = [];
+
+  saveDataset();
+
+  renderKanban();
+});
+
+// init
+
+loadKanban();

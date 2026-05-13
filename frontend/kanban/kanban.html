@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Kanban</title>
+  <title>
+    Dark Kanban Board
+  </title>
 
   <link rel="stylesheet" href="fakebootstrap.css">
+
   <link rel="stylesheet" href="kanban.css">
+
 </head>
 
 <body>
@@ -15,44 +22,66 @@
   <div class="container">
 
     <h1 class="text-center mb-3">
-      Study Kanban
+      Study Kanban Board
     </h1>
 
-    <div class="board">
+    <!-- ACTIONS -->
+
+    <div class="actions mb-3">
+
+      <button class="btn btn-success" id="exportButton">
+        Export JSON
+      </button>
+
+      <button class="btn btn-warning" id="importButton">
+        Import JSON
+      </button>
+
+      <button class="btn btn-danger" id="clearButton">
+        Clear Dataset
+      </button>
+
+      <input type="file" id="fileInput" hidden accept=".json">
+
+    </div>
+
+    <!-- BOARD -->
+
+    <div class="kanban-board">
 
       <!-- TODO -->
 
-      <div class="column">
+      <div class="kanban-column">
 
-        <h2 class="column-title">
-          To Do
+        <h2>
+          Todo
         </h2>
 
-        <div class="task-list" id="todo"></div>
+        <div class="kanban-cards" id="todo"></div>
 
       </div>
 
       <!-- DOING -->
 
-      <div class="column">
+      <div class="kanban-column">
 
-        <h2 class="column-title">
+        <h2>
           Doing
         </h2>
 
-        <div class="task-list" id="doing"></div>
+        <div class="kanban-cards" id="doing"></div>
 
       </div>
 
       <!-- DONE -->
 
-      <div class="column">
+      <div class="kanban-column">
 
-        <h2 class="column-title">
+        <h2>
           Done
         </h2>
 
-        <div class="task-list" id="done"></div>
+        <div class="kanban-cards" id="done"></div>
 
       </div>
 
@@ -62,45 +91,109 @@
 
   <!-- MODAL -->
 
-  <div class="modal" id="modal">
+  <div class="modal hidden" id="modal">
 
     <div class="modal-content">
 
-      <span class="close" id="closeModal">
-        &times;
-      </span>
+      <button class="close-button" id="closeModal">
+        ✖
+      </button>
 
-      <h2 class="mb-2" id="modalTitle"></h2>
+      <h2 class="mb-2">
+        Edit Card
+      </h2>
 
-      <div class="mb-1">
-        <strong>Code:</strong>
-        <span id="modalCode"></span>
+      <!-- TITLE -->
+
+      <div class="form-group">
+
+        <label>
+          Title
+        </label>
+
+        <input type="text" id="editTitle">
+
       </div>
 
-      <div class="mb-1">
-        <strong>Hours:</strong>
-        <span id="modalHours"></span>
+      <!-- CODE -->
+
+      <div class="form-group">
+
+        <label>
+          Code
+        </label>
+
+        <input type="text" id="editCode">
+
       </div>
 
-      <div class="mb-1">
-        <strong>Points:</strong>
-        <span id="modalPoints"></span>
+      <!-- HOURS -->
+
+      <div class="form-group">
+
+        <label>
+          Hours
+        </label>
+
+        <input type="text" id="editHours">
+
       </div>
 
-      <div class="mb-2">
-        <strong>Status:</strong>
-        <span id="modalStatus"></span>
+      <!-- POINTS -->
+
+      <div class="form-group">
+
+        <label>
+          Points
+        </label>
+
+        <input type="number" id="editPoints">
+
       </div>
 
-      <div class="card">
+      <!-- DESCRIPTION -->
 
-        <h3 class="mb-1">
+      <div class="form-group">
+
+        <label>
           Description
-        </h3>
+        </label>
 
-        <p id="modalDescription"></p>
+        <textarea id="editDescription"></textarea>
 
       </div>
+
+      <!-- STATUS -->
+
+      <div class="form-group">
+
+        <label>
+          Status
+        </label>
+
+        <select id="editStatus">
+
+          <option value="todo">
+            Todo
+          </option>
+
+          <option value="doing">
+            Doing
+          </option>
+
+          <option value="done">
+            Done
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- SAVE -->
+
+      <button class="btn btn-success" id="saveCardButton">
+        Save Card
+      </button>
 
     </div>
 
@@ -109,4 +202,5 @@
   <script src="kanban.js"></script>
 
 </body>
+
 </html>

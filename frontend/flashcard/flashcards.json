@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "english": "I need to figure this out.",
+        "portuguese": "Eu preciso resolver isso.",
+        "score": 0,
+        "lastPositive": null
+    },
+    {
+        "id": 2,
+        "english": "She has been working remotely.",
+        "portuguese": "Ela está trabalhando remotamente.",
+        "score": 0,
+        "lastPositive": null
+    },
+    {
+        "id": 3,
+        "english": "I am looking forward to the weekend.",
+        "portuguese": "Estou ansioso pelo fim de semana.",
+        "score": 0,
+        "lastPositive": null
+    }
+]

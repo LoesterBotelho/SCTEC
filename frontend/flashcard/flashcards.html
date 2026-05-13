@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        English Flashcards
+    </title>
+
+    <link rel="stylesheet" href="fakebootstrap.css">
+
+    <link rel="stylesheet" href="flashcards.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1 class="text-center mb-3">
+            English Flashcards B2
+        </h1>
+
+        <!-- FORM -->
+
+        <div class="card mb-3">
+
+            <h2 class="mb-2">
+                Add Flashcard
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    English Phrase
+                </label>
+
+                <input type="text" id="englishInput" placeholder="Example: I need to figure this out">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Portuguese Translation
+                </label>
+
+                <input type="text" id="translationInput" placeholder="Exemplo: Eu preciso resolver isso">
+
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <button class="btn btn-primary" id="addCardButton">
+                    Add Card
+                </button>
+
+                <button class="btn btn-success" id="exportButton">
+                    Export JSON
+                </button>
+
+                <button class="btn btn-warning" id="importButton">
+                    Import JSON
+                </button>
+
+                <button class="btn btn-danger" id="clearButton">
+                    Clear All
+                </button>
+
+                <input type="file" id="fileInput" hidden accept=".json">
+
+            </div>
+
+        </div>
+
+        <!-- SCORE -->
+
+        <div class="stats mb-3">
+
+            <div class="stat-card">
+                <h3>Total Cards</h3>
+                <p id="totalCards">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Learned</h3>
+                <p id="learnedCards">0</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Difficult</h3>
+                <p id="hardCards">0</p>
+            </div>
+
+        </div>
+
+        <!-- FLASHCARDS -->
+
+        <div class="flashcards-grid" id="flashcardsGrid"></div>
+
+    </div>
+
+    <!-- TEMPLATE -->
+
+    <template id="cardTemplate">
+
+        <div class="flashcard">
+
+            <div class="flashcard-inner">
+
+                <!-- FRONT -->
+
+                <div class="flashcard-front">
+
+                    <div>
+
+                        <h3 class="english-text"></h3>
+
+                        <p class="score-text"></p>
+
+                    </div>
+
+                </div>
+
+                <!-- BACK -->
+
+                <div class="flashcard-back">
+
+                    <div>
+
+                        <h3 class="portuguese-text"></h3>
+
+                        <div class="review-buttons">
+
+                            <button class="btn btn-success correctButton">
+                                I GOT IT
+                            </button>
+
+                            <button class="btn btn-danger wrongButton">
+                                I MISSED
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+    <script src="flashcards.js"></script>
+
+</body>
+
+</html>

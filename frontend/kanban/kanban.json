@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "HTML5",
+        "code": "HTML-01",
+        "hours": "10h / 80h",
+        "points": 400,
+        "description": "Learn semantic HTML5 tags and forms.",
+        "status": "todo"
+    },
+    {
+        "id": 2,
+        "title": "CSS3 Grid",
+        "code": "CSS-02",
+        "hours": "25h / 80h",
+        "points": 650,
+        "description": "Practice CSS Grid and responsive layouts.",
+        "status": "doing"
+    },
+    {
+        "id": 3,
+        "title": "JavaScript",
+        "code": "JS-03",
+        "hours": "60h / 80h",
+        "points": 1200,
+        "description": "Study DOM manipulation and events.",
+        "status": "done"
+    },
+    {
+        "id": 4,
+        "title": "Drag Drop",
+        "code": "JS-04",
+        "hours": "12h / 80h",
+        "points": 500,
+        "description": "Learn Drag and Drop API in HTML5.",
+        "status": "todo"
+    }
+]
