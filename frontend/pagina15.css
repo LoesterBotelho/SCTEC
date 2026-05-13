@@ -2,8 +2,31 @@
   background-color: blue;
   font-family: Arial, Helvetica, sans-serif;
   padding: 10px;
+  width: 200px;
+  height: 200px;
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /*default*/
+  justify-content: flex-start; /*default*/
+  /* align-items: flex-start;  */ /*default*/
+  /* align-items: flex-end; */
+  /* align-items: center; */
+  align-items: stretch;
+  /* justify-content: center; */
+  /* justify-content: space-between; */
+  /* justify-content: space-around; */
+  /*flex-wrap: nowrap;*/  /*default*/
+  /* flex-wrap: wrap; */
+  flex-wrap: wrap-reverse;
+  /* align-content: space-between; */
+  /* align-content: flex-start; */
+  /* align-content: flex-end; */
+  align-content: stretch; /*default*/
+  /* align-content: space-around; */
+  /* align-content: space-between; */
+  /*gap:10px;*/ /* espaçamento entre elementos lateral entre quebra de linha , vale para os dois */ 
+  column-gap: 20px; /* distancia lateral no formato de coluna | espacamento lateral */ 
+  row-gap:10px; /*espaço da linha quebrada*/  
+  flex-grow: 1;
 }
 
 .container2 {
@@ -12,6 +35,7 @@
   padding: 10px;
   display: flex;
   flex-direction: row-reverse;
+  justify-content: flex-end;
 }
 
 .container3 {
@@ -40,12 +64,15 @@
 
 #box1 {
   background-color: aqua;
+  flex-grow: 1;
 }
 
 #box2 {
   background-color: chocolate;
+  flex-grow: 2;
 }
 
 #box3 {
   background-color: fuchsia;
+  flex-grow: 1;
 }
