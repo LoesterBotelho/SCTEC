@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kanban</title>
+
+  <link rel="stylesheet" href="fakebootstrap.css">
+  <link rel="stylesheet" href="kanban.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1 class="text-center mb-3">
+      Study Kanban
+    </h1>
+
+    <div class="board">
+
+      <!-- TODO -->
+
+      <div class="column">
+
+        <h2 class="column-title">
+          To Do
+        </h2>
+
+        <div class="task-list" id="todo"></div>
+
+      </div>
+
+      <!-- DOING -->
+
+      <div class="column">
+
+        <h2 class="column-title">
+          Doing
+        </h2>
+
+        <div class="task-list" id="doing"></div>
+
+      </div>
+
+      <!-- DONE -->
+
+      <div class="column">
+
+        <h2 class="column-title">
+          Done
+        </h2>
+
+        <div class="task-list" id="done"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL -->
+
+  <div class="modal" id="modal">
+
+    <div class="modal-content">
+
+      <span class="close" id="closeModal">
+        &times;
+      </span>
+
+      <h2 class="mb-2" id="modalTitle"></h2>
+
+      <div class="mb-1">
+        <strong>Code:</strong>
+        <span id="modalCode"></span>
+      </div>
+
+      <div class="mb-1">
+        <strong>Hours:</strong>
+        <span id="modalHours"></span>
+      </div>
+
+      <div class="mb-1">
+        <strong>Points:</strong>
+        <span id="modalPoints"></span>
+      </div>
+
+      <div class="mb-2">
+        <strong>Status:</strong>
+        <span id="modalStatus"></span>
+      </div>
+
+      <div class="card">
+
+        <h3 class="mb-1">
+          Description
+        </h3>
+
+        <p id="modalDescription"></p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="kanban.js"></script>
+
+</body>
+</html>
