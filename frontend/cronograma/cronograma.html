@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma das Trilhas</title>
+
+    <link rel="stylesheet" href="cronograma.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- TABS -->
+
+        <div class="tabs">
+            <button class="tab active">1º Ciclo</button>
+            <button class="tab">2º Ciclo</button>
+        </div>
+
+        <!-- CALENDÁRIO -->
+
+        <section class="calendar-wrapper">
+
+            <!-- TOPO -->
+
+            <div class="calendar-header">
+
+                <div class="nav-buttons">
+                    <button id="prevBtn">&#10094;</button>
+                    <button id="nextBtn">&#10095;</button>
+                </div>
+
+                <div class="month-area">
+                    <span>Este mês</span>
+
+                    <h2 id="monthTitle">Maio 2026</h2>
+
+                    <button class="arrow-down">
+                        &#9662;
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- DIAS -->
+
+            <div class="weekdays">
+                <div>Dom</div>
+                <div>Seg</div>
+                <div>Ter</div>
+                <div>Qua</div>
+                <div>Qui</div>
+                <div>Sex</div>
+                <div>Sáb</div>
+            </div>
+
+            <!-- GRID -->
+
+            <div id="calendar" class="calendar-grid"></div>
+
+        </section>
+
+    </div>
+
+    <script src="cronograma.js"></script>
+
+</body>
+
+</html>
