@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SCTEC - Unidades Curriculares</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f7;
+            color: #111827;
+        }
+
+        /* HEADER */
+
+        header {
+            width: 100%;
+            height: 68px;
+            background: #fff;
+
+            border-bottom: 1px solid #dfe3e8;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 22px;
+        }
+
+        .logo img {
+            width: 150px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #111827;
+
+            font-size: 15px;
+            font-weight: 500;
+
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .header-icon {
+            font-size: 18px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .profile {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* CONTAINER */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 24px auto;
+
+            background: #fff;
+
+            border-radius: 28px;
+
+            padding: 18px;
+
+            min-height: 500px;
+        }
+
+        /* TOP */
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 26px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .search-area {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .search {
+            width: 320px;
+            height: 42px;
+
+            border-bottom: 1px solid #dfe3e8;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+
+            font-size: 15px;
+        }
+
+        .search input::placeholder {
+            color: #888;
+        }
+
+        select {
+            border: none;
+            background: transparent;
+            outline: none;
+
+            font-size: 15px;
+            color: #555;
+
+            cursor: pointer;
+        }
+
+        /* TABS */
+
+        .tabs {
+
+            width: 100%;
+            height: 60px;
+
+            border: 1px solid #d9dce1;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .tab {
+
+            padding: 14px 22px;
+
+            cursor: pointer;
+
+            color: #666;
+
+            border-bottom: 3px solid transparent;
+
+            transition: 0.2s;
+        }
+
+        .tab.active {
+
+            border-bottom: 3px solid #7ac142;
+
+            color: #111;
+
+            font-weight: bold;
+        }
+
+        /* CARDS */
+
+        .cards {
+            display: flex;
+            gap: 16px;
+
+            overflow-x: auto;
+
+            padding-bottom: 10px;
+        }
+
+        .cards::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .cards::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+            border-radius: 20px;
+        }
+
+        .card {
+
+            min-width: 380px;
+            height: 228px;
+
+            border-radius: 26px;
+
+            padding: 18px;
+
+            position: relative;
+            overflow: hidden;
+
+            color: #fff;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .red {
+            background: #eb4d5c;
+        }
+
+        .gray {
+            background: #8d8d8d;
+        }
+
+        /* BACKGROUND */
+
+        .circle-bg {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .c1 {
+            width: 180px;
+            height: 180px;
+
+            left: -40px;
+            top: 40px;
+        }
+
+        .c2 {
+            width: 130px;
+            height: 130px;
+
+            bottom: -30px;
+            left: 80px;
+        }
+
+        .c3 {
+            width: 90px;
+            height: 90px;
+
+            top: -20px;
+            left: 190px;
+        }
+
+        /* TITLE */
+
+        .title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.45;
+
+            color: #fff;
+
+            text-shadow:
+                0 1px 1px rgba(0, 0, 0, 0.15);
+
+            margin-bottom: 42px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        /* TAGS */
+
+        .tags {
+            display: flex;
+            gap: 8px;
+
+            margin-bottom: 38px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+
+            background: #fff;
+
+            border: 1px solid #d7d7d7;
+
+            color: #111;
+
+            padding: 4px 11px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        /* DATES */
+
+        .dates {
+            display: flex;
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .dates small {
+            display: block;
+            margin-bottom: 6px;
+
+            font-size: 13px;
+
+            color: #f1f1f1;
+        }
+
+        .dates strong {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* PROGRESS */
+
+        .progress {
+
+            width: 66px;
+            height: 66px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: absolute;
+
+            top: 40px;
+            right: 18px;
+
+            z-index: 5;
+        }
+
+        .progress::before {
+
+            content: "";
+
+            width: 54px;
+            height: 54px;
+
+            border-radius: 50%;
+
+            background: #edf0f7;
+
+            position: absolute;
+        }
+
+        .progress span {
+            position: relative;
+            z-index: 2;
+
+            color: #444;
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        /* LOCK */
+
+        .lock {
+
+            width: 66px;
+            height: 66px;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(#3f557f 100%,
+                    #3f557f 100%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: absolute;
+
+            right: 18px;
+            top: 40px;
+
+            box-shadow:
+                inset 0 0 0 2px rgba(255, 255, 255, 0.25);
+
+            z-index: 5;
+        }
+
+        .lock::before {
+
+            content: "";
+
+            width: 54px;
+            height: 54px;
+
+            border-radius: 50%;
+
+            background: #f3f5f8;
+
+            position: absolute;
+        }
+
+        /* STUDENT */
+
+        .student-icon {
+
+            width: 52px;
+            height: 52px;
+
+            background: rgba(255, 255, 255, 0.2);
+
+            border-top-left-radius: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: absolute;
+
+            right: 0;
+            bottom: 0;
+
+            z-index: 3;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            width: 100%;
+            padding: 40px;
+
+            text-align: center;
+
+            color: #777;
+            font-size: 18px;
+        }
+
+        /* FOOTER */
+
+        footer {
+
+            margin-top: 50px;
+
+            background: #ececec;
+
+            padding: 40px 50px 20px;
+        }
+
+        .footer-top {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 30px;
+        }
+
+        .footer-left {
+
+            display: flex;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .footer-logo h3 {
+
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: normal;
+        }
+
+        .footer-logo img {
+            height: 42px;
+        }
+
+        .social-groups {
+            display: flex;
+            gap: 50px;
+        }
+
+        .socials {
+            display: flex;
+            gap: 12px;
+
+            margin-top: 10px;
+        }
+
+        .socials img {
+            width: 18px;
+        }
+
+        .footer-bottom {
+
+            border-top: 1px solid #ccc;
+
+            padding-top: 18px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px) {
+
+            nav {
+                display: none;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .search-area {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .card {
+                min-width: 100%;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .social-groups {
+                flex-wrap: wrap;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <img
+                src="https://ava.sesisenai.org.br/pluginfile.php/1/theme_senai/logocompact/300x300/1779135132/sctec%20logo.png">
+        </div>
+
+        <nav>
+
+            <a href="#">⌂ Página inicial</a>
+
+            <a href="#">🎧 Falar com o suporte</a>
+
+            <a href="#">Mais ⌄</a>
+
+        </nav>
+
+        <div class="header-right">
+
+            <div class="header-icon">✉</div>
+
+            <div class="header-icon">🔔</div>
+
+            <div class="profile">
+                <img src="https://ava.sesisenai.org.br/pluginfile.php/814839/user/icon/senai/f2?rev=83143485">
+            </div>
+
+            <div class="header-icon">⌄</div>
+
+        </div>
+
+    </header>
+
+    <main class="container">
+
+        <div class="top">
+
+            <h1>Unidades Curriculares</h1>
+
+            <div class="search-area">
+
+                <div class="search">
+
+                    🔍
+
+                    <input type="text" id="searchInput" placeholder="Buscar">
+
+                </div>
+
+                <select id="filterSelect">
+
+                    <option>Todos</option>
+
+                    <option>Em andamento</option>
+
+                    <option>Não iniciados</option>
+
+                    <option>Encerrados</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="tabs">
+
+            <div class="tab active" data-periodo="1">
+                1º Período
+            </div>
+
+            <div class="tab" data-periodo="2">
+                2º Período
+            </div>
+
+        </div>
+
+        <div class="cards" id="cardsContainer"></div>
+
+    </main>
+
+    <script>
+
+        const cursos = [
+
+            {
+                titulo: "Introdução ao Data Science",
+                periodo: 1,
+                status: "Em andamento",
+                horas: "20h",
+                inicio: "30/04/2026",
+                fim: "20/05/2026",
+                progresso: 28,
+                cor: "red"
+            },
+
+            {
+                titulo: "Python para Análise de Dados",
+                periodo: 1,
+                status: "Encerrados",
+                horas: "80h",
+                inicio: "01/01/2026",
+                fim: "20/02/2026",
+                progresso: 100,
+                cor: "red"
+            },
+
+            {
+                titulo: "Gestão de Dados com Arquitetura Moderna",
+                periodo: 2,
+                status: "Não iniciados",
+                horas: "150h",
+                inicio: "03/11/2026",
+                fim: "06/03/2027",
+                progresso: 0,
+                cor: "gray"
+            },
+
+            {
+                titulo: "Manipulação de Dados com Python e SQL",
+                periodo: 2,
+                status: "Não iniciados",
+                horas: "150h",
+                inicio: "29/06/2026",
+                fim: "29/10/2026",
+                progresso: 0,
+                cor: "gray"
+            },
+
+            {
+                titulo: "Modelagem de Dados",
+                periodo: 2,
+                status: "Não iniciados",
+                horas: "150h",
+                inicio: "29/06/2026",
+                fim: "29/10/2026",
+                progresso: 0,
+                cor: "gray"
+            },
+
+            {
+                titulo: "Visualização de Dados",
+                periodo: 2,
+                status: "Não iniciados",
+                horas: "150h",
+                inicio: "03/11/2026",
+                fim: "06/03/2027",
+                progresso: 0,
+                cor: "gray"
+            }
+
+        ];
+
+        const cardsContainer =
+            document.getElementById("cardsContainer");
+
+        const tabs =
+            document.querySelectorAll(".tab");
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+        const filterSelect =
+            document.getElementById("filterSelect");
+
+        let periodoAtual = 1;
+
+        function renderCards() {
+
+            cardsContainer.innerHTML = "";
+
+            const busca =
+                searchInput.value.toLowerCase();
+
+            const filtro =
+                filterSelect.value;
+
+            const cursosFiltrados =
+                cursos.filter(curso => {
+
+                    const periodoOK =
+                        curso.periodo === periodoAtual;
+
+                    const buscaOK =
+                        curso.titulo
+                            .toLowerCase()
+                            .includes(busca);
+
+                    const filtroOK =
+                        filtro === "Todos"
+                        || curso.status === filtro;
+
+                    return (
+                        periodoOK &&
+                        buscaOK &&
+                        filtroOK
+                    );
+
+                });
+
+            if (cursosFiltrados.length === 0) {
+
+                cardsContainer.innerHTML = `
+      <div class="empty">
+        Nenhum curso encontrado.
+      </div>
+    `;
+
+                return;
+            }
+
+            cursosFiltrados.forEach(curso => {
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    `card ${curso.cor}`;
+
+                let topRight = "";
+
+                if (curso.progresso > 0) {
+
+                    topRight = `
+
+      <div
+        class="progress"
+
+        style="
+        background:
+        conic-gradient(
+          #4caf50 ${curso.progresso}%,
+          #dce5d4 ${curso.progresso}%
+        );
+        "
+      >
+
+        <span>
+          ${curso.progresso}%
+        </span>
+
+      </div>
+
+      `;
+
+                } else {
+
+                    topRight = `
+
+      <div class="lock">
+
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="position:relative; z-index:2;"
+        >
+
+          <path
+            d="M19.5 7.5H16.5V5.25C16.5 4.05653 16.0259 2.91193 15.182 2.06802C14.3381 1.22411 13.1935 0.75 12 0.75C10.8065 0.75 9.66193 1.22411 8.81802 2.06802C7.97411 2.91193 7.5 4.05653 7.5 5.25V7.5H4.5C4.10218 7.5 3.72064 7.65804 3.43934 7.93934C3.15804 8.22064 3 8.60218 3 9V19.5C3 19.8978 3.15804 20.2794 3.43934 20.5607C3.72064 20.842 4.10218 21 4.5 21H19.5C19.8978 21 20.2794 20.842 20.5607 20.5607C20.842 20.2794 21 19.8978 21 19.5V9C21 8.60218 20.842 8.22064 20.5607 7.93934C20.2794 7.65804 19.8978 7.5 19.5 7.5ZM9 5.25C9 4.45435 9.31607 3.69129 9.87868 3.12868C10.4413 2.56607 11.2044 2.25 12 2.25C12.7956 2.25 13.5587 2.56607 14.1213 3.12868C14.6839 3.69129 15 4.45435 15 5.25V7.5H9V5.25ZM19.5 19.5H4.5V9H19.5V19.5ZM13.125 14.25C13.125 14.4725 13.059 14.69 12.9354 14.875C12.8118 15.06 12.6361 15.2042 12.4305 15.2894C12.225 15.3745 11.9988 15.3968 11.7805 15.3534C11.5623 15.31 11.3618 15.2028 11.2045 15.0455C11.0472 14.8882 10.94 14.6877 10.8966 14.4695C10.8532 14.2512 10.8755 14.025 10.9606 13.8195C11.0458 13.6139 11.19 13.4382 11.375 13.3146C11.56 13.191 11.7775 13.125 12 13.125C12.2984 13.125 12.5845 13.2435 12.7955 13.4545C13.0065 13.6655 13.125 13.9516 13.125 14.25Z"
+            fill="#4F5F7A"
+          />
+
+        </svg>
+
+      </div>
+
+      `;
+                }
+
+                card.innerHTML = `
+
+    <div class="circle-bg c1"></div>
+    <div class="circle-bg c2"></div>
+    <div class="circle-bg c3"></div>
+
+    <div class="title">
+      ${curso.titulo}
+    </div>
+
+    ${topRight}
+
+    <div class="tags">
+
+      <div class="tag">
+        ${curso.status}
+      </div>
+
+      <div class="tag">
+        ${curso.horas}
+      </div>
+
+    </div>
+
+    <div class="dates">
+
+      <div>
+
+        <small>
+          Começa em:
+        </small>
+
+        <strong>
+          ${curso.inicio}
+        </strong>
+
+      </div>
+
+      <div>
+
+        <small>
+          Termina em:
+        </small>
+
+        <strong>
+          ${curso.fim}
+        </strong>
+
+      </div>
+
+    </div>
+
+    <div class="student-icon">
+      👤
+    </div>
+
+    `;
+
+                cardsContainer.appendChild(card);
+
+            });
+
+        }
+
+        tabs.forEach(tab => {
+
+            tab.addEventListener("click", () => {
+
+                tabs.forEach(t => {
+
+                    t.classList.remove("active");
+
+                });
+
+                tab.classList.add("active");
+
+                periodoAtual =
+                    Number(tab.dataset.periodo);
+
+                renderCards();
+
+            });
+
+        });
+
+        searchInput.addEventListener(
+            "input",
+            renderCards
+        );
+
+        filterSelect.addEventListener(
+            "change",
+            renderCards
+        );
+
+        renderCards();
+
+    </script>
+
+</body>
+
+</html>
