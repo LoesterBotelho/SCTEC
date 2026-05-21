@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Básico Completo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 38px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f9fafb;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            margin-top: 15px;
+
+            overflow: auto;
+
+            font-family: Consolas;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            margin-top: 10px;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript Básico Completo</h1>
+
+        <!-- VARIAVEIS -->
+
+        <div class="card">
+
+            <h2>1. Variáveis</h2>
+
+            <p>
+                Variáveis guardam dados.
+            </p>
+
+            <div class="code">
+
+                let nome = "João";
+
+                const pais = "Brasil";
+
+                var idade = 20;
+
+            </div>
+
+            <button onclick="mostrarVariaveis()">
+                Mostrar variáveis
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- OPERADORES -->
+
+        <div class="card">
+
+            <h2>2. Operadores Matemáticos</h2>
+
+            <div class="code">
+
+                +
+                -
+                *
+                /
+                %
+
+            </div>
+
+            <button onclick="operacoes()">
+                Calcular
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- IF -->
+
+        <div class="card">
+
+            <h2>3. if e else</h2>
+
+            <p>
+                Tomada de decisão.
+            </p>
+
+            <div class="code">
+
+                if(idade >= 18){
+
+                console.log("Maior");
+
+                }else{
+
+                console.log("Menor");
+
+                }
+
+            </div>
+
+            <button onclick="usarIf()">
+                Executar if
+            </button>
+
+            <div class="resultado" id="resultado3"></div>
+
+        </div>
+
+        <!-- INPUT -->
+
+        <div class="card">
+
+            <h2>4. Ler valor input</h2>
+
+            <input type="text" id="nomeInput" placeholder="Digite seu nome">
+
+            <button onclick="lerInput()">
+                Ler valor
+            </button>
+
+            <div class="resultado" id="resultado4"></div>
+
+        </div>
+
+        <!-- ESCREVER -->
+
+        <div class="card">
+
+            <h2>5. Escrever na tela</h2>
+
+            <p>
+                Usando innerHTML.
+            </p>
+
+            <button onclick="escreverTela()">
+                Escrever
+            </button>
+
+            <div class="resultado" id="resultado5"></div>
+
+        </div>
+
+        <!-- DOM -->
+
+        <div class="card">
+
+            <h2>6. Manipulação DOM</h2>
+
+            <p id="textoDom">
+                Texto original
+            </p>
+
+            <button onclick="alterarDom()">
+                Alterar texto
+            </button>
+
+            <div class="resultado" id="resultado6"></div>
+
+        </div>
+
+        <!-- STYLE -->
+
+        <div class="card">
+
+            <h2>7. Alterar CSS pelo JavaScript</h2>
+
+            <div id="caixa" style="
+width:120px;
+height:120px;
+background:red;
+border-radius:12px;
+margin-top:10px;
+">
+            </div>
+
+            <button onclick="alterarCss()">
+                Alterar cor
+            </button>
+
+        </div>
+
+        <!-- ARRAY -->
+
+        <div class="card">
+
+            <h2>8. Arrays</h2>
+
+            <div class="code">
+
+                let frutas = [
+                "Maçã",
+                "Banana",
+                "Uva"
+                ];
+
+            </div>
+
+            <button onclick="mostrarArray()">
+                Mostrar array
+            </button>
+
+            <div class="resultado" id="resultado8"></div>
+
+        </div>
+
+        <!-- FOREACH -->
+
+        <div class="card">
+
+            <h2>9. forEach</h2>
+
+            <button onclick="usarForEach()">
+                Executar forEach
+            </button>
+
+            <div class="resultado" id="resultado9"></div>
+
+        </div>
+
+        <!-- FOR -->
+
+        <div class="card">
+
+            <h2>10. for</h2>
+
+            <button onclick="usarFor()">
+                Executar for
+            </button>
+
+            <div class="resultado" id="resultado10"></div>
+
+        </div>
+
+        <!-- FUNCAO -->
+
+        <div class="card">
+
+            <h2>11. Funções</h2>
+
+            <div class="code">
+
+                function somar(a,b){
+
+                return a+b;
+
+                }
+
+            </div>
+
+            <button onclick="usarFuncao()">
+                Executar função
+            </button>
+
+            <div class="resultado" id="resultado11"></div>
+
+        </div>
+
+        <!-- EVENTO -->
+
+        <div class="card">
+
+            <h2>12. Eventos</h2>
+
+            <button onclick="eventoClick()">
+                Clique aqui
+            </button>
+
+            <div class="resultado" id="resultado12"></div>
+
+        </div>
+
+        <!-- DATE -->
+
+        <div class="card">
+
+            <h2>13. Data</h2>
+
+            <button onclick="mostrarData()">
+                Mostrar data
+            </button>
+
+            <div class="resultado" id="resultado13"></div>
+
+        </div>
+
+        <!-- RANDOM -->
+
+        <div class="card">
+
+            <h2>14. Número Aleatório</h2>
+
+            <button onclick="numeroRandom()">
+                Gerar número
+            </button>
+
+            <div class="resultado" id="resultado14"></div>
+
+        </div>
+
+        <!-- BOOLEAN -->
+
+        <div class="card">
+
+            <h2>15. Boolean</h2>
+
+            <button onclick="mostrarBoolean()">
+                Mostrar boolean
+            </button>
+
+            <div class="resultado" id="resultado15"></div>
+
+        </div>
+
+        <!-- SWITCH -->
+
+        <div class="card">
+
+            <h2>16. switch</h2>
+
+            <button onclick="usarSwitch()">
+                Executar switch
+            </button>
+
+            <div class="resultado" id="resultado16"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           VARIAVEIS
+        ========================= */
+
+        function mostrarVariaveis() {
+
+            let nome = "João";
+
+            const pais = "Brasil";
+
+            var idade = 20;
+
+            document.getElementById(
+                "resultado1"
+            ).innerHTML =
+
+                `
+  Nome: ${nome}
+  <br>
+  País: ${pais}
+  <br>
+  Idade: ${idade}
+  `;
+
+        }
+
+        /* =========================
+           OPERACOES
+        ========================= */
+
+        function operacoes() {
+
+            let a = 10;
+
+            let b = 5;
+
+            document.getElementById(
+                "resultado2"
+            ).innerHTML =
+
+                `
+  Soma: ${a + b}
+  <br>
+  Subtração: ${a - b}
+  <br>
+  Multiplicação: ${a * b}
+  <br>
+  Divisão: ${a / b}
+  <br>
+  Resto: ${a % b}
+  `;
+
+        }
+
+        /* =========================
+           IF
+        ========================= */
+
+        function usarIf() {
+
+            let idade = 17;
+
+            if (idade >= 18) {
+
+                document.getElementById(
+                    "resultado3"
+                ).innerHTML =
+
+                    "Maior de idade";
+
+            } else {
+
+                document.getElementById(
+                    "resultado3"
+                ).innerHTML =
+
+                    "Menor de idade";
+
+            }
+
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        function lerInput() {
+
+            let nome =
+                document.getElementById(
+                    "nomeInput"
+                ).value;
+
+            document.getElementById(
+                "resultado4"
+            ).innerHTML =
+
+                "Olá " + nome;
+
+        }
+
+        /* =========================
+           ESCREVER
+        ========================= */
+
+        function escreverTela() {
+
+            document.getElementById(
+                "resultado5"
+            ).innerHTML =
+
+                "Texto escrito pelo JavaScript";
+
+        }
+
+        /* =========================
+           DOM
+        ========================= */
+
+        function alterarDom() {
+
+            document.getElementById(
+                "textoDom"
+            ).innerHTML =
+
+                "Texto alterado";
+
+            document.getElementById(
+                "resultado6"
+            ).innerHTML =
+
+                "DOM alterado";
+
+        }
+
+        /* =========================
+           CSS
+        ========================= */
+
+        function alterarCss() {
+
+            document.getElementById(
+                "caixa"
+            ).style.background = "blue";
+
+        }
+
+        /* =========================
+           ARRAY
+        ========================= */
+
+        function mostrarArray() {
+
+            let frutas = [
+
+                "Maçã",
+
+                "Banana",
+
+                "Uva"
+
+            ];
+
+            document.getElementById(
+                "resultado8"
+            ).innerHTML =
+
+                frutas.join(" - ");
+
+        }
+
+        /* =========================
+           FOREACH
+        ========================= */
+
+        function usarForEach() {
+
+            let nomes = [
+
+                "João",
+
+                "Maria",
+
+                "Pedro"
+
+            ];
+
+            let html = "";
+
+            nomes.forEach(function (nome) {
+
+                html += nome + "<br>";
+
+            });
+
+            document.getElementById(
+                "resultado9"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           FOR
+        ========================= */
+
+        function usarFor() {
+
+            let html = "";
+
+            for (let i = 1; i <= 5; i++) {
+
+                html +=
+                    "Número " +
+                    i +
+                    "<br>";
+
+            }
+
+            document.getElementById(
+                "resultado10"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           FUNCAO
+        ========================= */
+
+        function usarFuncao() {
+
+            function somar(a, b) {
+
+                return a + b;
+
+            }
+
+            let resultado =
+                somar(10, 20);
+
+            document.getElementById(
+                "resultado11"
+            ).innerHTML =
+
+                "Resultado: " + resultado;
+
+        }
+
+        /* =========================
+           EVENTO
+        ========================= */
+
+        function eventoClick() {
+
+            document.getElementById(
+                "resultado12"
+            ).innerHTML =
+
+                "Botão clicado";
+
+        }
+
+        /* =========================
+           DATA
+        ========================= */
+
+        function mostrarData() {
+
+            let data = new Date();
+
+            document.getElementById(
+                "resultado13"
+            ).innerHTML = data;
+
+        }
+
+        /* =========================
+           RANDOM
+        ========================= */
+
+        function numeroRandom() {
+
+            let numero =
+                Math.floor(
+                    Math.random() * 100
+                );
+
+            document.getElementById(
+                "resultado14"
+            ).innerHTML =
+
+                numero;
+
+        }
+
+        /* =========================
+           BOOLEAN
+        ========================= */
+
+        function mostrarBoolean() {
+
+            let logado = true;
+
+            document.getElementById(
+                "resultado15"
+            ).innerHTML =
+
+                "Usuário logado: " + logado;
+
+        }
+
+        /* =========================
+           SWITCH
+        ========================= */
+
+        function usarSwitch() {
+
+            let cor = "azul";
+
+            let resultado = "";
+
+            switch (cor) {
+
+                case "azul":
+
+                    resultado = "Cor azul";
+
+                    break;
+
+                case "verde":
+
+                    resultado = "Cor verde";
+
+                    break;
+
+                default:
+
+                    resultado = "Outra cor";
+
+            }
+
+            document.getElementById(
+                "resultado16"
+            ).innerHTML = resultado;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
