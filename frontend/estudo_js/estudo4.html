@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios de Arrays JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #1a0933;
+            padding: 30px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #bb86fc;
+            text-align: center;
+        }
+
+        .card {
+            background: #2d1455;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #03dac6;
+        }
+
+        .code {
+            background: #000;
+            color: #03dac6;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            background: #6200ee;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #3700b3;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            background: #3700b3;
+            padding: 15px;
+            border-radius: 12px;
+            min-height: 40px;
+            border-left: 5px solid #03dac6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Exercícios de Arrays</h1>
+
+        <div class="card">
+            <h2>1 e 2. Criar Array e Exibir</h2>
+            <div class="code">let frutas = ["Maçã", "Banana", "Laranja", "Uva", "Manga"];<br>console.log(frutas);</div>
+            <button onclick="executarReq1e2()">Executar</button>
+            <div class="resultado" id="res1"></div>
+        </div>
+
+        <div class="card">
+            <h2>3. Acessar Terceiro Item</h2>
+            <div class="code">console.log(frutas[2]);</div>
+            <button onclick="executarReq3()">Acessar Terceiro</button>
+            <div class="resultado" id="res3"></div>
+        </div>
+
+        <div class="card">
+            <h2>4. Alterar Segundo Item</h2>
+            <div class="code">frutas[1] = "Morango";<br>console.log(frutas);</div>
+            <button onclick="executarReq4()">Alterar Segundo</button>
+            <div class="resultado" id="res4"></div>
+        </div>
+
+        <div class="card">
+            <h2>5. Adicionar duas frutas (.push)</h2>
+            <div class="code">frutas.push("Abacaxi", "Kiwi");<br>console.log(frutas);</div>
+            <button onclick="executarReq5()">Adicionar Final</button>
+            <div class="resultado" id="res5"></div>
+        </div>
+    </div>
+
+    <script>
+        let frutas = ["Maçã", "Banana", "Laranja", "Uva", "Manga"];
+
+        function executarReq1e2() {
+            console.log(frutas);
+            document.getElementById("res1").innerHTML = "Console: " + JSON.stringify(frutas);
+        }
+
+        function executarReq3() {
+            console.log(frutas[2]);
+            document.getElementById("res3").innerHTML = "Terceiro item: " + frutas[2];
+        }
+
+        function executarReq4() {
+            frutas[1] = "Morango";
+            console.log(frutas);
+            document.getElementById("res4").innerHTML = "Atualizado: " + JSON.stringify(frutas);
+        }
+
+        function executarReq5() {
+            frutas.push("Abacaxi", "Kiwi");
+            console.log(frutas);
+            document.getElementById("res5").innerHTML = "Final: " + JSON.stringify(frutas);
+        }
+    </script>
+
+</body>
+
+</html>

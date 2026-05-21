@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Arrays Completo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 36px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f9fafb;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            margin-top: 15px;
+
+            overflow: auto;
+
+            font-family: Consolas;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript Arrays - Guia Completo</h1>
+
+        <!-- ARRAY -->
+
+        <div class="card">
+
+            <h2>1. Criando Array</h2>
+
+            <p>
+                Array é uma lista de dados.
+            </p>
+
+            <div class="code">
+
+                let frutas = [
+                "Maçã",
+                "Banana",
+                "Laranja"
+                ];
+
+            </div>
+
+            <button onclick="criarArray()">
+                Mostrar Array
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- POSIÇÃO -->
+
+        <div class="card">
+
+            <h2>2. Pegando posição do Array</h2>
+
+            <p>
+                Arrays começam na posição ZERO.
+            </p>
+
+            <div class="code">
+
+                frutas[0]
+                frutas[1]
+                frutas[2]
+
+            </div>
+
+            <button onclick="mostrarPosicao()">
+                Mostrar posições
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- PUSH -->
+
+        <div class="card">
+
+            <h2>3. push() - Adicionar item</h2>
+
+            <p>
+                push adiciona item no FINAL do array.
+            </p>
+
+            <div class="code">
+
+                frutas.push("Uva");
+
+            </div>
+
+            <button onclick="adicionarPush()">
+                Adicionar item
+            </button>
+
+            <div class="resultado" id="resultado3"></div>
+
+        </div>
+
+        <!-- POP -->
+
+        <div class="card">
+
+            <h2>4. pop() - Remover último item</h2>
+
+            <p>
+                pop remove o ÚLTIMO item.
+            </p>
+
+            <div class="code">
+
+                frutas.pop();
+
+            </div>
+
+            <button onclick="removerPop()">
+                Remover último
+            </button>
+
+            <div class="resultado" id="resultado4"></div>
+
+        </div>
+
+        <!-- SHIFT -->
+
+        <div class="card">
+
+            <h2>5. shift() - Remove primeiro</h2>
+
+            <p>
+                shift remove o PRIMEIRO item.
+            </p>
+
+            <div class="code">
+
+                frutas.shift();
+
+            </div>
+
+            <button onclick="removerShift()">
+                Remover primeiro
+            </button>
+
+            <div class="resultado" id="resultado5"></div>
+
+        </div>
+
+        <!-- UNSHIFT -->
+
+        <div class="card">
+
+            <h2>6. unshift() - Adicionar no começo</h2>
+
+            <p>
+                unshift adiciona no início.
+            </p>
+
+            <div class="code">
+
+                frutas.unshift("Morango");
+
+            </div>
+
+            <button onclick="adicionarUnshift()">
+                Adicionar no começo
+            </button>
+
+            <div class="resultado" id="resultado6"></div>
+
+        </div>
+
+        <!-- LENGTH -->
+
+        <div class="card">
+
+            <h2>7. length - Quantidade</h2>
+
+            <p>
+                length mostra quantos itens existem.
+            </p>
+
+            <div class="code">
+
+                frutas.length
+
+            </div>
+
+            <button onclick="mostrarLength()">
+                Mostrar quantidade
+            </button>
+
+            <div class="resultado" id="resultado7"></div>
+
+        </div>
+
+        <!-- FOREACH -->
+
+        <div class="card">
+
+            <h2>8. forEach()</h2>
+
+            <p>
+                Percorre todos os itens.
+            </p>
+
+            <div class="code">
+
+                frutas.forEach(function(fruta){
+
+                console.log(fruta);
+
+                });
+
+            </div>
+
+            <button onclick="usarForEach()">
+                Executar forEach
+            </button>
+
+            <div class="resultado" id="resultado8"></div>
+
+        </div>
+
+        <!-- INCLUDES -->
+
+        <div class="card">
+
+            <h2>9. includes()</h2>
+
+            <p>
+                Verifica se existe item.
+            </p>
+
+            <div class="code">
+
+                frutas.includes("Banana")
+
+            </div>
+
+            <button onclick="usarIncludes()">
+                Verificar Banana
+            </button>
+
+            <div class="resultado" id="resultado9"></div>
+
+        </div>
+
+        <!-- INDEXOF -->
+
+        <div class="card">
+
+            <h2>10. indexOf()</h2>
+
+            <p>
+                Mostra posição do item.
+            </p>
+
+            <div class="code">
+
+                frutas.indexOf("Banana")
+
+            </div>
+
+            <button onclick="usarIndexOf()">
+                Mostrar posição
+            </button>
+
+            <div class="resultado" id="resultado10"></div>
+
+        </div>
+
+        <!-- SPLICE -->
+
+        <div class="card">
+
+            <h2>11. splice()</h2>
+
+            <p>
+                Remove item específico.
+            </p>
+
+            <div class="code">
+
+                frutas.splice(1,1);
+
+            </div>
+
+            <button onclick="usarSplice()">
+                Remover Banana
+            </button>
+
+            <div class="resultado" id="resultado11"></div>
+
+        </div>
+
+        <!-- ARRAY BIDIMENSIONAL -->
+
+        <div class="card">
+
+            <h2>12. Array Bidimensional</h2>
+
+            <p>
+                Array dentro de array.
+            </p>
+
+            <div class="code">
+
+                let alunos = [
+
+                ["João",20],
+
+                ["Maria",25]
+
+                ];
+
+            </div>
+
+            <button onclick="arrayBidimensional()">
+                Mostrar alunos
+            </button>
+
+            <div class="resultado" id="resultado12"></div>
+
+        </div>
+
+        <!-- CONST E LET -->
+
+        <div class="card">
+
+            <h2>13. const e let</h2>
+
+            <p>
+                const = valor fixo
+            </p>
+
+            <p>
+                let = valor que pode mudar
+            </p>
+
+            <div class="code">
+
+                const pais = "Brasil";
+
+                let idade = 20;
+
+                idade = 30;
+
+            </div>
+
+            <button onclick="constLet()">
+                Mostrar exemplos
+            </button>
+
+            <div class="resultado" id="resultado13"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* ARRAY BASE */
+
+        let frutas = [
+
+            "Maçã",
+
+            "Banana",
+
+            "Laranja"
+
+        ];
+
+        /* 1 */
+
+        function criarArray() {
+
+            document.getElementById(
+                "resultado1"
+            ).innerHTML = frutas.join(" - ");
+
+        }
+
+        /* 2 */
+
+        function mostrarPosicao() {
+
+            document.getElementById(
+                "resultado2"
+            ).innerHTML =
+
+                `
+  Posição 0: ${frutas[0]} <br>
+  Posição 1: ${frutas[1]} <br>
+  Posição 2: ${frutas[2]}
+  `;
+
+        }
+
+        /* 3 */
+
+        function adicionarPush() {
+
+            frutas.push("Uva");
+
+            document.getElementById(
+                "resultado3"
+            ).innerHTML = frutas.join(" - ");
+
+        }
+
+        /* 4 */
+
+        function removerPop() {
+
+            let removido = frutas.pop();
+
+            document.getElementById(
+                "resultado4"
+            ).innerHTML =
+
+                `
+  Removido: ${removido}
+  <br><br>
+  Array:
+  ${frutas.join(" - ")}
+  `;
+
+        }
+
+        /* 5 */
+
+        function removerShift() {
+
+            let removido = frutas.shift();
+
+            document.getElementById(
+                "resultado5"
+            ).innerHTML =
+
+                `
+  Removido: ${removido}
+  <br><br>
+  Array:
+  ${frutas.join(" - ")}
+  `;
+
+        }
+
+        /* 6 */
+
+        function adicionarUnshift() {
+
+            frutas.unshift("Morango");
+
+            document.getElementById(
+                "resultado6"
+            ).innerHTML = frutas.join(" - ");
+
+        }
+
+        /* 7 */
+
+        function mostrarLength() {
+
+            document.getElementById(
+                "resultado7"
+            ).innerHTML =
+
+                "Quantidade: " + frutas.length;
+
+        }
+
+        /* 8 */
+
+        function usarForEach() {
+
+            let html = "<ul>";
+
+            frutas.forEach(function (fruta) {
+
+                html += "<li>" + fruta + "</li>";
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultado8"
+            ).innerHTML = html;
+
+        }
+
+        /* 9 */
+
+        function usarIncludes() {
+
+            let existe =
+                frutas.includes("Banana");
+
+            document.getElementById(
+                "resultado9"
+            ).innerHTML =
+
+                "Existe Banana? " + existe;
+
+        }
+
+        /* 10 */
+
+        function usarIndexOf() {
+
+            let posicao =
+                frutas.indexOf("Banana");
+
+            document.getElementById(
+                "resultado10"
+            ).innerHTML =
+
+                "Posição da Banana: " + posicao;
+
+        }
+
+        /* 11 */
+
+        function usarSplice() {
+
+            let copia = [...frutas];
+
+            let posicao =
+                copia.indexOf("Banana");
+
+            if (posicao !== -1) {
+
+                copia.splice(posicao, 1);
+
+            }
+
+            document.getElementById(
+                "resultado11"
+            ).innerHTML =
+
+                copia.join(" - ");
+
+        }
+
+        /* 12 */
+
+        function arrayBidimensional() {
+
+            let alunos = [
+
+                ["João", 20],
+
+                ["Maria", 25],
+
+                ["Pedro", 30]
+
+            ];
+
+            let html = "<ul>";
+
+            alunos.forEach(function (aluno) {
+
+                html +=
+
+                    `
+    <li>
+      ${aluno[0]}
+      -
+      ${aluno[1]} anos
+    </li>
+    `;
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultado12"
+            ).innerHTML = html;
+
+        }
+
+        /* 13 */
+
+        function constLet() {
+
+            const pais = "Brasil";
+
+            let idade = 20;
+
+            idade = 30;
+
+            document.getElementById(
+                "resultado13"
+            ).innerHTML =
+
+                `
+  País (const):
+  ${pais}
+
+  <br><br>
+
+  Idade alterada (let):
+  ${idade}
+  `;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
