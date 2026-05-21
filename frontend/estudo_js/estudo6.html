@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador Dinâmico de Site</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--light);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="cabecalho"></header>
+
+    <main id="conteudo">
+        <h1>Bem-vindo ao Gerador Dinâmico</h1>
+        <div class="card" id="form-container">
+            <h2>Adicionar Carro</h2>
+            <input type="text" id="inputCarro" placeholder="Nome do carro">
+            <button onclick="adicionarCarro()">Adicionar</button>
+        </div>
+        <div id="lista-carros" class="card"></div>
+    </main>
+
+    <footer id="rodape"></footer>
+
+    <script>
+        // 1. Dados iniciais
+        let carros = ["Uno", "Fusca", "Escort", "Gol"];
+
+        // 2. Função para renderizar o cabeçalho
+        function renderizarCabecalho() {
+            const header = document.getElementById("cabecalho");
+            header.innerHTML = `<div>Logo Site</div><nav><ul><li>Home</li><li>Sobre</li><li>Contato</li></ul></nav>`;
+        }
+
+        // 3. Função para renderizar a lista de carros dinamicamente (Baseado no seu exemplo)
+        function renderizarCarros() {
+            const listaDiv = document.getElementById("lista-carros");
+            listaDiv.innerHTML = "<h2>Lista de Carros (Loop While)</h2>";
+
+            let i = 0;
+            while (i < carros.length) {
+                listaDiv.innerHTML += `<p>🚗 ${carros[i]}</p>`;
+                i++;
+            }
+        }
+
+        // 4. Função para adicionar carro via input
+        function adicionarCarro() {
+            const input = document.getElementById("inputCarro");
+            if (input.value) {
+                carros.push(input.value);
+                input.value = "";
+                renderizarCarros(); // Re-renderiza a lista
+            }
+        }
+
+        // 5. Renderizar Rodapé
+        function renderizarRodape() {
+            document.getElementById("rodape").innerHTML = "<p>&copy; 2026 - Site Gerado com JavaScript</p>";
+        }
+
+        // Inicialização
+        renderizarCabecalho();
+        renderizarCarros();
+        renderizarRodape();
+    </script>
+
+</body>
+
+</html>
