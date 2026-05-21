@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Classes e JSON</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 38px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f9fafb;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-family: Consolas;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+
+            border: 1px solid #ccc;
+
+            padding: 12px;
+
+            text-align: left;
+        }
+
+        table th {
+            background: #dbeafe;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript - Classes, Objetos e JSON</h1>
+
+        <!-- CLASSE -->
+
+        <div class="card">
+
+            <h2>1. Classe</h2>
+
+            <p>
+                Classe é um modelo para criar objetos.
+            </p>
+
+            <div class="code">
+
+                class Carro{
+
+                constructor(marca,modelo,ano){
+
+                this.marca = marca;
+                this.modelo = modelo;
+                this.ano = ano;
+
+                }
+
+                }
+
+            </div>
+
+            <button onclick="mostrarClasse()">
+                Mostrar classe
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- OBJETO -->
+
+        <div class="card">
+
+            <h2>2. Objeto JavaScript</h2>
+
+            <p>
+                Objeto guarda propriedades.
+            </p>
+
+            <div class="code">
+
+                let carro = {
+
+                marca:"Toyota",
+
+                modelo:"Corolla",
+
+                ano:2025
+
+                };
+
+            </div>
+
+            <button onclick="mostrarObjeto()">
+                Mostrar objeto
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- ARRAY OBJETOS -->
+
+        <div class="card">
+
+            <h2>3. Array de Objetos</h2>
+
+            <p>
+                Muito usado em sistemas.
+            </p>
+
+            <div class="code">
+
+                let carros = [
+
+                {
+                marca:"Toyota",
+                modelo:"Corolla",
+                ano:2025
+                },
+
+                {
+                marca:"Honda",
+                modelo:"Civic",
+                ano:2024
+                }
+
+                ];
+
+            </div>
+
+            <button onclick="mostrarArrayObjetos()">
+                Mostrar carros
+            </button>
+
+            <div class="resultado" id="resultado3"></div>
+
+        </div>
+
+        <!-- JSON -->
+
+        <div class="card">
+
+            <h2>4. JSON</h2>
+
+            <p>
+                JSON é formato de dados.
+            </p>
+
+            <div class="code">
+
+                let json = `
+
+                {
+                "marca":"Toyota",
+                "modelo":"Corolla",
+                "ano":2025
+                }
+
+                `;
+
+            </div>
+
+            <button onclick="mostrarJson()">
+                Mostrar JSON
+            </button>
+
+            <div class="resultado" id="resultado4"></div>
+
+        </div>
+
+        <!-- JSON PARSE -->
+
+        <div class="card">
+
+            <h2>5. JSON.parse()</h2>
+
+            <p>
+                Transforma JSON em objeto JavaScript.
+            </p>
+
+            <div class="code">
+
+                JSON.parse(json);
+
+            </div>
+
+            <button onclick="usarJsonParse()">
+                Executar parse
+            </button>
+
+            <div class="resultado" id="resultado5"></div>
+
+        </div>
+
+        <!-- JSON STRINGIFY -->
+
+        <div class="card">
+
+            <h2>6. JSON.stringify()</h2>
+
+            <p>
+                Transforma objeto em JSON.
+            </p>
+
+            <div class="code">
+
+                JSON.stringify(objeto);
+
+            </div>
+
+            <button onclick="usarStringify()">
+                Executar stringify
+            </button>
+
+            <div class="resultado" id="resultado6"></div>
+
+        </div>
+
+        <!-- CONSTRUCTOR -->
+
+        <div class="card">
+
+            <h2>7. constructor</h2>
+
+            <p>
+                constructor recebe valores.
+            </p>
+
+            <div class="code">
+
+                constructor(nome){
+
+                this.nome = nome;
+
+                }
+
+            </div>
+
+            <button onclick="mostrarConstructor()">
+                Mostrar constructor
+            </button>
+
+            <div class="resultado" id="resultado7"></div>
+
+        </div>
+
+        <!-- THIS -->
+
+        <div class="card">
+
+            <h2>8. this</h2>
+
+            <p>
+                this representa o objeto atual.
+            </p>
+
+            <div class="code">
+
+                this.nome
+
+            </div>
+
+            <button onclick="mostrarThis()">
+                Mostrar this
+            </button>
+
+            <div class="resultado" id="resultado8"></div>
+
+        </div>
+
+        <!-- METODO -->
+
+        <div class="card">
+
+            <h2>9. Método</h2>
+
+            <p>
+                Método é função dentro da classe.
+            </p>
+
+            <div class="code">
+
+                ligar(){
+
+                return "Carro ligado";
+
+                }
+
+            </div>
+
+            <button onclick="mostrarMetodo()">
+                Executar método
+            </button>
+
+            <div class="resultado" id="resultado9"></div>
+
+        </div>
+
+        <!-- ARRAY JSON -->
+
+        <div class="card">
+
+            <h2>10. Array JSON</h2>
+
+            <p>
+                Lista de objetos JSON.
+            </p>
+
+            <button onclick="mostrarArrayJson()">
+                Mostrar array JSON
+            </button>
+
+            <div class="resultado" id="resultado10"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           CLASSE
+        ========================= */
+
+        function mostrarClasse() {
+
+            class Carro {
+
+                constructor(marca, modelo, ano) {
+
+                    this.marca = marca;
+
+                    this.modelo = modelo;
+
+                    this.ano = ano;
+
+                }
+
+            }
+
+            let carro1 = new Carro(
+
+                "Toyota",
+
+                "Corolla",
+
+                2025
+
+            );
+
+            document.getElementById(
+                "resultado1"
+            ).innerHTML =
+
+                `
+  Marca:
+  ${carro1.marca}
+
+  <br>
+
+  Modelo:
+  ${carro1.modelo}
+
+  <br>
+
+  Ano:
+  ${carro1.ano}
+  `;
+
+        }
+
+        /* =========================
+           OBJETO
+        ========================= */
+
+        function mostrarObjeto() {
+
+            let carro = {
+
+                marca: "Toyota",
+
+                modelo: "Corolla",
+
+                ano: 2025
+
+            };
+
+            document.getElementById(
+                "resultado2"
+            ).innerHTML =
+
+                `
+  Marca:
+  ${carro.marca}
+
+  <br>
+
+  Modelo:
+  ${carro.modelo}
+
+  <br>
+
+  Ano:
+  ${carro.ano}
+  `;
+
+        }
+
+        /* =========================
+           ARRAY OBJETOS
+        ========================= */
+
+        function mostrarArrayObjetos() {
+
+            let carros = [
+
+                {
+                    marca: "Toyota",
+                    modelo: "Corolla",
+                    ano: 2025
+                },
+
+                {
+                    marca: "Honda",
+                    modelo: "Civic",
+                    ano: 2024
+                },
+
+                {
+                    marca: "Ford",
+                    modelo: "Focus",
+                    ano: 2023
+                }
+
+            ];
+
+            let html = `
+
+  <table>
+
+    <tr>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Ano</th>
+    </tr>
+
+  `;
+
+            carros.forEach(function (carro) {
+
+                html += `
+
+    <tr>
+
+      <td>${carro.marca}</td>
+
+      <td>${carro.modelo}</td>
+
+      <td>${carro.ano}</td>
+
+    </tr>
+
+    `;
+
+            });
+
+            html += "</table>";
+
+            document.getElementById(
+                "resultado3"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           JSON
+        ========================= */
+
+        function mostrarJson() {
+
+            let json = `
+
+  {
+    "marca":"Toyota",
+    "modelo":"Corolla",
+    "ano":2025
+  }
+
+  `;
+
+            document.getElementById(
+                "resultado4"
+            ).innerHTML =
+
+                "<pre>" + json + "</pre>";
+
+        }
+
+        /* =========================
+           JSON PARSE
+        ========================= */
+
+        function usarJsonParse() {
+
+            let json = `
+
+  {
+    "marca":"Honda",
+    "modelo":"Civic",
+    "ano":2024
+  }
+
+  `;
+
+            let objeto =
+                JSON.parse(json);
+
+            document.getElementById(
+                "resultado5"
+            ).innerHTML =
+
+                `
+  Marca:
+  ${objeto.marca}
+
+  <br>
+
+  Modelo:
+  ${objeto.modelo}
+
+  <br>
+
+  Ano:
+  ${objeto.ano}
+  `;
+
+        }
+
+        /* =========================
+           STRINGIFY
+        ========================= */
+
+        function usarStringify() {
+
+            let carro = {
+
+                marca: "Ford",
+
+                modelo: "Focus",
+
+                ano: 2023
+
+            };
+
+            let json =
+                JSON.stringify(carro);
+
+            document.getElementById(
+                "resultado6"
+            ).innerHTML =
+
+                json;
+
+        }
+
+        /* =========================
+           CONSTRUCTOR
+        ========================= */
+
+        function mostrarConstructor() {
+
+            class Pessoa {
+
+                constructor(nome) {
+
+                    this.nome = nome;
+
+                }
+
+            }
+
+            let pessoa =
+                new Pessoa("João");
+
+            document.getElementById(
+                "resultado7"
+            ).innerHTML =
+
+                pessoa.nome;
+
+        }
+
+        /* =========================
+           THIS
+        ========================= */
+
+        function mostrarThis() {
+
+            class Usuario {
+
+                constructor(nome) {
+
+                    this.nome = nome;
+
+                }
+
+            }
+
+            let usuario =
+                new Usuario("Maria");
+
+            document.getElementById(
+                "resultado8"
+            ).innerHTML =
+
+                usuario.nome;
+
+        }
+
+        /* =========================
+           METODO
+        ========================= */
+
+        function mostrarMetodo() {
+
+            class Carro {
+
+                ligar() {
+
+                    return "Carro ligado";
+
+                }
+
+            }
+
+            let carro =
+                new Carro();
+
+            document.getElementById(
+                "resultado9"
+            ).innerHTML =
+
+                carro.ligar();
+
+        }
+
+        /* =========================
+           ARRAY JSON
+        ========================= */
+
+        function mostrarArrayJson() {
+
+            let dados = [
+
+                {
+                    marca: "Toyota",
+                    modelo: "Corolla",
+                    ano: 2025
+                },
+
+                {
+                    marca: "Honda",
+                    modelo: "Civic",
+                    ano: 2024
+                },
+
+                {
+                    marca: "BMW",
+                    modelo: "320i",
+                    ano: 2026
+                }
+
+            ];
+
+            let html = `
+
+  <table>
+
+    <tr>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>Ano</th>
+    </tr>
+
+  `;
+
+            dados.forEach(function (item) {
+
+                html += `
+
+    <tr>
+
+      <td>${item.marca}</td>
+
+      <td>${item.modelo}</td>
+
+      <td>${item.ano}</td>
+
+    </tr>
+
+    `;
+
+            });
+
+            html += "</table>";
+
+            document.getElementById(
+                "resultado10"
+            ).innerHTML = html;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

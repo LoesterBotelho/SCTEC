@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Interação</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <button id="redButton">Vermelho</button>
+        <button id="greenButton">Verde</button>
+        <button id="blueButton">Azul</button>
+    </div>
+
+    <div class="card">
+        <input type="text" id="inputBox" placeholder="Pressionar uma tecla">
+    </div>
+
+    <script>
+        // 1. Função reutilizável para mudar a cor do fundo
+        function setBackgroundColor(color) {
+            document.body.style.backgroundColor = color;
+        }
+
+        // Associando os botões à função reutilizável
+        document.getElementById('redButton').addEventListener('click', () => setBackgroundColor('#fecaca'));
+        document.getElementById('greenButton').addEventListener('click', () => setBackgroundColor('#bbf7d0'));
+        document.getElementById('blueButton').addEventListener('click', () => setBackgroundColor('#bfdbfe'));
+
+        // 2. Input com evento de teclado (conforme sua imagem)
+        document.getElementById('inputBox').addEventListener('keypress', function (event) {
+            alert("Tecla pressionada: " + event.key);
+        });
+    </script>
+
+</body>
+
+</html>

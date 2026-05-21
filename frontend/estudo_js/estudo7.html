@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Básico Completo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 38px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f9fafb;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-family: Consolas;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript Básico - Loops e Condições</h1>
+
+        <!-- WHILE -->
+
+        <div class="card">
+
+            <h2>1. while</h2>
+
+            <p>
+                while repete enquanto a condição for verdadeira.
+            </p>
+
+            <div class="code">
+
+                let i = 1;
+
+                while(i <= 5){ console.log(i); i++; } </div>
+
+                    <button onclick="usarWhile()">
+                        Executar while
+                    </button>
+
+                    <div class="resultado" id="resultado1"></div>
+
+            </div>
+
+            <!-- I++ -->
+
+            <div class="card">
+
+                <h2>2. i++</h2>
+
+                <p>
+                    i++ adiciona +1 na variável.
+                </p>
+
+                <div class="code">
+
+                    let i = 0;
+
+                    i++;
+
+                </div>
+
+                <button onclick="usarMaisMais()">
+                    Executar i++
+                </button>
+
+                <div class="resultado" id="resultado2"></div>
+
+            </div>
+
+            <!-- TEXTO += -->
+
+            <div class="card">
+
+                <h2>3. texto +=</h2>
+
+                <p>
+                    += adiciona mais texto.
+                </p>
+
+                <div class="code">
+
+                    texto += "Novo texto";
+
+                </div>
+
+                <button onclick="usarMaisIgual()">
+                    Executar +=
+                </button>
+
+                <div class="resultado" id="resultado3"></div>
+
+            </div>
+
+            <!-- DO WHILE -->
+
+            <div class="card">
+
+                <h2>4. do while</h2>
+
+                <p>
+                    Executa pelo menos uma vez.
+                </p>
+
+                <div class="code">
+
+                    let i = 1;
+
+                    do{
+
+                    console.log(i);
+
+                    i++;
+
+                    }while(i <= 5); </div>
+
+                        <button onclick="usarDoWhile()">
+                            Executar do while
+                        </button>
+
+                        <div class="resultado" id="resultado4"></div>
+
+                </div>
+
+                <!-- FOR -->
+
+                <div class="card">
+
+                    <h2>5. for</h2>
+
+                    <p>
+                        for é usado para repetição.
+                    </p>
+
+                    <div class="code">
+
+                        for(let i=1; i<=5; i++){ console.log(i); } </div>
+
+                            <button onclick="usarFor()">
+                                Executar for
+                            </button>
+
+                            <div class="resultado" id="resultado5"></div>
+
+                    </div>
+
+                    <!-- IF ELSE -->
+
+                    <div class="card">
+
+                        <h2>6. if e else</h2>
+
+                        <p>
+                            Tomada de decisão.
+                        </p>
+
+                        <div class="code">
+
+                            if(idade >= 18){
+
+                            console.log("Maior");
+
+                            }else{
+
+                            console.log("Menor");
+
+                            }
+
+                        </div>
+
+                        <button onclick="usarIfElse()">
+                            Executar if else
+                        </button>
+
+                        <div class="resultado" id="resultado6"></div>
+
+                    </div>
+
+                    <!-- ELSE IF -->
+
+                    <div class="card">
+
+                        <h2>7. else if</h2>
+
+                        <p>
+                            Verifica várias condições.
+                        </p>
+
+                        <div class="code">
+
+                            if(nota >= 7){
+
+                            console.log("Aprovado");
+
+                            }else if(nota >=5){
+
+                            console.log("Recuperação");
+
+                            }else{
+
+                            console.log("Reprovado");
+
+                            }
+
+                        </div>
+
+                        <button onclick="usarElseIf()">
+                            Executar else if
+                        </button>
+
+                        <div class="resultado" id="resultado7"></div>
+
+                    </div>
+
+                    <!-- SWITCH -->
+
+                    <div class="card">
+
+                        <h2>8. switch</h2>
+
+                        <p>
+                            switch compara valores.
+                        </p>
+
+                        <div class="code">
+
+                            switch(cor){
+
+                            case "azul":
+                            console.log("Azul");
+                            break;
+
+                            case "verde":
+                            console.log("Verde");
+                            break;
+
+                            }
+
+                        </div>
+
+                        <button onclick="usarSwitch()">
+                            Executar switch
+                        </button>
+
+                        <div class="resultado" id="resultado8"></div>
+
+                    </div>
+
+                    <!-- OPERADORES -->
+
+                    <div class="card">
+
+                        <h2>9. Operadores Matemáticos</h2>
+
+                        <div class="code">
+
+                            +
+                            -
+                            *
+                            /
+                            %
+
+                        </div>
+
+                        <button onclick="usarOperadores()">
+                            Calcular
+                        </button>
+
+                        <div class="resultado" id="resultado9"></div>
+
+                    </div>
+
+                    <!-- BOOLEAN -->
+
+                    <div class="card">
+
+                        <h2>10. Boolean</h2>
+
+                        <p>
+                            true ou false
+                        </p>
+
+                        <div class="code">
+
+                            let logado = true;
+
+                        </div>
+
+                        <button onclick="usarBoolean()">
+                            Mostrar boolean
+                        </button>
+
+                        <div class="resultado" id="resultado10"></div>
+
+                    </div>
+
+                    <!-- ARRAY -->
+
+                    <div class="card">
+
+                        <h2>11. Arrays</h2>
+
+                        <div class="code">
+
+                            let frutas = [
+                            "Maçã",
+                            "Banana",
+                            "Uva"
+                            ];
+
+                        </div>
+
+                        <button onclick="usarArray()">
+                            Mostrar array
+                        </button>
+
+                        <div class="resultado" id="resultado11"></div>
+
+                    </div>
+
+                    <!-- FOREACH -->
+
+                    <div class="card">
+
+                        <h2>12. forEach</h2>
+
+                        <div class="code">
+
+                            frutas.forEach(function(fruta){
+
+                            console.log(fruta);
+
+                            });
+
+                        </div>
+
+                        <button onclick="usarForEach()">
+                            Executar forEach
+                        </button>
+
+                        <div class="resultado" id="resultado12"></div>
+
+                    </div>
+
+                </div>
+
+                <script>
+
+                    /* =========================
+                       WHILE
+                    ========================= */
+
+                    function usarWhile() {
+
+                        let i = 1;
+
+                        let texto = "";
+
+                        while (i <= 5) {
+
+                            texto +=
+                                "Número: " +
+                                i +
+                                "<br>";
+
+                            i++;
+
+                        }
+
+                        document.getElementById(
+                            "resultado1"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       I++
+                    ========================= */
+
+                    function usarMaisMais() {
+
+                        let i = 0;
+
+                        i++;
+
+                        i++;
+
+                        i++;
+
+                        document.getElementById(
+                            "resultado2"
+                        ).innerHTML =
+
+                            "Valor final: " + i;
+
+                    }
+
+                    /* =========================
+                       +=
+                    ========================= */
+
+                    function usarMaisIgual() {
+
+                        let texto = "";
+
+                        texto += "Olá ";
+                        texto += "Mundo ";
+                        texto += "JavaScript";
+
+                        document.getElementById(
+                            "resultado3"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       DO WHILE
+                    ========================= */
+
+                    function usarDoWhile() {
+
+                        let i = 1;
+
+                        let texto = "";
+
+                        do {
+
+                            texto +=
+                                "Número: " +
+                                i +
+                                "<br>";
+
+                            i++;
+
+                        } while (i <= 5);
+
+                        document.getElementById(
+                            "resultado4"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       FOR
+                    ========================= */
+
+                    function usarFor() {
+
+                        let texto = "";
+
+                        for (let i = 1; i <= 5; i++) {
+
+                            texto +=
+                                "Número: " +
+                                i +
+                                "<br>";
+
+                        }
+
+                        document.getElementById(
+                            "resultado5"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       IF ELSE
+                    ========================= */
+
+                    function usarIfElse() {
+
+                        let idade = 17;
+
+                        let texto = "";
+
+                        if (idade >= 18) {
+
+                            texto = "Maior de idade";
+
+                        } else {
+
+                            texto = "Menor de idade";
+
+                        }
+
+                        document.getElementById(
+                            "resultado6"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       ELSE IF
+                    ========================= */
+
+                    function usarElseIf() {
+
+                        let nota = 6;
+
+                        let texto = "";
+
+                        if (nota >= 7) {
+
+                            texto = "Aprovado";
+
+                        } else if (nota >= 5) {
+
+                            texto = "Recuperação";
+
+                        } else {
+
+                            texto = "Reprovado";
+
+                        }
+
+                        document.getElementById(
+                            "resultado7"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       SWITCH
+                    ========================= */
+
+                    function usarSwitch() {
+
+                        let cor = "verde";
+
+                        let texto = "";
+
+                        switch (cor) {
+
+                            case "azul":
+
+                                texto = "Cor azul";
+
+                                break;
+
+                            case "verde":
+
+                                texto = "Cor verde";
+
+                                break;
+
+                            case "vermelho":
+
+                                texto = "Cor vermelha";
+
+                                break;
+
+                            default:
+
+                                texto = "Outra cor";
+
+                        }
+
+                        document.getElementById(
+                            "resultado8"
+                        ).innerHTML = texto;
+
+                    }
+
+                    /* =========================
+                       OPERADORES
+                    ========================= */
+
+                    function usarOperadores() {
+
+                        let a = 10;
+
+                        let b = 5;
+
+                        document.getElementById(
+                            "resultado9"
+                        ).innerHTML =
+
+                            `
+  Soma: ${a + b}
+  <br>
+  Subtração: ${a - b}
+  <br>
+  Multiplicação: ${a * b}
+  <br>
+  Divisão: ${a / b}
+  <br>
+  Resto: ${a % b}
+  `;
+
+                    }
+
+                    /* =========================
+                       BOOLEAN
+                    ========================= */
+
+                    function usarBoolean() {
+
+                        let logado = true;
+
+                        document.getElementById(
+                            "resultado10"
+                        ).innerHTML =
+
+                            "Usuário logado: " + logado;
+
+                    }
+
+                    /* =========================
+                       ARRAY
+                    ========================= */
+
+                    function usarArray() {
+
+                        let frutas = [
+
+                            "Maçã",
+
+                            "Banana",
+
+                            "Uva"
+
+                        ];
+
+                        document.getElementById(
+                            "resultado11"
+                        ).innerHTML =
+
+                            frutas.join(" - ");
+
+                    }
+
+                    /* =========================
+                       FOREACH
+                    ========================= */
+
+                    function usarForEach() {
+
+                        let frutas = [
+
+                            "Maçã",
+
+                            "Banana",
+
+                            "Uva"
+
+                        ];
+
+                        let texto = "";
+
+                        frutas.forEach(function (fruta) {
+
+                            texto +=
+                                fruta +
+                                "<br>";
+
+                        });
+
+                        document.getElementById(
+                            "resultado12"
+                        ).innerHTML = texto;
+
+                    }
+
+                </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todos Tipos de Listas JavaScript</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 40px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #fff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+        }
+
+        button {
+
+            margin-top: 15px;
+
+            padding: 12px 18px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+
+            border: 1px solid #ccc;
+
+            padding: 10px;
+        }
+
+        table th {
+            background: #dbeafe;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript - Todos Tipos de Listas</h1>
+
+        <!-- ARRAY STRING -->
+
+        <div class="card">
+
+            <h2>1. Lista de Strings</h2>
+
+            <p>
+                Lista simples de textos.
+            </p>
+
+            <div class="code">
+
+                let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+                ];
+
+            </div>
+
+            <button onclick="listaString()">
+                Mostrar lista
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- ARRAY NUMBER -->
+
+        <div class="card">
+
+            <h2>2. Lista de Números</h2>
+
+            <p>
+                Lista de números.
+            </p>
+
+            <div class="code">
+
+                let numeros = [
+
+                10,
+
+                20,
+
+                30
+
+                ];
+
+            </div>
+
+            <button onclick="listaNumero()">
+                Mostrar números
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- ARRAY BOOLEAN -->
+
+        <div class="card">
+
+            <h2>3. Lista Boolean</h2>
+
+            <p>
+                Lista true e false.
+            </p>
+
+            <div class="code">
+
+                let status = [
+
+                true,
+
+                false,
+
+                true
+
+                ];
+
+            </div>
+
+            <button onclick="listaBoolean()">
+                Mostrar boolean
+            </button>
+
+            <div class="resultado" id="resultado3"></div>
+
+        </div>
+
+        <!-- ARRAY MISTO -->
+
+        <div class="card">
+
+            <h2>4. Lista Mista</h2>
+
+            <p>
+                Tipos diferentes.
+            </p>
+
+            <div class="code">
+
+                let dados = [
+
+                "João",
+
+                20,
+
+                true
+
+                ];
+
+            </div>
+
+            <button onclick="listaMista()">
+                Mostrar lista
+            </button>
+
+            <div class="resultado" id="resultado4"></div>
+
+        </div>
+
+        <!-- ARRAY OBJETOS -->
+
+        <div class="card">
+
+            <h2>5. Lista de Objetos</h2>
+
+            <p>
+                Muito usada em sistemas.
+            </p>
+
+            <div class="code">
+
+                let usuarios = [
+
+                {
+                nome:"João",
+                idade:20
+                }
+
+                ];
+
+            </div>
+
+            <button onclick="listaObjetos()">
+                Mostrar objetos
+            </button>
+
+            <div class="resultado" id="resultado5"></div>
+
+        </div>
+
+        <!-- ARRAY BIDIMENSIONAL -->
+
+        <div class="card">
+
+            <h2>6. Lista Bidimensional</h2>
+
+            <p>
+                Array dentro de array.
+            </p>
+
+            <div class="code">
+
+                let matriz = [
+
+                ["João",20],
+
+                ["Maria",25]
+
+                ];
+
+            </div>
+
+            <button onclick="listaBi()">
+                Mostrar matriz
+            </button>
+
+            <div class="resultado" id="resultado6"></div>
+
+        </div>
+
+        <!-- PUSH -->
+
+        <div class="card">
+
+            <h2>7. push()</h2>
+
+            <p>
+                Adicionar item.
+            </p>
+
+            <div class="code">
+
+                carros.push("Honda");
+
+            </div>
+
+            <button onclick="listaPush()">
+                Adicionar item
+            </button>
+
+            <div class="resultado" id="resultado7"></div>
+
+        </div>
+
+        <!-- POP -->
+
+        <div class="card">
+
+            <h2>8. pop()</h2>
+
+            <p>
+                Remove último item.
+            </p>
+
+            <div class="code">
+
+                carros.pop();
+
+            </div>
+
+            <button onclick="listaPop()">
+                Remover item
+            </button>
+
+            <div class="resultado" id="resultado8"></div>
+
+        </div>
+
+        <!-- SHIFT -->
+
+        <div class="card">
+
+            <h2>9. shift()</h2>
+
+            <p>
+                Remove primeiro item.
+            </p>
+
+            <div class="code">
+
+                carros.shift();
+
+            </div>
+
+            <button onclick="listaShift()">
+                Remover primeiro
+            </button>
+
+            <div class="resultado" id="resultado9"></div>
+
+        </div>
+
+        <!-- UNSHIFT -->
+
+        <div class="card">
+
+            <h2>10. unshift()</h2>
+
+            <p>
+                Adicionar no começo.
+            </p>
+
+            <div class="code">
+
+                carros.unshift("Tesla");
+
+            </div>
+
+            <button onclick="listaUnshift()">
+                Adicionar início
+            </button>
+
+            <div class="resultado" id="resultado10"></div>
+
+        </div>
+
+        <!-- SPLICE -->
+
+        <div class="card">
+
+            <h2>11. splice()</h2>
+
+            <p>
+                Adicionar ou remover.
+            </p>
+
+            <div class="code">
+
+                carros.splice(1,1);
+
+            </div>
+
+            <button onclick="listaSplice()">
+                Executar splice
+            </button>
+
+            <div class="resultado" id="resultado11"></div>
+
+        </div>
+
+        <!-- SLICE -->
+
+        <div class="card">
+
+            <h2>12. slice()</h2>
+
+            <p>
+                Copiar parte do array.
+            </p>
+
+            <div class="code">
+
+                carros.slice(0,2);
+
+            </div>
+
+            <button onclick="listaSlice()">
+                Executar slice
+            </button>
+
+            <div class="resultado" id="resultado12"></div>
+
+        </div>
+
+        <!-- FOREACH -->
+
+        <div class="card">
+
+            <h2>13. forEach()</h2>
+
+            <p>
+                Percorrer lista.
+            </p>
+
+            <div class="code">
+
+                carros.forEach()
+
+            </div>
+
+            <button onclick="listaForEach()">
+                Executar
+            </button>
+
+            <div class="resultado" id="resultado13"></div>
+
+        </div>
+
+        <!-- MAP -->
+
+        <div class="card">
+
+            <h2>14. map()</h2>
+
+            <p>
+                Criar novo array.
+            </p>
+
+            <div class="code">
+
+                numeros.map()
+
+            </div>
+
+            <button onclick="listaMap()">
+                Executar map
+            </button>
+
+            <div class="resultado" id="resultado14"></div>
+
+        </div>
+
+        <!-- FILTER -->
+
+        <div class="card">
+
+            <h2>15. filter()</h2>
+
+            <p>
+                Filtrar lista.
+            </p>
+
+            <div class="code">
+
+                numeros.filter()
+
+            </div>
+
+            <button onclick="listaFilter()">
+                Executar filter
+            </button>
+
+            <div class="resultado" id="resultado15"></div>
+
+        </div>
+
+        <!-- FIND -->
+
+        <div class="card">
+
+            <h2>16. find()</h2>
+
+            <p>
+                Buscar item.
+            </p>
+
+            <div class="code">
+
+                numeros.find()
+
+            </div>
+
+            <button onclick="listaFind()">
+                Executar find
+            </button>
+
+            <div class="resultado" id="resultado16"></div>
+
+        </div>
+
+        <!-- LENGTH -->
+
+        <div class="card">
+
+            <h2>17. length</h2>
+
+            <p>
+                Quantidade de itens.
+            </p>
+
+            <div class="code">
+
+                carros.length
+
+            </div>
+
+            <button onclick="listaLength()">
+                Mostrar quantidade
+            </button>
+
+            <div class="resultado" id="resultado17"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           STRING
+        ========================= */
+
+        function listaString() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            document.getElementById(
+                "resultado1"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           NUMBER
+        ========================= */
+
+        function listaNumero() {
+
+            let numeros = [
+
+                10,
+
+                20,
+
+                30
+
+            ];
+
+            document.getElementById(
+                "resultado2"
+            ).innerHTML = numeros.join(" - ");
+
+        }
+
+        /* =========================
+           BOOLEAN
+        ========================= */
+
+        function listaBoolean() {
+
+            let status = [
+
+                true,
+
+                false,
+
+                true
+
+            ];
+
+            document.getElementById(
+                "resultado3"
+            ).innerHTML = status.join(" - ");
+
+        }
+
+        /* =========================
+           MISTA
+        ========================= */
+
+        function listaMista() {
+
+            let dados = [
+
+                "João",
+
+                20,
+
+                true
+
+            ];
+
+            document.getElementById(
+                "resultado4"
+            ).innerHTML = dados.join(" - ");
+
+        }
+
+        /* =========================
+           OBJETOS
+        ========================= */
+
+        function listaObjetos() {
+
+            let usuarios = [
+
+                {
+                    nome: "João",
+                    idade: 20
+                },
+
+                {
+                    nome: "Maria",
+                    idade: 25
+                }
+
+            ];
+
+            let html = `
+
+  <table>
+
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+    </tr>
+
+  `;
+
+            usuarios.forEach(function (usuario) {
+
+                html += `
+
+    <tr>
+
+      <td>${usuario.nome}</td>
+
+      <td>${usuario.idade}</td>
+
+    </tr>
+
+    `;
+
+            });
+
+            html += "</table>";
+
+            document.getElementById(
+                "resultado5"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           BIDIMENSIONAL
+        ========================= */
+
+        function listaBi() {
+
+            let matriz = [
+
+                ["João", 20],
+
+                ["Maria", 25]
+
+            ];
+
+            let html = "";
+
+            matriz.forEach(function (item) {
+
+                html +=
+                    item[0] +
+                    " - " +
+                    item[1] +
+                    "<br>";
+
+            });
+
+            document.getElementById(
+                "resultado6"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           PUSH
+        ========================= */
+
+        function listaPush() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi"
+
+            ];
+
+            carros.push("Honda");
+
+            document.getElementById(
+                "resultado7"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           POP
+        ========================= */
+
+        function listaPop() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            carros.pop();
+
+            document.getElementById(
+                "resultado8"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           SHIFT
+        ========================= */
+
+        function listaShift() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            carros.shift();
+
+            document.getElementById(
+                "resultado9"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           UNSHIFT
+        ========================= */
+
+        function listaUnshift() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi"
+
+            ];
+
+            carros.unshift("Tesla");
+
+            document.getElementById(
+                "resultado10"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           SPLICE
+        ========================= */
+
+        function listaSplice() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            carros.splice(1, 1);
+
+            document.getElementById(
+                "resultado11"
+            ).innerHTML = carros.join(" - ");
+
+        }
+
+        /* =========================
+           SLICE
+        ========================= */
+
+        function listaSlice() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            let novo =
+                carros.slice(0, 2);
+
+            document.getElementById(
+                "resultado12"
+            ).innerHTML = novo.join(" - ");
+
+        }
+
+        /* =========================
+           FOREACH
+        ========================= */
+
+        function listaForEach() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            let texto = "";
+
+            carros.forEach(function (carro) {
+
+                texto += carro + "<br>";
+
+            });
+
+            document.getElementById(
+                "resultado13"
+            ).innerHTML = texto;
+
+        }
+
+        /* =========================
+           MAP
+        ========================= */
+
+        function listaMap() {
+
+            let numeros = [
+
+                10,
+
+                20,
+
+                30
+
+            ];
+
+            let dobro =
+                numeros.map(function (n) {
+
+                    return n * 2;
+
+                });
+
+            document.getElementById(
+                "resultado14"
+            ).innerHTML = dobro.join(" - ");
+
+        }
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        function listaFilter() {
+
+            let numeros = [
+
+                10,
+
+                20,
+
+                30,
+
+                40
+
+            ];
+
+            let filtrado =
+                numeros.filter(function (n) {
+
+                    return n > 20;
+
+                });
+
+            document.getElementById(
+                "resultado15"
+            ).innerHTML = filtrado.join(" - ");
+
+        }
+
+        /* =========================
+           FIND
+        ========================= */
+
+        function listaFind() {
+
+            let numeros = [
+
+                10,
+
+                20,
+
+                30,
+
+                40
+
+            ];
+
+            let encontrado =
+                numeros.find(function (n) {
+
+                    return n > 25;
+
+                });
+
+            document.getElementById(
+                "resultado16"
+            ).innerHTML = encontrado;
+
+        }
+
+        /* =========================
+           LENGTH
+        ========================= */
+
+        function listaLength() {
+
+            let carros = [
+
+                "BMW",
+
+                "Audi",
+
+                "Ferrari"
+
+            ];
+
+            document.getElementById(
+                "resultado17"
+            ).innerHTML =
+
+                "Quantidade: " +
+                carros.length;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

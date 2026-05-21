@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudação Personalizada</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input,
+        select,
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        #mensagem {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Saudação Personalizada</h2>
+        <label>Digite seu nome:</label>
+        <input type="text" id="nome" placeholder="Seu nome">
+
+        <label>Selecione a hora:</label>
+        <select id="hora">
+            <option value="10">Manhã (10h)</option>
+            <option value="15">Tarde (15h)</option>
+            <option value="20">Noite (20h)</option>
+        </select>
+
+        <button onclick="exibirSaudacao()">Gerar saudação</button>
+        <div id="mensagem"></div>
+    </div>
+
+    <script>
+        function saudacaoPersonalizada(nome, hora) {
+            if (hora < 12) {
+                return "Bom dia, " + nome + "!";
+            } else if (hora >= 12 && hora < 18) {
+                return "Boa tarde, " + nome + "!";
+            } else {
+                return "Boa noite, " + nome + "!";
+            }
+        }
+
+        function exibirSaudacao() {
+            const nome = document.getElementById('nome').value;
+            const hora = document.getElementById('hora').value;
+            const resultado = saudacaoPersonalizada(nome, hora);
+            document.getElementById('mensagem').innerHTML = resultado;
+        }
+    </script>
+
+</body>
+
+</html>

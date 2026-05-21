@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript - Tratamento de Exceções</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 38px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2563eb;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f9fafb;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-family: Consolas;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            margin-top: 10px;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        .erro {
+            color: red;
+            font-weight: bold;
+        }
+
+        .sucesso {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript - Tratamento de Exceções</h1>
+
+        <!-- TRY CATCH -->
+
+        <div class="card">
+
+            <h2>1. try catch</h2>
+
+            <p>
+                try tenta executar.
+            </p>
+
+            <p>
+                catch captura o erro.
+            </p>
+
+            <div class="code">
+
+                try{
+
+                erro();
+
+                }catch(e){
+
+                console.log(e);
+
+                }
+
+            </div>
+
+            <button onclick="exemploTryCatch()">
+                Executar
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- FINALLY -->
+
+        <div class="card">
+
+            <h2>2. finally</h2>
+
+            <p>
+                finally executa sempre.
+            </p>
+
+            <div class="code">
+
+                try{
+
+                }catch(e){
+
+                }finally{
+
+                }
+
+            </div>
+
+            <button onclick="exemploFinally()">
+                Executar
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- THROW -->
+
+        <div class="card">
+
+            <h2>3. throw</h2>
+
+            <p>
+                throw cria erro manual.
+            </p>
+
+            <input type="number" id="idadeInput" placeholder="Digite idade">
+
+            <button onclick="exemploThrow()">
+                Validar idade
+            </button>
+
+            <div class="resultado" id="resultado3"></div>
+
+        </div>
+
+        <!-- DIVISAO -->
+
+        <div class="card">
+
+            <h2>4. Divisão por zero</h2>
+
+            <p>
+                Exemplo simples de validação.
+            </p>
+
+            <input type="number" id="numero1" placeholder="Número 1">
+
+            <input type="number" id="numero2" placeholder="Número 2">
+
+            <button onclick="dividir()">
+                Dividir
+            </button>
+
+            <div class="resultado" id="resultado4"></div>
+
+        </div>
+
+        <!-- JSON -->
+
+        <div class="card">
+
+            <h2>5. Erro JSON</h2>
+
+            <p>
+                Capturando erro JSON inválido.
+            </p>
+
+            <div class="code">
+
+                JSON.parse()
+
+            </div>
+
+            <button onclick="erroJson()">
+                Executar JSON
+            </button>
+
+            <div class="resultado" id="resultado5"></div>
+
+        </div>
+
+        <!-- ARRAY -->
+
+        <div class="card">
+
+            <h2>6. Array inexistente</h2>
+
+            <p>
+                Tentando acessar posição inválida.
+            </p>
+
+            <button onclick="erroArray()">
+                Executar array
+            </button>
+
+            <div class="resultado" id="resultado6"></div>
+
+        </div>
+
+        <!-- INPUT -->
+
+        <div class="card">
+
+            <h2>7. Campo vazio</h2>
+
+            <input type="text" id="nomeInput" placeholder="Digite nome">
+
+            <button onclick="validarNome()">
+                Validar nome
+            </button>
+
+            <div class="resultado" id="resultado7"></div>
+
+        </div>
+
+        <!-- NUMBER -->
+
+        <div class="card">
+
+            <h2>8. Validar número</h2>
+
+            <input type="text" id="numeroTexto" placeholder="Digite número">
+
+            <button onclick="validarNumero()">
+                Validar
+            </button>
+
+            <div class="resultado" id="resultado8"></div>
+
+        </div>
+
+        <!-- SENHA -->
+
+        <div class="card">
+
+            <h2>9. Validar senha</h2>
+
+            <input type="password" id="senhaInput" placeholder="Digite senha">
+
+            <button onclick="validarSenha()">
+                Validar senha
+            </button>
+
+            <div class="resultado" id="resultado9"></div>
+
+        </div>
+
+        <!-- ASYNC -->
+
+        <div class="card">
+
+            <h2>10. setTimeout</h2>
+
+            <p>
+                Exemplo com erro assíncrono.
+            </p>
+
+            <button onclick="erroAsync()">
+                Executar
+            </button>
+
+            <div class="resultado" id="resultado10"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           TRY CATCH
+        ========================= */
+
+        function exemploTryCatch() {
+
+            try {
+
+                testeErro();
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado1"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      Erro capturado:
+      ${e.message}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           FINALLY
+        ========================= */
+
+        function exemploFinally() {
+
+            let texto = "";
+
+            try {
+
+                texto += "Executando try <br>";
+
+                erroTeste();
+
+            } catch (e) {
+
+                texto +=
+                    "Erro encontrado <br>";
+
+            } finally {
+
+                texto +=
+                    "Finally executado";
+
+            }
+
+            document.getElementById(
+                "resultado2"
+            ).innerHTML = texto;
+
+        }
+
+        /* =========================
+           THROW
+        ========================= */
+
+        function exemploThrow() {
+
+            let idade =
+                document.getElementById(
+                    "idadeInput"
+                ).value;
+
+            try {
+
+                if (idade == "") {
+
+                    throw "Digite a idade";
+
+                }
+
+                if (idade < 18) {
+
+                    throw "Menor de idade";
+
+                }
+
+                document.getElementById(
+                    "resultado3"
+                ).innerHTML =
+
+                    `
+    <span class="sucesso">
+      Maior de idade
+    </span>
+    `;
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado3"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           DIVISAO
+        ========================= */
+
+        function dividir() {
+
+            let n1 =
+                Number(
+                    document.getElementById(
+                        "numero1"
+                    ).value
+                );
+
+            let n2 =
+                Number(
+                    document.getElementById(
+                        "numero2"
+                    ).value
+                );
+
+            try {
+
+                if (n2 === 0) {
+
+                    throw "Não pode dividir por zero";
+
+                }
+
+                let resultado = n1 / n2;
+
+                document.getElementById(
+                    "resultado4"
+                ).innerHTML =
+
+                    `
+    <span class="sucesso">
+      Resultado:
+      ${resultado}
+    </span>
+    `;
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado4"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           JSON
+        ========================= */
+
+        function erroJson() {
+
+            try {
+
+                let json =
+                    '{"nome":"João"';
+
+                JSON.parse(json);
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado5"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      JSON inválido
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           ARRAY
+        ========================= */
+
+        function erroArray() {
+
+            try {
+
+                let frutas = [
+
+                    "Maçã",
+
+                    "Banana"
+
+                ];
+
+                if (frutas[10] === undefined) {
+
+                    throw "Posição inexistente";
+
+                }
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado6"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           INPUT VAZIO
+        ========================= */
+
+        function validarNome() {
+
+            let nome =
+                document.getElementById(
+                    "nomeInput"
+                ).value;
+
+            try {
+
+                if (nome.trim() === "") {
+
+                    throw "Nome obrigatório";
+
+                }
+
+                document.getElementById(
+                    "resultado7"
+                ).innerHTML =
+
+                    `
+    <span class="sucesso">
+      Nome válido
+    </span>
+    `;
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado7"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           VALIDAR NUMERO
+        ========================= */
+
+        function validarNumero() {
+
+            let valor =
+                document.getElementById(
+                    "numeroTexto"
+                ).value;
+
+            try {
+
+                if (isNaN(valor)) {
+
+                    throw "Não é número";
+
+                }
+
+                document.getElementById(
+                    "resultado8"
+                ).innerHTML =
+
+                    `
+    <span class="sucesso">
+      Número válido
+    </span>
+    `;
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado8"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           SENHA
+        ========================= */
+
+        function validarSenha() {
+
+            let senha =
+                document.getElementById(
+                    "senhaInput"
+                ).value;
+
+            try {
+
+                if (senha.length < 6) {
+
+                    throw "Senha muito curta";
+
+                }
+
+                document.getElementById(
+                    "resultado9"
+                ).innerHTML =
+
+                    `
+    <span class="sucesso">
+      Senha válida
+    </span>
+    `;
+
+            } catch (e) {
+
+                document.getElementById(
+                    "resultado9"
+                ).innerHTML =
+
+                    `
+    <span class="erro">
+      ${e}
+    </span>
+    `;
+
+            }
+
+        }
+
+        /* =========================
+           ASYNC
+        ========================= */
+
+        function erroAsync() {
+
+            document.getElementById(
+                "resultado10"
+            ).innerHTML =
+
+                "Aguardando...";
+
+            setTimeout(function () {
+
+                try {
+
+                    testeAsync();
+
+                } catch (e) {
+
+                    document.getElementById(
+                        "resultado10"
+                    ).innerHTML =
+
+                        `
+      <span class="erro">
+        Erro assíncrono capturado
+      </span>
+      `;
+
+                }
+
+            }, 1000);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

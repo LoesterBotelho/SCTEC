@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Estudos JS</title>
+    <style>
+        /* CSS3: Estilização Moderna */
+        :root {
+            --cor-principal: #6366f1;
+            --bg: #f3f4f6;
+        }
+
+        body {
+            font-family: sans-serif;
+            background: var(--bg);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .resultado {
+            background: #eef2ff;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+
+        button {
+            background: var(--cor-principal);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="app">
+        <h1>Laboratório de JavaScript</h1>
+
+        <div class="card">
+            <h2>Exercícios de Arrays</h2>
+            <button onclick="resolverExercicios()">Executar Exercícios</button>
+            <div id="saida-exercicios" class="resultado">Clique para ver os resultados</div>
+        </div>
+
+        <div class="card" id="secao-carros">
+            <h2>Lista de Carros (Construção Dinâmica)</h2>
+        </div>
+    </div>
+
+    <script>
+        // 1. Lógica dos Exercícios (Requisitos da imagem)
+        function resolverExercicios() {
+            let frutas = ["Maçã", "Banana", "Uva", "Manga", "Abacaxi"]; // Req 1
+            console.log(frutas); // Req 2
+            let terceiroItem = frutas[2]; // Req 3
+            frutas[1] = "Morango"; // Req 4
+            frutas.push("Kiwi", "Laranja"); // Req 5
+
+            document.getElementById("saida-exercicios").innerHTML =
+                "Array Atualizado: " + frutas.join(", ");
+        }
+
+        // 2. Lógica de Construção Dinâmica (Baseada na sua imagem do Loop)
+        const carros2 = [
+            { marca: "Ford", modelo: "Ka", ano: "2015" },
+            { marca: "Fiat", modelo: "Uno", ano: "2000" }
+        ];
+
+        function criarSecaoDinamica() {
+            const secao = document.getElementById("secao-carros");
+            let dados = "";
+
+            // Loop For...of para percorrer o array de objetos
+            for (let carro of carros2) {
+                // Criando string dinâmica
+                dados += `<p><strong>${carro.marca}</strong> - ${carro.modelo} (${carro.ano})</p>`;
+            }
+
+            // Injeção de HTML dinâmico
+            secao.innerHTML += dados;
+        }
+
+        // Inicializa a função ao carregar
+        criarSecaoDinamica();
+    </script>
+
+</body>
+
+</html>

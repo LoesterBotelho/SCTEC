@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Básico Completo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 40px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #fff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            margin-top: 15px;
+
+            overflow: auto;
+        }
+
+        button {
+
+            padding: 12px 18px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            margin-top: 15px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            margin-top: 15px;
+
+            min-height: 50px;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+        table th,
+        table td {
+
+            border: 1px solid #ccc;
+
+            padding: 10px;
+        }
+
+        table th {
+            background: #dbeafe;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript Básico Completo</h1>
+
+        <!-- IF -->
+
+        <div class="card">
+
+            <h2>1. if else if else</h2>
+
+            <p>
+                if verifica condição.
+            </p>
+
+            <p>
+                Quando existe muitas condições,
+                normalmente switch case fica melhor.
+            </p>
+
+            <div class="code">
+
+                let nota = 7;
+
+                if(nota >= 9){
+
+                console.log("Excelente");
+
+                }else if(nota >= 7){
+
+                console.log("Aprovado");
+
+                }else{
+
+                console.log("Reprovado");
+
+                }
+
+            </div>
+
+            <button onclick="exemploIf()">
+                Executar if
+            </button>
+
+            <div class="resultado" id="resultado1"></div>
+
+        </div>
+
+        <!-- SWITCH -->
+
+        <div class="card">
+
+            <h2>2. switch case</h2>
+
+            <p>
+                switch é bom para várias opções.
+            </p>
+
+            <div class="code">
+
+                switch(cor){
+
+                case "azul":
+                break;
+
+                case "verde":
+                break;
+
+                default:
+                break;
+
+                }
+
+            </div>
+
+            <button onclick="exemploSwitch()">
+                Executar switch
+            </button>
+
+            <div class="resultado" id="resultado2"></div>
+
+        </div>
+
+        <!-- FOR -->
+
+        <div class="card">
+
+            <h2>3. for e i++</h2>
+
+            <p>
+                i++ adiciona +1.
+            </p>
+
+            <div class="code">
+
+                for(let i = 0; i < 5; i++){ } </div>
+
+                    <button onclick="exemploFor()">
+                        Executar for
+                    </button>
+
+                    <div class="resultado" id="resultado3"></div>
+
+            </div>
+
+            <!-- WHILE -->
+
+            <div class="card">
+
+                <h2>4. while</h2>
+
+                <div class="code">
+
+                    let i = 0;
+
+                    while(i < 5){ i++; } </div>
+
+                        <button onclick="exemploWhile()">
+                            Executar while
+                        </button>
+
+                        <div class="resultado" id="resultado4"></div>
+
+                </div>
+
+                <!-- DO WHILE -->
+
+                <div class="card">
+
+                    <h2>5. do while</h2>
+
+                    <p>
+                        Executa ao menos 1 vez.
+                    </p>
+
+                    <div class="code">
+
+                        do{
+
+                        }while();
+
+                    </div>
+
+                    <button onclick="exemploDoWhile()">
+                        Executar do while
+                    </button>
+
+                    <div class="resultado" id="resultado5"></div>
+
+                </div>
+
+                <!-- TEXTO += -->
+
+                <div class="card">
+
+                    <h2>6. texto += item</h2>
+
+                    <p>
+                        += adiciona texto.
+                    </p>
+
+                    <div class="code">
+
+                        texto += item;
+
+                    </div>
+
+                    <button onclick="exemploTextoMais()">
+                        Executar +=
+                    </button>
+
+                    <div class="resultado" id="resultado6"></div>
+
+                </div>
+
+                <!-- BREAK -->
+
+                <div class="card">
+
+                    <h2>7. break</h2>
+
+                    <p>
+                        break para o laço.
+                    </p>
+
+                    <div class="code">
+
+                        break;
+
+                    </div>
+
+                    <button onclick="exemploBreak()">
+                        Executar break
+                    </button>
+
+                    <div class="resultado" id="resultado7"></div>
+
+                </div>
+
+                <!-- CONTINUE -->
+
+                <div class="card">
+
+                    <h2>8. continue</h2>
+
+                    <p>
+                        continue pula item.
+                    </p>
+
+                    <div class="code">
+
+                        continue;
+
+                    </div>
+
+                    <button onclick="exemploContinue()">
+                        Executar continue
+                    </button>
+
+                    <div class="resultado" id="resultado8"></div>
+
+                </div>
+
+                <!-- CLASSE -->
+
+                <div class="card">
+
+                    <h2>9. Classe</h2>
+
+                    <div class="code">
+
+                        class Carro{
+
+                        }
+
+                    </div>
+
+                    <button onclick="exemploClasse()">
+                        Executar classe
+                    </button>
+
+                    <div class="resultado" id="resultado9"></div>
+
+                </div>
+
+                <!-- LISTA CLASSE -->
+
+                <div class="card">
+
+                    <h2>10. Lista de Classe</h2>
+
+                    <div class="code">
+
+                        let carros = [];
+
+                    </div>
+
+                    <button onclick="exemploListaClasse()">
+                        Mostrar lista
+                    </button>
+
+                    <div class="resultado" id="resultado10"></div>
+
+                </div>
+
+                <!-- FOREACH -->
+
+                <div class="card">
+
+                    <h2>11. forEach()</h2>
+
+                    <div class="code">
+
+                        array.forEach()
+
+                    </div>
+
+                    <button onclick="exemploForEach()">
+                        Executar forEach
+                    </button>
+
+                    <div class="resultado" id="resultado11"></div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                /* =========================
+                   IF ELSE
+                ========================= */
+
+                function exemploIf() {
+
+                    let nota = 7;
+
+                    let texto = "";
+
+                    /*
+                      Poucas condições:
+                      if else
+                  
+                      Muitas condições:
+                      switch case
+                    */
+
+                    if (nota >= 9) {
+
+                        texto = "Excelente";
+
+                    } else if (nota >= 7) {
+
+                        texto = "Aprovado";
+
+                    } else {
+
+                        texto = "Reprovado";
+
+                    }
+
+                    document.getElementById(
+                        "resultado1"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   SWITCH CASE
+                ========================= */
+
+                function exemploSwitch() {
+
+                    let cor = "verde";
+
+                    let texto = "";
+
+                    switch (cor) {
+
+                        case "azul":
+
+                            texto = "Cor azul";
+
+                            break;
+
+                        case "verde":
+
+                            texto = "Cor verde";
+
+                            break;
+
+                        case "vermelho":
+
+                            texto = "Cor vermelha";
+
+                            break;
+
+                        default:
+
+                            texto = "Cor não encontrada";
+
+                            break;
+
+                    }
+
+                    document.getElementById(
+                        "resultado2"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   FOR
+                ========================= */
+
+                function exemploFor() {
+
+                    let texto = "";
+
+                    for (let i = 0; i < 5; i++) {
+
+                        texto +=
+                            "Número: " +
+                            i +
+                            "<br>";
+
+                    }
+
+                    document.getElementById(
+                        "resultado3"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   WHILE
+                ========================= */
+
+                function exemploWhile() {
+
+                    let i = 0;
+
+                    let texto = "";
+
+                    while (i < 5) {
+
+                        texto +=
+                            "While: " +
+                            i +
+                            "<br>";
+
+                        i++;
+
+                    }
+
+                    document.getElementById(
+                        "resultado4"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   DO WHILE
+                ========================= */
+
+                function exemploDoWhile() {
+
+                    let i = 0;
+
+                    let texto = "";
+
+                    do {
+
+                        texto +=
+                            "Do While: " +
+                            i +
+                            "<br>";
+
+                        i++;
+
+                    } while (i < 5);
+
+                    document.getElementById(
+                        "resultado5"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   +=
+                ========================= */
+
+                function exemploTextoMais() {
+
+                    let frutas = [
+
+                        "Maçã",
+
+                        "Banana",
+
+                        "Uva"
+
+                    ];
+
+                    let texto = "";
+
+                    for (let i = 0; i < frutas.length; i++) {
+
+                        texto +=
+                            frutas[i] +
+                            "<br>";
+
+                    }
+
+                    document.getElementById(
+                        "resultado6"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   BREAK
+                ========================= */
+
+                function exemploBreak() {
+
+                    let texto = "";
+
+                    for (let i = 0; i < 10; i++) {
+
+                        if (i == 5) {
+
+                            break;
+
+                        }
+
+                        texto +=
+                            i +
+                            "<br>";
+
+                    }
+
+                    document.getElementById(
+                        "resultado7"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   CONTINUE
+                ========================= */
+
+                function exemploContinue() {
+
+                    let texto = "";
+
+                    for (let i = 0; i < 10; i++) {
+
+                        if (i == 5) {
+
+                            continue;
+
+                        }
+
+                        texto +=
+                            i +
+                            "<br>";
+
+                    }
+
+                    document.getElementById(
+                        "resultado8"
+                    ).innerHTML = texto;
+
+                }
+
+                /* =========================
+                   CLASSE
+                ========================= */
+
+                function exemploClasse() {
+
+                    class Carro {
+
+                        constructor(marca, modelo) {
+
+                            this.marca = marca;
+
+                            this.modelo = modelo;
+
+                        }
+
+                        mostrar() {
+
+                            return this.marca +
+                                " - " +
+                                this.modelo;
+
+                        }
+
+                    }
+
+                    let carro1 = new Carro(
+
+                        "Toyota",
+
+                        "Corolla"
+
+                    );
+
+                    document.getElementById(
+                        "resultado9"
+                    ).innerHTML =
+
+                        carro1.mostrar();
+
+                }
+
+                /* =========================
+                   LISTA CLASSE
+                ========================= */
+
+                function exemploListaClasse() {
+
+                    class Carro {
+
+                        constructor(marca, modelo) {
+
+                            this.marca = marca;
+
+                            this.modelo = modelo;
+
+                        }
+
+                    }
+
+                    let carros = [];
+
+                    carros.push(
+                        new Carro(
+                            "Toyota",
+                            "Corolla"
+                        )
+                    );
+
+                    carros.push(
+                        new Carro(
+                            "Honda",
+                            "Civic"
+                        )
+                    );
+
+                    let html = `
+
+  <table>
+
+    <tr>
+      <th>Marca</th>
+      <th>Modelo</th>
+    </tr>
+
+  `;
+
+                    carros.forEach(function (carro) {
+
+                        html += `
+
+    <tr>
+
+      <td>${carro.marca}</td>
+
+      <td>${carro.modelo}</td>
+
+    </tr>
+
+    `;
+
+                    });
+
+                    html += "</table>";
+
+                    document.getElementById(
+                        "resultado10"
+                    ).innerHTML = html;
+
+                }
+
+                /* =========================
+                   FOREACH
+                ========================= */
+
+                function exemploForEach() {
+
+                    let nomes = [
+
+                        "João",
+
+                        "Maria",
+
+                        "Pedro"
+
+                    ];
+
+                    let texto = "";
+
+                    nomes.forEach(function (nome) {
+
+                        texto +=
+                            nome +
+                            "<br>";
+
+                    });
+
+                    document.getElementById(
+                        "resultado11"
+                    ).innerHTML = texto;
+
+                }
+
+            </script>
+
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Profissional com Tabelas</title>
+    <style>
+        :root {
+            --primary: #0d6efd;
+            --light: #f8f9fa;
+            --border: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #e9ecef;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo Tabela "Bootstrap-like" */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--light);
+            font-weight: bold;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Gerenciamento de Dados (Tabela Dinâmica)</h2>
+        <div class="table-container">
+            <table id="tabela-carros">
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Ano</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Dados de exemplo
+        const carros = [
+            { marca: "Ford", modelo: "Ka", ano: "2015" },
+            { marca: "Fiat", modelo: "Uno", ano: "2000" },
+            { marca: "VW", modelo: "Gol", ano: "2010" },
+            { marca: "Chevrolet", modelo: "Onix", ano: "2022" }
+        ];
+
+        // Função para gerar a tabela dinamicamente
+        function carregarTabela() {
+            const corpo = document.getElementById("corpo-tabela");
+            let html = "";
+
+            // Usando o loop para gerar linhas da tabela
+            carros.forEach(carro => {
+                html += `
+                <tr>
+                    <td>${carro.marca}</td>
+                    <td>${carro.modelo}</td>
+                    <td>${carro.ano}</td>
+                </tr>
+            `;
+            });
+
+            corpo.innerHTML = html;
+        }
+
+        // Executa ao carregar a página
+        carregarTabela();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador Dinâmico</title>
+    <style>
+        /* CSS3: Estilo limpo e moderno (Bootstrap-like) */
+        body {
+            font-family: sans-serif;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        th {
+            background: #e9ecef;
+        }
+
+        .btn-acao {
+            padding: 10px 20px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Inventário de Veículos</h1>
+        <button class="btn-acao" onclick="renderizarTabela()">Carregar Dados</button>
+
+        <table id="tabela-carros">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Array de Objetos (Dados)
+        const carros2 = [
+            { marca: "Ford", modelo: "Ka", ano: "2015" },
+            { marca: "Fiat", modelo: "Uno", ano: "2000" },
+            { marca: "VW", modelo: "Gol", ano: "2010" }
+        ];
+
+        // Função que usa o Loop para construir a página
+        function renderizarTabela() {
+            const corpo = document.getElementById("corpo-tabela");
+            corpo.innerHTML = ""; // Limpa a tabela antes de popular
+
+            // Usando o Laço 'for...of' (recomendado para arrays)
+            for (let carro of carros2) {
+                corpo.innerHTML += `
+                <tr>
+                    <td>${carro.marca}</td>
+                    <td>${carro.modelo}</td>
+                    <td>${carro.ano}</td>
+                </tr>
+            `;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercícios de Programação</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f9;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        code {
+            background: #333;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-left: 5px solid #6366f1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>Exercícios de Arrays</h1>
+        <p>Abra o console do navegador (F12) para ver os resultados.</p>
+    </div>
+
+    <div class="card">
+        <h2>Exemplos de Laços (Loops)</h2>
+        <div id="loops-demo"></div>
+    </div>
+
+    <script>
+        // --- RESOLUÇÃO DOS EXERCÍCIOS DA IMAGEM ---
+        // 1. Criar array com 5 frutas
+        let frutas = ["Maçã", "Banana", "Laranja", "Uva", "Manga"];
+
+        // 2. Exibir array completo
+        console.log("Array completo:", frutas);
+
+        // 3. Acessar terceiro item (índice 2)
+        console.log("Terceiro item:", frutas[2]);
+
+        // 4. Alterar segundo item
+        frutas[1] = "Morango";
+        console.log("Array alterado:", frutas);
+
+        // 5. Adicionar duas frutas com push
+        frutas.push("Abacaxi", "Kiwi");
+        console.log("Array final:", frutas);
+
+
+        // --- EXEMPLOS DE LAÇOS (Tabela da imagem) ---
+        const demo = document.getElementById("loops-demo");
+
+        // Exemplo for-of (percorre valores)
+        let texto = "<h3>Exemplo for-of:</h3>";
+        for (let valor of frutas) {
+            texto += valor + " | ";
+        }
+
+        // Exemplo for-in (percorre propriedades de um objeto)
+        const carro = { marca: "Ford", modelo: "Ka" };
+        texto += "<h3>Exemplo for-in:</h3>";
+        for (let prop in carro) {
+            texto += prop + ": " + carro[prop] + "<br>";
+        }
+
+        demo.innerHTML = texto;
+    </script>
+
+</body>
+
+</html>
