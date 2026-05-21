@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Cronograma - Java Extensivo</title>
+    <style>
+        /* Variáveis de Design - Estilo Premium */
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent-online: #22c55e;
+            --accent-presencial: #0ea5e9;
+            --accent-special: #eab308;
+            --bg-body: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+
+            /* Cores dos Módulos Sync com Planilha */
+            --m1: #c3e6cb; --m2: #ffeeba; --m3: #d4edda; --m4: #e2e3e5;
+            --m5: #c3e6cb; --m6: #b8daff; --m7: #9fcdff; --m8: #bae6fd;
+            --m9: #fde047; --m10: #fef08a; --m11: #ffedd5; --m12: #bfdbfe;
+            --m13: #1e293b; --ingles: #99f6e4; --hackweek: #fca5a5;
+            --feriado: #94a3b8; --recesso: #cbd5e1; --tec: #f3e8ff;
+        }
+
+        /* Reset Geral */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* Header (Estilo Jumbotron Bootstrap) */
+        .jumbotron {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #ffffff;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .jumbotron h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        .jumbotron p { color: #94a3b8; font-size: 1.1rem; }
+        
+        /* Badges de Informações Metas */
+        .meta-badges {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .badge-highlight { background: var(--accent-presencial); color: white; }
+
+        /* Painel de Legenda Flutuante */
+        .card-legend {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .legend-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .legend-item { display: flex; align-items: center; font-size: 0.875rem; font-weight: 500; }
+        .color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 0.75rem;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Input de Busca Customizado */
+        .search-wrapper { margin-bottom: 2rem; }
+        .search-input {
+            width: 100%;
+            max-width: 480px;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-presencial);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        /* Estrutura das Seções Separadas */
+        .section-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 24px;
+            background: var(--accent-presencial);
+            border-radius: 4px;
+        }
+
+        /* Tabelas Responsivas de Alta Performance */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            text-align: left;
+        }
+        th, td { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
+        th { background: #f1f5f9; color: var(--text-dark); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+        tr:last-child td { border-bottom: none; }
+
+        /* Estilização Dinâmica de Células de Aula */
+        .cell-m1 { background-color: var(--m1) !important; color: #14532d; }
+        .cell-m2 { background-color: var(--m2) !important; color: #713f12; }
+        .cell-m3 { background-color: var(--m3) !important; color: #14532d; }
+        .cell-m4 { background-color: var(--m4) !important; color: #334155; }
+        .cell-m5 { background-color: var(--m5) !important; color: #14532d; }
+        .cell-m6 { background-color: var(--m6) !important; color: #1e3a8a; }
+        .cell-m7 { background-color: var(--m7) !important; color: #1e3a8a; }
+        .cell-m8 { background-color: var(--m8) !important; color: #0369a1; }
+        .cell-m9 { background-color: var(--m9) !important; color: #000000; }
+        .cell-m10 { background-color: var(--m10) !important; color: #713f12; }
+        .cell-m11 { background-color: var(--m11) !important; color: #7c2d12; }
+        .cell-m12 { background-color: var(--m12) !important; color: #1e3a8a; }
+        .cell-m13 { background-color: var(--m13) !important; color: #ffffff; }
+        .cell-ingles { background-color: var(--ingles) !important; color: #115e59; }
+        .cell-hackweek { background-color: var(--hackweek) !important; color: #991b1b; font-weight: bold; }
+        .cell-feriado { background-color: var(--feriado) !important; color: white; }
+        .cell-recesso { background-color: var(--recesso) !important; color: #475569; font-style: italic; }
+        .cell-tec { background-color: var(--tec) !important; color: #581c87; }
+
+        /* Modificadores de Status das Bordas */
+        .online-border { border-left: 5px solid var(--accent-online) !important; }
+        .presencial-border { border-left: 5px solid var(--accent-presencial) !important; }
+        .special-event { background: var(--accent-special) !important; color: #000 !important; font-weight: bold; }
+
+        /* Tags Internas das Células */
+        .day-num {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.06);
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .weekend { background-color: #fef9c3; text-align: center; font-weight: 600; width: 60px; }
+        .sunday { background-color: #fee2e2; text-align: center; font-weight: 600; width: 60px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Curso Especialista Java</h1>
+        <p>Plataforma Corporativa de Acompanhamento do Cronograma e Conteúdo Programático</p>
+        <div class="meta-badges">
+            <div class="badge">Turma: 2024.3181.01</div>
+            <div class="badge">Ano: 2024 / 2025</div>
+            <div class="badge badge-highlight">Horário: 18h40 - 22h00</div>
+            <div class="badge">Patrocínio: Premiersoft | +Dev2Blu</div>
+        </div>
+    </div>
+
+    <div class="card-legend">
+        <div class="legend-title">Identificadores de Formatos de Aula</div>
+        <div class="legend-grid">
+            <div class="legend-item"><div class="color-dot" style="background: var(--accent-online)"></div> Aula ONLINE</div>
+            <div class="legend-item"><div class="color-dot" style="background: var(--accent-presencial)"></div> Aula Presencial</div>
+            <div class="legend-item"><div class="color-dot" style="background: var(--accent-special)"></div> Evento / Formatura</div>
+        </div>
+    </div>
+
+    <div class="search-wrapper">
+        <input type="text" id="globalSearch" class="search-input" placeholder="Pesquisar por matéria, professor, mês...">
+    </div>
+
+    <div class="section-card">
+        <div class="section-title">Calendário e Grade do Cronograma Mensal</div>
+        <div class="table-responsive">
+            <table id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">Mês</th>
+                        <th>Segunda-Feira</th>
+                        <th>Terça-Feira</th>
+                        <th>Quarta-Feira</th>
+                        <th>Quinta-Feira</th>
+                        <th>Sexta-Feira</th>
+                        <th>Sáb</th>
+                        <th>Dom</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title">Matriz Curricular e Carga Horária Distribuída</div>
+        <div class="table-responsive">
+            <table id="modulesTable">
+                <thead>
+                    <tr>
+                        <th>Identificação do Componente Curricular</th>
+                        <th style="width: 100px;">Carga Horária</th>
+                        <th style="width: 100px;">Total Dias</th>
+                        <th>Professor Regente</th>
+                    </tr>
+                </thead>
+                <tbody id="modulesBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Camada de Dados em JSON nativo Puro
+    const courseData = {
+        modules: [
+            { name: "Módulo 01 - Fundamentos de Desenvolvimento com Java", ch: 20, dias: 5, prof: "Heloisa", code: "cell-m1" },
+            { name: "Módulo 05 - Programação Orientada a Objetos", ch: 40, dias: 10, prof: "Heloisa", code: "cell-m5" },
+            { name: "Módulo 03 - Controle de Versão e Colaboração", ch: 20, dias: 5, prof: "Heloisa", code: "cell-m3" },
+            { name: "Módulo 02 - Metodologias Ágeis e Scrum", ch: 32, dias: 8, prof: "Heloisa", code: "cell-m2" },
+            { name: "Módulo 09 - Desenvolvimento Back-End com Spring Framework", ch: 40, dias: 10, prof: "Heloisa", code: "cell-m9" },
+            { name: "Módulo 04 - Banco de Dados Relacional com PostgreSQL (40 horas)", ch: 40, dias: 10, prof: "Vilson", code: "cell-m4" },
+            { name: "Módulo 06 - Banco de Dados NoSQL com MongoDB (20 horas)", ch: 20, dias: 5, prof: "Vilson", code: "cell-m6" },
+            { name: "Módulo 07 - Desenvolvimento Front-End com HTML, CSS e JavaScript (30 horas)", ch: 28, dias: 7, prof: "Vilson", code: "cell-m7" },
+            { name: "Módulo 12 - Desenvolvimento Front-End com Angular (32 horas)", ch: 32, dias: 8, prof: "Vilson", code: "cell-m12" },
+            { name: "Módulo 08 - Conceitos de Arquitetura de Software", ch: 20, dias: 5, prof: "Alan", code: "cell-m8" },
+            { name: "Módulo 10 - Docker e Kubernetes (26 horas)", ch: 28, dias: 7, prof: "Vilson", code: "cell-m10" },
+            { name: "Módulo 11 - Desenvolvimento com Quarkus Framework", ch: 24, dias: 6, prof: "Vilson", code: "cell-m11" },
+            { name: "Módulo 13 - Gestão e Gerenciamento de Projetos de TI", ch: 40, dias: 10, prof: "Thiago / Oscar", code: "cell-m13" },
+            { name: "HackWeek (16 horas)", ch: 16, dias: 4, prof: "Mentores", code: "cell-hackweek" },
+            { name: "Inglês", ch: 80, dias: 20, prof: "Abelardo", code: "cell-ingles" }
+        ],
+        schedule: [
+            { mes: "Setembro", seg: "9 | M1 - Heloisa", ter: "10 | M4 - Vilson", qua: "11 | M1 - Heloisa", qui: "12 | Inglês", sex: "13", sab: "14", dom: "15" },
+            { mes: "Setembro", seg: "16 | M1 - Heloisa", ter: "17 | M4 - Vilson", qua: "18 | M1 - Heloisa", qui: "19 | Inglês", sex: "20", sab: "21", dom: "22" },
+            { mes: "Setembro", seg: "23 | M1 - Heloisa", ter: "24 | M4 - Vilson", qua: "25 | M1 - Heloisa", qui: "26 | Aula Magna", sex: "27 | M5 - Heloisa", sab: "28", dom: "29" },
+            { mes: "SET/OUT", seg: "30 | M5 - Heloisa", ter: "1 | M4 - Vilson", qua: "2 | M5 - Heloisa", qui: "3 | Inglês", sex: "4", sab: "5", dom: "6" },
+            { mes: "Outubro", seg: "7 | M5 - Heloisa", ter: "8 | M4 - Vilson", qua: "9 | M5 - Heloisa", qui: "10 | Inglês", sex: "11", sab: "12 | NsaSraAp", dom: "13" },
+            { mes: "Outubro", seg: "14 | Recesso", ter: "15 | D. Profs", qua: "16 | M5 - Heloisa", qui: "17 | Inglês", sex: "18 | M4 - Vilson", sab: "19", dom: "20" },
+            { mes: "Outubro", seg: "21 | M5 - Heloisa", ter: "22 | M4 - Vilson", qua: "23 | DevDay", qui: "24 | Inglês", sex: "25", sab: "26", dom: "27" },
+            { mes: "OUT/NOV", seg: "28 | M5 - Heloisa", ter: "29 | M4 - Vilson", qua: "30 | M5 - Heloisa", qui: "31 | Inglês", sex: "1", sab: "2 | Finados", dom: "3" },
+            { mes: "Novembro", seg: "4 | M3 - Heloisa", ter: "5 | M4 - Vilson", qua: "6 | M3 - Heloisa", qui: "7 | Inglês", sex: "8", sab: "9", dom: "10" },
+            { mes: "Novembro", seg: "11 | M3 - Heloisa", ter: "12 | M4 - Vilson", qua: "13 | M3 - Heloisa", qui: "14 | Inglês", sex: "15 | P. República", sab: "16", dom: "17" },
+            { mes: "Novembro", seg: "18 | M3 - Heloisa", ter: "19 | M6 - Vilson", qua: "20 | C. Negra", qui: "21 | Inglês", sex: "22 | M2 - Heloisa", sab: "23", dom: "24" },
+            { mes: "NOV/DEZ", seg: "25 | M2 - Heloisa", ter: "26 | M6 - Vilson", qua: "27 | M2 - Heloisa", qui: "28 | Inglês", sex: "29", sab: "30", dom: "1" },
+            { mes: "Dezembro", seg: "2 | M2 - Heloisa", ter: "3 | M6 - Vilson", qua: "4 | M2 - Heloisa", qui: "5 | Inglês", sex: "6 | M6 - Vilson", sab: "7", dom: "8" },
+            { mes: "Dezembro", seg: "9 | M2 - Heloisa", ter: "10 | M6 - Vilson", qua: "11 | M9 - Heloisa", qui: "12 | Inglês", sex: "13", sab: "14", dom: "15" },
+            { mes: "Dezembro", seg: "16 | Recesso", ter: "17 | Recesso", qua: "18 | Recesso", qui: "19 | Recesso", sex: "20 | Recesso", sab: "21", dom: "22" },
+            { mes: "Dezembro", seg: "23 | Recesso", ter: "24 | Recesso", qua: "25 | Natal", qui: "26 | Recesso", sex: "27 | Recesso", sab: "28", dom: "29" },
+            { mes: "Dez/Jan", seg: "30 | Recesso", ter: "31 | Recesso", qua: "1 | Ano Novo", qui: "2 | Recesso", sex: "3 | Recesso", sab: "4", dom: "5" },
+            { mes: "Janeiro", seg: "6 | Recesso", ter: "7 | Recesso", qua: "8 | Recesso", qui: "9 | Recesso", sex: "10 | Recesso", sab: "11", dom: "12" },
+            { mes: "Janeiro", seg: "13 | Recesso", ter: "14 | Recesso", qua: "15 | M7 - Vilson", qui: "16 | Inglês", sex: "17", sab: "18", dom: "19" },
+            { mes: "Janeiro", seg: "20 | M8 - Alan", ter: "21 | M7 - Vilson", qua: "22 | M8 - Alan", qui: "23 | Inglês", sex: "24", sab: "25", dom: "26" },
+            { mes: "Janeiro", seg: "27 | M8 - Alan", ter: "28 | M7 - Vilson", qua: "29 | M8 - Alan", qui: "30 | Inglês", sex: "31", sab: "1", dom: "2" },
+            { mes: "Fevereiro", seg: "3 | M8 - Alan", ter: "4 | M7 - Vilson", qua: "5 | M7 - Vilson", qui: "6 | Inglês", sex: "7", sab: "8", dom: "9" },
+            { mes: "Fevereiro", seg: "10 | M9 - Heloisa", ter: "11 | M7 - Vilson", qua: "12 | M7 - Vilson", qui: "13 | Inglês", sex: "14", sab: "15", dom: "16" },
+            { mes: "Fevereiro", seg: "17 | M9 - Heloisa", ter: "18 | M12 - Vilson", qua: "19 | M12 - Vilson", qui: "20 | Inglês", sex: "21", sab: "22", dom: "23" },
+            { mes: "Fevereiro", seg: "24 | M9 - Heloisa", ter: "25 | M12 - Vilson", qua: "26 | M12 - Vilson", qui: "27 | Inglês", sex: "28", sab: "1", dom: "2" },
+            { mes: "Março", seg: "3 | Recesso", ter: "4 | Carnaval", qua: "5 | M12 - Vilson", qui: "6 | M13", sex: "7 | Inglês", sab: "8", dom: "9" },
+            { mes: "Março", seg: "10 | M9 - Heloisa", ter: "11 | M12 - Vilson", qua: "12 | TEC", qui: "13 | M13", sex: "14", sab: "15", dom: "16" },
+            { mes: "Março", seg: "17 | M9 - Heloisa", ter: "18 | TEC", qua: "19 | TEC", qui: "20 | M13", sex: "21", sab: "22", dom: "23" },
+            { mes: "Março", seg: "24 | M9 - Heloisa", ter: "25 | TEC", qua: "26 | TEC", qui: "27 | M13", sex: "28", sab: "29", dom: "30" },
+            { mes: "Março/Abril", seg: "31 | M9 - Heloisa", ter: "1 | M10 - Vilson", qua: "2 | M10 - Vilson", qui: "3 | M13", sex: "4", sab: "5", dom: "6" },
+            { mes: "Abril", seg: "7 | M9 - Heloisa", ter: "8 | M10 - Vilson", qua: "9 | M10 - Vilson", qui: "10 | M13", sex: "11", sab: "12", dom: "13" },
+            { mes: "Abril", seg: "14 | M9 - Heloisa", ter: "15 | M11 - Vilson", qua: "16 | M13 - Oscar", qui: "17 | M13", sex: "18 | S. Santa", sab: "19", dom: "20" },
+            
+            // Período Crítico Validado com Regras de Fronteira Online/Presencial
+            { mes: "Abril", seg: "21 | Tiradentes", ter: "22 | M11 - Vilson", qua: "23 | M11 - Vilson", qui: "24 | M9 - Heloisa", sex: "25 | M13 - Oscar", sab: "26", dom: "27", modalities: { ter: "online", qua: "presencial", qui: "presencial", sex: "presencial" } },
+            { mes: "Abril/Maio", seg: "28 | M13 - Thiago", ter: "29 | M13 - Thiago", qua: "30 | M11 - Vilson", qui: "1 | Trabalho", sex: "2 | Recesso", sab: "3", dom: "4", modalities: { seg: "online", ter: "online", qua: "presencial" } },
+            { mes: "Maio", seg: "5 | M13 - Thiago", ter: "6 | M13 - Oscar", qua: "7 | Hack Week", qui: "8 | Hack Week", sex: "9 | Hack Week", sab: "10 | Hack Week", dom: "11", modalities: { seg: "online", ter: "special", qua: "presencial", qui: "presencial", sex: "presencial" } },
+            { mes: "Maio", seg: "12 | M11 - Vilson", ter: "13", qua: "14", qui: "15 | Formatura", sex: "16", sab: "17", dom: "18", modalities: { qui: "special" } }
+        ]
+    };
+
+    function generateCell(cellData, modality) {
+        if (!cellData || cellData.trim() === "") return '<td></td>';
+        
+        const splitData = cellData.split("|");
+        const number = splitData[0].trim();
+        const info = splitData[1] ? splitData[1].trim() : "";
+        
+        let colorClass = "";
+        const check = info.toUpperCase();
+        
+        if (check.includes("M1 ")) colorClass = "cell-m1";
+        else if (check.includes("M2")) colorClass = "cell-m2";
+        else if (check.includes("M3")) colorClass = "cell-m3";
+        else if (check.includes("M4")) colorClass = "cell-m4";
+        else if (check.includes("M5")) colorClass = "cell-m5";
+        else if (check.includes("M6")) colorClass = "cell-m6";
+        else if (check.includes("M7")) colorClass = "cell-m7";
+        else if (check.includes("M8")) colorClass = "cell-m8";
+        else if (check.includes("M9")) colorClass = "cell-m9";
+        else if (check.includes("M10")) colorClass = "cell-m10";
+        else if (check.includes("M11")) colorClass = "cell-m11";
+        else if (check.includes("M12")) colorClass = "cell-m12";
+        else if (check.includes("M13")) colorClass = "cell-m13";
+        else if (check.includes("INGLÊS")) colorClass = "cell-ingles";
+        else if (check.includes("HACK WEEK")) colorClass = "cell-hackweek";
+        else if (check.includes("RECESSO")) colorClass = "cell-recesso";
+        else if (check.includes("TEC")) colorClass = "cell-tec";
+        else if (check.includes("TIRADENTES") || check.includes("TRABALHO") || check.includes("NATAL") || check.includes("ANO NOVO") || check.includes("FERIADO")) colorClass = "cell-feriado";
+
+        let borderClass = "";
+        if (modality === "online") borderClass = "online-border";
+        if (modality === "presencial") borderClass = "presencial-border";
+        if (modality === "special" || check.includes("FORMATURA")) colorClass = "special-event";
+
+        return `<td class="${colorClass} ${borderClass}"><span class="day-num">${number}</span>${info}</td>`;
+    }
+
+    function renderApp() {
+        // Render 1: Tabela Curricular Separada
+        const modulesBody = document.getElementById('modulesBody');
+        modulesBody.innerHTML = courseData.modules.map(m => `
+            <tr>
+                <td class="${m.code}" style="font-weight: 600;">${m.name}</td>
+                <td style="font-weight: 700;">${m.ch} Horas</td>
+                <td>${m.dias} Dias</td>
+                <td><strong>${m.prof}</strong></td>
+            </tr>
+        `).join('');
+
+        // Render 2: Tabela do Calendário Mensal
+        const scheduleBody = document.getElementById('scheduleBody');
+        scheduleBody.innerHTML = courseData.schedule.map(row => {
+            const mods = row.modalities || {};
+            return `
+                <tr>
+                    <td style="font-weight: 700; background: #f8fafc; color: var(--primary);">${row.mes}</td>
+                    ${generateCell(row.seg, mods.seg)}
+                    ${generateCell(row.ter, mods.ter)}
+                    ${generateCell(row.qua, mods.qua)}
+                    ${generateCell(row.qui, mods.qui)}
+                    ${generateCell(row.sex, mods.sex)}
+                    <td class="weekend">${row.sab}</td>
+                    <td class="sunday">${row.dom}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // Mecanismo de Busca Reativa Instantânea
+    document.getElementById('globalSearch').addEventListener('input', function(e) {
+        const value = e.target.value.toLowerCase();
+        document.querySelectorAll('#scheduleTable tbody tr').forEach(row => {
+            row.style.display = row.textContent.toLowerCase().includes(value) ? '' : 'none';
+        });
+    });
+
+    // Inicialização da Aplicação
+    renderApp();
+</script>
+
+</body>
+</html>
