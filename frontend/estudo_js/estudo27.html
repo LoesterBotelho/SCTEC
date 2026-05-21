@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Batalha Naval</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            background: #0f172a;
+
+            color: #fff;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            background: #111827;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.4);
+
+            text-align: center;
+        }
+
+        h1 {
+
+            margin-bottom: 20px;
+
+            font-size: 40px;
+        }
+
+        .info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+        }
+
+        .status {
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        button {
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .tabuleiros {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 40px;
+
+            flex-wrap: wrap;
+        }
+
+        .area h2 {
+
+            margin-bottom: 15px;
+        }
+
+        .tabuleiro {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(10, 35px);
+
+            gap: 2px;
+
+            background: #1e293b;
+
+            padding: 10px;
+
+            border-radius: 12px;
+        }
+
+        .casa {
+
+            width: 35px;
+
+            height: 35px;
+
+            background: #0ea5e9;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 18px;
+        }
+
+        .casa:hover {
+            background: #38bdf8;
+        }
+
+        .agua {
+            background: #1e40af;
+        }
+
+        .navio {
+            background: #475569;
+        }
+
+        .acerto {
+            background: #ef4444;
+        }
+
+        .erro {
+            background: #94a3b8;
+        }
+
+        .explicacao {
+
+            margin-top: 25px;
+
+            background: #0f172a;
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            text-align: left;
+
+            line-height: 1.8;
+        }
+
+        @media(max-width:700px) {
+
+            .tabuleiro {
+
+                grid-template-columns:
+                    repeat(10, 28px);
+
+            }
+
+            .casa {
+
+                width: 28px;
+
+                height: 28px;
+
+                font-size: 14px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🚢 Batalha Naval</h1>
+
+        <div class="info">
+
+            <div class="status" id="status">
+                Sua vez de atacar!
+            </div>
+
+            <button onclick="reiniciarJogo()">
+                Novo Jogo
+            </button>
+
+        </div>
+
+        <!-- TABULEIROS -->
+
+        <div class="tabuleiros">
+
+            <!-- PLAYER -->
+
+            <div class="area">
+
+                <h2>Seu Tabuleiro</h2>
+
+                <div class="tabuleiro" id="playerBoard"></div>
+
+            </div>
+
+            <!-- CPU -->
+
+            <div class="area">
+
+                <h2>Inimigo</h2>
+
+                <div class="tabuleiro" id="cpuBoard"></div>
+
+            </div>
+
+        </div>
+
+        <!-- EXPLICAÇÃO -->
+
+        <div class="explicacao">
+
+            <b>Conceitos usados:</b>
+
+            <br><br>
+
+            • HTML5
+
+            • CSS3
+
+            • JavaScript
+
+            • DOM
+
+            • Arrays bidimensionais
+
+            • Loops for
+
+            • if else
+
+            • addEventListener
+
+            • Manipulação DOM
+
+            • Eventos clique
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           CONFIG
+        ========================= */
+
+        const tamanho = 10;
+
+        const navios = 10;
+
+        /* =========================
+           TABULEIROS
+        ========================= */
+
+        let playerBoard = [];
+
+        let cpuBoard = [];
+
+        /* =========================
+           DOM
+        ========================= */
+
+        const playerHTML =
+            document.getElementById(
+                "playerBoard"
+            );
+
+        const cpuHTML =
+            document.getElementById(
+                "cpuBoard"
+            );
+
+        const statusHTML =
+            document.getElementById(
+                "status"
+            );
+
+        /* =========================
+           INICIAR
+        ========================= */
+
+        function iniciar() {
+
+            playerBoard = [];
+
+            cpuBoard = [];
+
+            playerHTML.innerHTML = "";
+
+            cpuHTML.innerHTML = "";
+
+            criarMatriz(playerBoard);
+
+            criarMatriz(cpuBoard);
+
+            colocarNavios(playerBoard);
+
+            colocarNavios(cpuBoard);
+
+            renderBoards();
+
+        }
+
+        /* =========================
+           MATRIZ
+        ========================= */
+
+        function criarMatriz(board) {
+
+            for (
+
+                let linha = 0;
+
+                linha < tamanho;
+
+                linha++
+
+            ) {
+
+                let linhaArray = [];
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < tamanho;
+
+                    coluna++
+
+                ) {
+
+                    linhaArray.push({
+
+                        navio: false,
+
+                        atingido: false
+
+                    });
+
+                }
+
+                board.push(linhaArray);
+
+            }
+
+        }
+
+        /* =========================
+           NAVIOS
+        ========================= */
+
+        function colocarNavios(board) {
+
+            let total = 0;
+
+            while (total < navios) {
+
+                let linha =
+                    Math.floor(
+                        Math.random() * tamanho
+                    );
+
+                let coluna =
+                    Math.floor(
+                        Math.random() * tamanho
+                    );
+
+                if (
+
+                    board[linha][coluna]
+                        .navio == false
+
+                ) {
+
+                    board[linha][coluna]
+                        .navio = true;
+
+                    total++;
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           RENDER
+        ========================= */
+
+        function renderBoards() {
+
+            /* PLAYER */
+
+            for (
+
+                let linha = 0;
+
+                linha < tamanho;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < tamanho;
+
+                    coluna++
+
+                ) {
+
+                    const casa =
+                        document.createElement("div");
+
+                    casa.classList.add("casa");
+
+                    const item =
+                        playerBoard[linha][coluna];
+
+                    if (item.navio) {
+
+                        casa.classList.add(
+                            "navio"
+                        );
+
+                    }
+
+                    playerHTML.appendChild(casa);
+
+                }
+
+            }
+
+            /* CPU */
+
+            for (
+
+                let linha = 0;
+
+                linha < tamanho;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < tamanho;
+
+                    coluna++
+
+                ) {
+
+                    const casa =
+                        document.createElement("div");
+
+                    casa.classList.add("casa");
+
+                    casa.dataset.linha =
+                        linha;
+
+                    casa.dataset.coluna =
+                        coluna;
+
+                    casa.addEventListener(
+
+                        "click",
+
+                        atacarCPU
+
+                    );
+
+                    cpuHTML.appendChild(casa);
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           ATAQUE PLAYER
+        ========================= */
+
+        function atacarCPU(evento) {
+
+            const linha =
+                evento.target.dataset.linha;
+
+            const coluna =
+                evento.target.dataset.coluna;
+
+            const item =
+                cpuBoard[linha][coluna];
+
+            if (item.atingido) {
+
+                return;
+
+            }
+
+            item.atingido = true;
+
+            /* acerto */
+
+            if (item.navio) {
+
+                evento.target.classList
+                    .add("acerto");
+
+                evento.target.innerHTML =
+                    "💥";
+
+                statusHTML.innerHTML =
+                    "Você acertou!";
+
+            }
+
+            /* erro */
+
+            else {
+
+                evento.target.classList
+                    .add("erro");
+
+                evento.target.innerHTML =
+                    "🌊";
+
+                statusHTML.innerHTML =
+                    "Você errou!";
+
+            }
+
+            verificarVitoria();
+
+            setTimeout(
+
+                ataqueCPU,
+
+                700
+
+            );
+
+        }
+
+        /* =========================
+           ATAQUE CPU
+        ========================= */
+
+        function ataqueCPU() {
+
+            let linha;
+            let coluna;
+            let item;
+
+            do {
+
+                linha =
+                    Math.floor(
+                        Math.random() * tamanho
+                    );
+
+                coluna =
+                    Math.floor(
+                        Math.random() * tamanho
+                    );
+
+                item =
+                    playerBoard[linha][coluna];
+
+            }
+
+            while (item.atingido);
+
+            item.atingido = true;
+
+            const index =
+
+                linha * tamanho + coluna;
+
+            const casaHTML =
+
+                playerHTML.children[index];
+
+            if (item.navio) {
+
+                casaHTML.classList
+                    .add("acerto");
+
+                casaHTML.innerHTML =
+                    "💥";
+
+                statusHTML.innerHTML =
+                    "CPU acertou!";
+
+            }
+
+            else {
+
+                casaHTML.classList
+                    .add("erro");
+
+                casaHTML.innerHTML =
+                    "🌊";
+
+                statusHTML.innerHTML =
+                    "CPU errou!";
+
+            }
+
+            verificarVitoria();
+
+        }
+
+        /* =========================
+           VITÓRIA
+        ========================= */
+
+        function verificarVitoria() {
+
+            let playerRestante = 0;
+
+            let cpuRestante = 0;
+
+            for (
+
+                let linha = 0;
+
+                linha < tamanho;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < tamanho;
+
+                    coluna++
+
+                ) {
+
+                    const player =
+                        playerBoard[linha][coluna];
+
+                    const cpu =
+                        cpuBoard[linha][coluna];
+
+                    if (
+
+                        player.navio
+
+                        &&
+
+                        !player.atingido
+
+                    ) {
+
+                        playerRestante++;
+
+                    }
+
+                    if (
+
+                        cpu.navio
+
+                        &&
+
+                        !cpu.atingido
+
+                    ) {
+
+                        cpuRestante++;
+
+                    }
+
+                }
+
+            }
+
+            if (cpuRestante == 0) {
+
+                alert("🎉 Você venceu!");
+
+                bloquearJogo();
+
+            }
+
+            if (playerRestante == 0) {
+
+                alert("💀 CPU venceu!");
+
+                bloquearJogo();
+
+            }
+
+        }
+
+        /* =========================
+           BLOQUEAR
+        ========================= */
+
+        function bloquearJogo() {
+
+            const casas =
+
+                cpuHTML.querySelectorAll(
+                    ".casa"
+                );
+
+            casas.forEach(function (casa) {
+
+                casa.style.pointerEvents =
+                    "none";
+
+            });
+
+        }
+
+        /* =========================
+           REINICIAR
+        ========================= */
+
+        function reiniciarJogo() {
+
+            statusHTML.innerHTML =
+                "Sua vez de atacar!";
+
+            iniciar();
+
+        }
+
+        /* =========================
+           START
+        ========================= */
+
+        iniciar();
+
+    </script>
+
+</body>
+
+</html>

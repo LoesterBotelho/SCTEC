@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Xadrez Completo HTML5</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            background: #0f172a;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            padding: 20px;
+
+            color: #fff;
+        }
+
+        .container {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            background: #111827;
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+
+            margin-bottom: 20px;
+
+            font-size: 38px;
+        }
+
+        .info {
+
+            margin-bottom: 20px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+   TABULEIRO
+========================= */
+
+        .chessboard {
+
+            width: 640px;
+
+            height: 640px;
+
+            max-width: 95vw;
+
+            max-height: 95vw;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(8, 1fr);
+
+            grid-template-rows:
+                repeat(8, 1fr);
+
+            border: 6px solid #111827;
+
+            overflow: hidden;
+
+            border-radius: 10px;
+        }
+
+        /* =========================
+   CASAS
+========================= */
+
+        .square {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: clamp(24px, 5vw, 48px);
+
+            cursor: pointer;
+
+            user-select: none;
+
+            transition: 0.2s;
+
+            color: #fff;
+
+            text-shadow:
+                2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .white {
+            background: #6b7280;
+        }
+
+        .black {
+            background: #1f2937;
+        }
+
+        .square:hover {
+
+            filter: brightness(1.15);
+        }
+
+        .selected {
+
+            outline: 4px solid #22c55e;
+
+            z-index: 2;
+        }
+
+        /* =========================
+   BOTÕES
+========================= */
+
+        .buttons {
+
+            display: flex;
+
+            gap: 12px;
+
+            justify-content: center;
+
+            margin-top: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        button {
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+
+            background: #1d4ed8;
+        }
+
+        /* =========================
+   LOG
+========================= */
+
+        .log-container {
+
+            margin-top: 30px;
+
+            background: #0b1220;
+
+            border-radius: 12px;
+
+            padding: 15px;
+
+            text-align: left;
+        }
+
+        .log-container h2 {
+
+            margin-bottom: 12px;
+
+            font-size: 22px;
+        }
+
+        #log {
+
+            max-height: 300px;
+
+            overflow-y: auto;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .log-item {
+
+            background: #1e293b;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+        }
+
+        @media(max-width:700px) {
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .info {
+                font-size: 16px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>♟️ Xadrez</h1>
+
+        <div class="info" id="info">
+            Turno: Branco
+        </div>
+
+        <div class="chessboard" id="board"></div>
+
+        <div class="buttons">
+
+            <button onclick="desfazerMovimento()">
+                ↩ Desfazer Movimento
+            </button>
+
+            <button onclick="reiniciarJogo()">
+                🔄 Reiniciar
+            </button>
+
+        </div>
+
+        <div class="log-container">
+
+            <h2>📜 Log de Movimentos</h2>
+
+            <div id="log"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           DOM
+        ========================= */
+
+        const boardHTML =
+            document.getElementById("board");
+
+        const infoHTML =
+            document.getElementById("info");
+
+        const logHTML =
+            document.getElementById("log");
+
+        /* =========================
+           VARIÁVEIS
+        ========================= */
+
+        let board = [];
+
+        let turno = "branco";
+
+        let selecionado = null;
+
+        let historico = [];
+
+        /* =========================
+           TABULEIRO INICIAL
+        ========================= */
+
+        function criarTabuleiro() {
+
+            board = [
+
+                [
+                    "♜", "♞", "♝", "♛",
+                    "♚", "♝", "♞", "♜"
+                ],
+
+                [
+                    "♟", "♟", "♟", "♟",
+                    "♟", "♟", "♟", "♟"
+                ],
+
+                [
+                    "", "", "", "", "", "", "", ""
+                ],
+
+                [
+                    "", "", "", "", "", "", "", ""
+                ],
+
+                [
+                    "", "", "", "", "", "", "", ""
+                ],
+
+                [
+                    "", "", "", "", "", "", "", ""
+                ],
+
+                [
+                    "♙", "♙", "♙", "♙",
+                    "♙", "♙", "♙", "♙"
+                ],
+
+                [
+                    "♖", "♘", "♗", "♕",
+                    "♔", "♗", "♘", "♖"
+                ]
+
+            ];
+
+        }
+
+        /* =========================
+           RENDER
+        ========================= */
+
+        function renderBoard() {
+
+            boardHTML.innerHTML = "";
+
+            for (
+
+                let linha = 0;
+
+                linha < 8;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < 8;
+
+                    coluna++
+
+                ) {
+
+                    const square =
+                        document.createElement("div");
+
+                    square.classList.add(
+                        "square"
+                    );
+
+                    if (
+
+                        (linha + coluna) % 2 == 0
+
+                    ) {
+
+                        square.classList.add(
+                            "white"
+                        );
+
+                    }
+
+                    else {
+
+                        square.classList.add(
+                            "black"
+                        );
+
+                    }
+
+                    if (
+
+                        selecionado
+
+                        &&
+
+                        selecionado.linha == linha
+
+                        &&
+
+                        selecionado.coluna == coluna
+
+                    ) {
+
+                        square.classList.add(
+                            "selected"
+                        );
+
+                    }
+
+                    square.dataset.linha =
+                        linha;
+
+                    square.dataset.coluna =
+                        coluna;
+
+                    square.innerHTML =
+                        board[linha][coluna];
+
+                    square.addEventListener(
+                        "click",
+                        clicarCasa
+                    );
+
+                    boardHTML.appendChild(
+                        square
+                    );
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           PEÇAS BRANCAS
+        ========================= */
+
+        function isBranca(peca) {
+
+            return [
+
+                "♙", "♖", "♘",
+                "♗", "♕", "♔"
+
+            ].includes(peca);
+
+        }
+
+        /* =========================
+           PEÇAS PRETAS
+        ========================= */
+
+        function isPreta(peca) {
+
+            return [
+
+                "♟", "♜", "♞",
+                "♝", "♛", "♚"
+
+            ].includes(peca);
+
+        }
+
+        /* =========================
+           MESMA COR
+        ========================= */
+
+        function mesmaCor(
+
+            peca1,
+            peca2
+
+        ) {
+
+            if (
+                peca1 == ""
+                ||
+                peca2 == ""
+            ) {
+                return false;
+            }
+
+            return (
+
+                (
+                    isBranca(peca1)
+                    &&
+                    isBranca(peca2)
+                )
+
+                ||
+
+                (
+                    isPreta(peca1)
+                    &&
+                    isPreta(peca2)
+                )
+
+            );
+
+        }
+
+        /* =========================
+           CAMINHO LIVRE
+        ========================= */
+
+        function caminhoLivre(
+
+            linhaOrigem,
+            colunaOrigem,
+
+            linhaDestino,
+            colunaDestino
+
+        ) {
+
+            let passoLinha =
+
+                Math.sign(
+
+                    linhaDestino - linhaOrigem
+
+                );
+
+            let passoColuna =
+
+                Math.sign(
+
+                    colunaDestino - colunaOrigem
+
+                );
+
+            let linhaAtual =
+                linhaOrigem + passoLinha;
+
+            let colunaAtual =
+                colunaOrigem + passoColuna;
+
+            while (
+
+                linhaAtual != linhaDestino
+
+                ||
+
+                colunaAtual != colunaDestino
+
+            ) {
+
+                if (
+
+                    board[linhaAtual][colunaAtual]
+                    != ""
+
+                ) {
+
+                    return false;
+
+                }
+
+                linhaAtual += passoLinha;
+
+                colunaAtual += passoColuna;
+
+            }
+
+            return true;
+
+        }
+
+        /* =========================
+           MOVIMENTO VÁLIDO
+        ========================= */
+
+        function movimentoValido(
+
+            peca,
+
+            linhaOrigem,
+            colunaOrigem,
+
+            linhaDestino,
+            colunaDestino
+
+        ) {
+
+            if (
+
+                linhaOrigem == linhaDestino
+
+                &&
+
+                colunaOrigem == colunaDestino
+
+            ) {
+
+                return false;
+
+            }
+
+            const pecaDestino =
+
+                board[linhaDestino][colunaDestino];
+
+            if (
+
+                mesmaCor(
+                    peca,
+                    pecaDestino
+                )
+
+            ) {
+
+                return false;
+
+            }
+
+            const diffLinha =
+
+                linhaDestino - linhaOrigem;
+
+            const diffColuna =
+
+                colunaDestino - colunaOrigem;
+
+            /* =====================
+               PEÃO BRANCO
+            ===================== */
+
+            if (peca == "♙") {
+
+                if (
+
+                    diffColuna == 0
+
+                    &&
+
+                    diffLinha == -1
+
+                    &&
+
+                    pecaDestino == ""
+
+                ) {
+
+                    return true;
+
+                }
+
+                if (
+
+                    linhaOrigem == 6
+
+                    &&
+
+                    diffColuna == 0
+
+                    &&
+
+                    diffLinha == -2
+
+                    &&
+
+                    board[linhaOrigem - 1][colunaOrigem]
+                    == ""
+
+                    &&
+
+                    pecaDestino == ""
+
+                ) {
+
+                    return true;
+
+                }
+
+                if (
+
+                    Math.abs(diffColuna) == 1
+
+                    &&
+
+                    diffLinha == -1
+
+                    &&
+
+                    pecaDestino != ""
+
+                    &&
+
+                    isPreta(pecaDestino)
+
+                ) {
+
+                    return true;
+
+                }
+
+            }
+
+            /* =====================
+               PEÃO PRETO
+            ===================== */
+
+            if (peca == "♟") {
+
+                if (
+
+                    diffColuna == 0
+
+                    &&
+
+                    diffLinha == 1
+
+                    &&
+
+                    pecaDestino == ""
+
+                ) {
+
+                    return true;
+
+                }
+
+                if (
+
+                    linhaOrigem == 1
+
+                    &&
+
+                    diffColuna == 0
+
+                    &&
+
+                    diffLinha == 2
+
+                    &&
+
+                    board[linhaOrigem + 1][colunaOrigem]
+                    == ""
+
+                    &&
+
+                    pecaDestino == ""
+
+                ) {
+
+                    return true;
+
+                }
+
+                if (
+
+                    Math.abs(diffColuna) == 1
+
+                    &&
+
+                    diffLinha == 1
+
+                    &&
+
+                    pecaDestino != ""
+
+                    &&
+
+                    isBranca(pecaDestino)
+
+                ) {
+
+                    return true;
+
+                }
+
+            }
+
+            /* =====================
+               TORRE
+            ===================== */
+
+            if (
+
+                peca == "♖"
+
+                ||
+
+                peca == "♜"
+
+            ) {
+
+                if (
+
+                    linhaOrigem == linhaDestino
+
+                    ||
+
+                    colunaOrigem == colunaDestino
+
+                ) {
+
+                    return caminhoLivre(
+
+                        linhaOrigem,
+                        colunaOrigem,
+
+                        linhaDestino,
+                        colunaDestino
+
+                    );
+
+                }
+
+            }
+
+            /* =====================
+               BISPO
+            ===================== */
+
+            if (
+
+                peca == "♗"
+
+                ||
+
+                peca == "♝"
+
+            ) {
+
+                if (
+
+                    Math.abs(diffLinha)
+
+                    ==
+
+                    Math.abs(diffColuna)
+
+                ) {
+
+                    return caminhoLivre(
+
+                        linhaOrigem,
+                        colunaOrigem,
+
+                        linhaDestino,
+                        colunaDestino
+
+                    );
+
+                }
+
+            }
+
+            /* =====================
+               CAVALO
+            ===================== */
+
+            if (
+
+                peca == "♘"
+
+                ||
+
+                peca == "♞"
+
+            ) {
+
+                if (
+
+                    (
+                        Math.abs(diffLinha) == 2
+                        &&
+                        Math.abs(diffColuna) == 1
+                    )
+
+                    ||
+
+                    (
+                        Math.abs(diffLinha) == 1
+                        &&
+                        Math.abs(diffColuna) == 2
+                    )
+
+                ) {
+
+                    return true;
+
+                }
+
+            }
+
+            /* =====================
+               RAINHA
+            ===================== */
+
+            if (
+
+                peca == "♕"
+
+                ||
+
+                peca == "♛"
+
+            ) {
+
+                const linhaReta =
+
+                    linhaOrigem == linhaDestino;
+
+                const colunaReta =
+
+                    colunaOrigem == colunaDestino;
+
+                const diagonal =
+
+                    Math.abs(diffLinha)
+
+                    ==
+
+                    Math.abs(diffColuna);
+
+                if (
+
+                    linhaReta
+                    ||
+                    colunaReta
+                    ||
+                    diagonal
+
+                ) {
+
+                    return caminhoLivre(
+
+                        linhaOrigem,
+                        colunaOrigem,
+
+                        linhaDestino,
+                        colunaDestino
+
+                    );
+
+                }
+
+            }
+
+            /* =====================
+               REI
+            ===================== */
+
+            if (
+
+                peca == "♔"
+
+                ||
+
+                peca == "♚"
+
+            ) {
+
+                if (
+
+                    Math.abs(diffLinha) <= 1
+
+                    &&
+
+                    Math.abs(diffColuna) <= 1
+
+                ) {
+
+                    return true;
+
+                }
+
+            }
+
+            return false;
+
+        }
+
+        /* =========================
+           NOME PEÇA
+        ========================= */
+
+        function nomePeca(peca) {
+
+            switch (peca) {
+
+                case "♙":
+                    return "Peão Branco";
+
+                case "♟":
+                    return "Peão Preto";
+
+                case "♖":
+                    return "Torre Branca";
+
+                case "♜":
+                    return "Torre Preta";
+
+                case "♘":
+                    return "Cavalo Branco";
+
+                case "♞":
+                    return "Cavalo Preto";
+
+                case "♗":
+                    return "Bispo Branco";
+
+                case "♝":
+                    return "Bispo Preto";
+
+                case "♕":
+                    return "Rainha Branca";
+
+                case "♛":
+                    return "Rainha Preta";
+
+                case "♔":
+                    return "Rei Branco";
+
+                case "♚":
+                    return "Rei Preto";
+
+                default:
+                    return "Peça";
+
+            }
+
+        }
+
+        /* =========================
+           POSIÇÃO XADREZ
+        ========================= */
+
+        function posicaoXadrez(
+
+            linha,
+            coluna
+
+        ) {
+
+            const letras =
+                ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+            return (
+
+                letras[coluna]
+
+                +
+
+                (8 - linha)
+
+            );
+
+        }
+
+        /* =========================
+           ADICIONAR LOG
+        ========================= */
+
+        function adicionarLog(texto) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "log-item";
+
+            item.innerHTML =
+                texto;
+
+            logHTML.prepend(item);
+
+        }
+
+        /* =========================
+           CLIQUE CASA
+        ========================= */
+
+        function clicarCasa(evento) {
+
+            const linha =
+                Number(
+                    evento.target.dataset.linha
+                );
+
+            const coluna =
+                Number(
+                    evento.target.dataset.coluna
+                );
+
+            const peca =
+                board[linha][coluna];
+
+            if (selecionado == null) {
+
+                if (peca != "") {
+
+                    if (
+
+                        turno == "branco"
+
+                        &&
+
+                        isBranca(peca)
+
+                    ) {
+
+                        selecionado = {
+
+                            linha,
+                            coluna
+
+                        };
+
+                    }
+
+                    else if (
+
+                        turno == "preto"
+
+                        &&
+
+                        isPreta(peca)
+
+                    ) {
+
+                        selecionado = {
+
+                            linha,
+                            coluna
+
+                        };
+
+                    }
+
+                    renderBoard();
+
+                }
+
+            }
+
+            else {
+
+                moverPeca(
+
+                    selecionado.linha,
+                    selecionado.coluna,
+
+                    linha,
+                    coluna
+
+                );
+
+            }
+
+        }
+
+        /* =========================
+           MOVER PEÇA
+        ========================= */
+
+        function moverPeca(
+
+            linhaOrigem,
+            colunaOrigem,
+
+            linhaDestino,
+            colunaDestino
+
+        ) {
+
+            const peca =
+
+                board[linhaOrigem][colunaOrigem];
+
+            const captura =
+
+                board[linhaDestino][colunaDestino];
+
+            const valido =
+
+                movimentoValido(
+
+                    peca,
+
+                    linhaOrigem,
+                    colunaOrigem,
+
+                    linhaDestino,
+                    colunaDestino
+
+                );
+
+            if (valido) {
+
+                historico.push({
+
+                    linhaOrigem,
+                    colunaOrigem,
+
+                    linhaDestino,
+                    colunaDestino,
+
+                    peca,
+
+                    captura,
+
+                    turno
+
+                });
+
+                board[linhaDestino][colunaDestino]
+                    = peca;
+
+                board[linhaOrigem][colunaOrigem]
+                    = "";
+
+                let texto =
+
+                    `
+    ${nomePeca(peca)}
+    :
+    ${posicaoXadrez(
+                        linhaOrigem,
+                        colunaOrigem
+                    )}
+    →
+    ${posicaoXadrez(
+                        linhaDestino,
+                        colunaDestino
+                    )}
+    `;
+
+                if (captura != "") {
+
+                    texto +=
+                        ` | capturou ${nomePeca(captura)}`;
+
+                }
+
+                adicionarLog(texto);
+
+                trocarTurno();
+
+            }
+
+            selecionado = null;
+
+            renderBoard();
+
+        }
+
+        /* =========================
+           DESFAZER
+        ========================= */
+
+        function desfazerMovimento() {
+
+            if (
+
+                historico.length == 0
+
+            ) {
+
+                return;
+
+            }
+
+            const ultimo =
+
+                historico.pop();
+
+            board[
+                ultimo.linhaOrigem
+            ][
+                ultimo.colunaOrigem
+            ]
+
+                =
+
+                ultimo.peca;
+
+            board[
+                ultimo.linhaDestino
+            ][
+                ultimo.colunaDestino
+            ]
+
+                =
+
+                ultimo.captura;
+
+            turno =
+                ultimo.turno;
+
+            if (turno == "branco") {
+
+                infoHTML.innerHTML =
+                    "Turno: Branco";
+
+            }
+
+            else {
+
+                infoHTML.innerHTML =
+                    "Turno: Preto";
+
+            }
+
+            if (logHTML.firstChild) {
+
+                logHTML.removeChild(
+                    logHTML.firstChild
+                );
+
+            }
+
+            renderBoard();
+
+        }
+
+        /* =========================
+           TROCAR TURNO
+        ========================= */
+
+        function trocarTurno() {
+
+            if (turno == "branco") {
+
+                turno = "preto";
+
+                infoHTML.innerHTML =
+                    "Turno: Preto";
+
+            }
+
+            else {
+
+                turno = "branco";
+
+                infoHTML.innerHTML =
+                    "Turno: Branco";
+
+            }
+
+        }
+
+        /* =========================
+           REINICIAR
+        ========================= */
+
+        function reiniciarJogo() {
+
+            turno = "branco";
+
+            selecionado = null;
+
+            historico = [];
+
+            logHTML.innerHTML = "";
+
+            infoHTML.innerHTML =
+                "Turno: Branco";
+
+            criarTabuleiro();
+
+            renderBoard();
+
+        }
+
+        /* =========================
+           START
+        ========================= */
+
+        criarTabuleiro();
+
+        renderBoard();
+
+    </script>
+
+</body>
+
+</html>

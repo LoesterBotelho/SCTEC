@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro Completo Avançado</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            background:
+                linear-gradient(135deg,
+                    #e2e8f0,
+                    #f8fafc);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+
+            font-size: 38px;
+
+            color: #0f172a;
+
+            margin-bottom: 10px;
+        }
+
+        .header p {
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 22px;
+        }
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .form-group.full {
+
+            grid-column: 1 / -1;
+        }
+
+        label {
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #334155;
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 2px solid #cbd5e1;
+
+            border-radius: 14px;
+
+            outline: none;
+
+            background: #fff;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 120px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .success-border {
+
+            border-color: #16a34a !important;
+        }
+
+        .error-border {
+
+            border-color: #dc2626 !important;
+        }
+
+        .feedback {
+
+            min-height: 20px;
+
+            margin-top: 6px;
+
+            font-size: 13px;
+        }
+
+        .feedback.success {
+
+            color: #16a34a;
+        }
+
+        .feedback.error {
+
+            color: #dc2626;
+        }
+
+        .password-strength {
+
+            margin-top: 10px;
+
+            width: 100%;
+
+            height: 10px;
+
+            border-radius: 20px;
+
+            background: #e5e7eb;
+
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+
+            height: 100%;
+
+            width: 0%;
+
+            transition: 0.3s;
+        }
+
+        button {
+
+            margin-top: 35px;
+
+            width: 100%;
+
+            border: none;
+
+            background:
+                linear-gradient(90deg,
+                    #2563eb,
+                    #1d4ed8);
+
+            color: #fff;
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+
+            transform: translateY(-2px);
+
+            opacity: 0.95;
+        }
+
+        .resultado {
+
+            margin-top: 25px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            display: none;
+
+            font-weight: bold;
+        }
+
+        @media(max-width:700px) {
+
+            .container {
+
+                padding: 25px;
+            }
+
+            .header h1 {
+
+                font-size: 30px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>Cadastro Completo</h1>
+
+            <p>
+                HTML5 + CSS3 + JavaScript +
+                Regex + Validação em Tempo Real
+            </p>
+
+        </div>
+
+        <form id="formCadastro">
+
+            <div class="form-grid">
+
+                <!-- NOME -->
+
+                <div class="form-group">
+
+                    <label>Nome Completo</label>
+
+                    <input type="text" id="nome" placeholder="Digite seu nome">
+
+                    <div class="feedback" id="nomeFeedback"></div>
+
+                </div>
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>E-mail</label>
+
+                    <input type="email" id="email" placeholder="email@site.com">
+
+                    <div class="feedback" id="emailFeedback"></div>
+
+                </div>
+
+                <!-- CPF -->
+
+                <div class="form-group">
+
+                    <label>CPF</label>
+
+                    <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+
+                    <div class="feedback" id="cpfFeedback"></div>
+
+                </div>
+
+                <!-- TELEFONE -->
+
+                <div class="form-group">
+
+                    <label>Telefone</label>
+
+                    <input type="text" id="telefone" placeholder="(00) 00000-0000" maxlength="15">
+
+                    <div class="feedback" id="telefoneFeedback"></div>
+
+                </div>
+
+                <!-- SENHA -->
+
+                <div class="form-group">
+
+                    <label>Senha Forte</label>
+
+                    <input type="password" id="senha" placeholder="Digite senha forte">
+
+                    <div class="password-strength">
+
+                        <div class="password-strength-bar" id="passwordBar"></div>
+
+                    </div>
+
+                    <div class="feedback" id="senhaFeedback"></div>
+
+                </div>
+
+                <!-- CONFIRMAR SENHA -->
+
+                <div class="form-group">
+
+                    <label>Confirmar Senha</label>
+
+                    <input type="password" id="confirmarSenha" placeholder="Repita a senha">
+
+                    <div class="feedback" id="confirmarSenhaFeedback"></div>
+
+                </div>
+
+                <!-- IDADE -->
+
+                <div class="form-group">
+
+                    <label>Idade</label>
+
+                    <input type="number" id="idade" placeholder="Digite sua idade">
+
+                    <div class="feedback" id="idadeFeedback"></div>
+
+                </div>
+
+                <!-- ESTADO -->
+
+                <div class="form-group">
+
+                    <label>Estado</label>
+
+                    <select id="estado">
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option>SC</option>
+                        <option>PR</option>
+                        <option>RS</option>
+                        <option>SP</option>
+                        <option>RJ</option>
+
+                    </select>
+
+                    <div class="feedback" id="estadoFeedback"></div>
+
+                </div>
+
+                <!-- CEP -->
+
+                <div class="form-group">
+
+                    <label>CEP</label>
+
+                    <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+
+                    <div class="feedback" id="cepFeedback"></div>
+
+                </div>
+
+                <!-- SITE -->
+
+                <div class="form-group">
+
+                    <label>Website</label>
+
+                    <input type="url" id="site" placeholder="https://site.com">
+
+                    <div class="feedback" id="siteFeedback"></div>
+
+                </div>
+
+                <!-- OBS -->
+
+                <div class="form-group full">
+
+                    <label>Observações</label>
+
+                    <textarea id="obs" placeholder="Digite observações..."></textarea>
+
+                    <div class="feedback" id="obsFeedback"></div>
+
+                </div>
+
+            </div>
+
+            <button type="submit">
+                Cadastrar
+            </button>
+
+        </form>
+
+        <div class="resultado" id="resultado">
+
+            Cadastro realizado com sucesso!
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           ELEMENTOS
+        ========================= */
+
+        const form =
+            document.getElementById(
+                "formCadastro"
+            );
+
+        const resultado =
+            document.getElementById(
+                "resultado"
+            );
+
+        const passwordBar =
+            document.getElementById(
+                "passwordBar"
+            );
+
+        /* =========================
+           REGEX
+        ========================= */
+
+        const regexNome =
+            /^[A-Za-zÀ-ÿ\s]{3,}$/;
+
+        const regexEmail =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const regexCPF =
+            /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+
+        const regexTelefone =
+            /^\(\d{2}\)\s\d{5}\-\d{4}$/;
+
+        const regexCEP =
+            /^\d{5}\-\d{3}$/;
+
+        const regexSenhaForte =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]{8,}$/;
+
+        /* =========================
+           FEEDBACK
+        ========================= */
+
+        function feedback(
+
+            input,
+            feedbackId,
+            mensagem,
+            valido
+
+        ) {
+
+            const feedbackHTML =
+                document.getElementById(
+                    feedbackId
+                );
+
+            input.classList.remove(
+                "success-border",
+                "error-border"
+            );
+
+            feedbackHTML.classList.remove(
+                "success",
+                "error"
+            );
+
+            if (valido) {
+
+                input.classList.add(
+                    "success-border"
+                );
+
+                feedbackHTML.classList.add(
+                    "success"
+                );
+
+            }
+
+            else {
+
+                input.classList.add(
+                    "error-border"
+                );
+
+                feedbackHTML.classList.add(
+                    "error"
+                );
+
+            }
+
+            feedbackHTML.innerHTML =
+                mensagem;
+
+        }
+
+        /* =========================
+           VALIDAR NOME
+        ========================= */
+
+        function validarNome() {
+
+            const input =
+                document.getElementById(
+                    "nome"
+                );
+
+            const valido =
+                regexNome.test(
+                    input.value.trim()
+                );
+
+            feedback(
+
+                input,
+
+                "nomeFeedback",
+
+                valido
+                    ?
+                    "Nome válido"
+                    :
+                    "Digite nome completo",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR EMAIL
+        ========================= */
+
+        function validarEmail() {
+
+            const input =
+                document.getElementById(
+                    "email"
+                );
+
+            const valido =
+                regexEmail.test(
+                    input.value.trim()
+                );
+
+            feedback(
+
+                input,
+
+                "emailFeedback",
+
+                valido
+                    ?
+                    "E-mail válido"
+                    :
+                    "E-mail inválido",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR CPF
+        ========================= */
+
+        function validarCPF() {
+
+            const input =
+                document.getElementById(
+                    "cpf"
+                );
+
+            const valido =
+                regexCPF.test(
+                    input.value.trim()
+                );
+
+            feedback(
+
+                input,
+
+                "cpfFeedback",
+
+                valido
+                    ?
+                    "CPF válido"
+                    :
+                    "Formato: 000.000.000-00",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR TELEFONE
+        ========================= */
+
+        function validarTelefone() {
+
+            const input =
+                document.getElementById(
+                    "telefone"
+                );
+
+            const valido =
+                regexTelefone.test(
+                    input.value.trim()
+                );
+
+            feedback(
+
+                input,
+
+                "telefoneFeedback",
+
+                valido
+                    ?
+                    "Telefone válido"
+                    :
+                    "Formato: (00) 00000-0000",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR SENHA
+        ========================= */
+
+        function validarSenha() {
+
+            const input =
+                document.getElementById(
+                    "senha"
+                );
+
+            const valor =
+                input.value;
+
+            const valido =
+                regexSenhaForte.test(valor);
+
+            let forca = 0;
+
+            if (valor.length >= 8) {
+                forca += 25;
+            }
+
+            if (/[A-Z]/.test(valor)) {
+                forca += 25;
+            }
+
+            if (/[0-9]/.test(valor)) {
+                forca += 25;
+            }
+
+            if (/[@$!%*?&.#_-]/.test(valor)) {
+                forca += 25;
+            }
+
+            passwordBar.style.width =
+                forca + "%";
+
+            if (forca <= 25) {
+
+                passwordBar.style.background =
+                    "#dc2626";
+
+            }
+
+            else if (forca <= 50) {
+
+                passwordBar.style.background =
+                    "#f59e0b";
+
+            }
+
+            else if (forca <= 75) {
+
+                passwordBar.style.background =
+                    "#3b82f6";
+
+            }
+
+            else {
+
+                passwordBar.style.background =
+                    "#16a34a";
+
+            }
+
+            feedback(
+
+                input,
+
+                "senhaFeedback",
+
+                valido
+                    ?
+                    "Senha forte válida"
+                    :
+                    "Use maiúscula, minúscula, número e símbolo",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           CONFIRMAR SENHA
+        ========================= */
+
+        function validarConfirmarSenha() {
+
+            const input =
+                document.getElementById(
+                    "confirmarSenha"
+                );
+
+            const senha =
+                document.getElementById(
+                    "senha"
+                ).value;
+
+            const valido =
+                input.value === senha
+                &&
+                input.value != "";
+
+            feedback(
+
+                input,
+
+                "confirmarSenhaFeedback",
+
+                valido
+                    ?
+                    "Senha confirmada"
+                    :
+                    "As senhas não coincidem",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR IDADE
+        ========================= */
+
+        function validarIdade() {
+
+            const input =
+                document.getElementById(
+                    "idade"
+                );
+
+            const valido =
+                Number(input.value) >= 18;
+
+            feedback(
+
+                input,
+
+                "idadeFeedback",
+
+                valido
+                    ?
+                    "Idade válida"
+                    :
+                    "Mínimo 18 anos",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR ESTADO
+        ========================= */
+
+        function validarEstado() {
+
+            const input =
+                document.getElementById(
+                    "estado"
+                );
+
+            const valido =
+                input.value != "";
+
+            feedback(
+
+                input,
+
+                "estadoFeedback",
+
+                valido
+                    ?
+                    "Estado selecionado"
+                    :
+                    "Selecione um estado",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR CEP
+        ========================= */
+
+        function validarCEP() {
+
+            const input =
+                document.getElementById(
+                    "cep"
+                );
+
+            const valido =
+                regexCEP.test(
+                    input.value.trim()
+                );
+
+            feedback(
+
+                input,
+
+                "cepFeedback",
+
+                valido
+                    ?
+                    "CEP válido"
+                    :
+                    "Formato: 00000-000",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           VALIDAR SITE
+        ========================= */
+
+        function validarSite() {
+
+            const input =
+                document.getElementById(
+                    "site"
+                );
+
+            const valido =
+                input.value.startsWith(
+                    "https://"
+                );
+
+            feedback(
+
+                input,
+
+                "siteFeedback",
+
+                valido
+                    ?
+                    "Website válido"
+                    :
+                    "Use https://",
+
+                valido
+
+            );
+
+            return valido;
+
+        }
+
+        /* =========================
+           EVENTOS
+        ========================= */
+
+        document
+            .getElementById("nome")
+            .addEventListener(
+                "input",
+                validarNome
+            );
+
+        document
+            .getElementById("email")
+            .addEventListener(
+                "input",
+                validarEmail
+            );
+
+        document
+            .getElementById("cpf")
+            .addEventListener(
+                "input",
+                validarCPF
+            );
+
+        document
+            .getElementById("telefone")
+            .addEventListener(
+                "input",
+                validarTelefone
+            );
+
+        document
+            .getElementById("senha")
+            .addEventListener(
+                "input",
+                validarSenha
+            );
+
+        document
+            .getElementById("confirmarSenha")
+            .addEventListener(
+                "input",
+                validarConfirmarSenha
+            );
+
+        document
+            .getElementById("idade")
+            .addEventListener(
+                "input",
+                validarIdade
+            );
+
+        document
+            .getElementById("estado")
+            .addEventListener(
+                "change",
+                validarEstado
+            );
+
+        document
+            .getElementById("cep")
+            .addEventListener(
+                "input",
+                validarCEP
+            );
+
+        document
+            .getElementById("site")
+            .addEventListener(
+                "input",
+                validarSite
+            );
+
+        /* =========================
+           SUBMIT
+        ========================= */
+
+        form.addEventListener(
+
+            "submit",
+
+            function (event) {
+
+                event.preventDefault();
+
+                const valido =
+
+                    validarNome()
+
+                    &&
+
+                    validarEmail()
+
+                    &&
+
+                    validarCPF()
+
+                    &&
+
+                    validarTelefone()
+
+                    &&
+
+                    validarSenha()
+
+                    &&
+
+                    validarConfirmarSenha()
+
+                    &&
+
+                    validarIdade()
+
+                    &&
+
+                    validarEstado()
+
+                    &&
+
+                    validarCEP()
+
+                    &&
+
+                    validarSite();
+
+                if (valido) {
+
+                    resultado.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    resultado.style.display =
+                        "none";
+
+                    alert(
+                        "Corrija os campos inválidos."
+                    );
+
+                }
+
+            }
+
+        );
+
+        /* =========================
+           MÁSCARA CPF
+        ========================= */
+
+        document
+            .getElementById("cpf")
+            .addEventListener(
+
+                "input",
+
+                function (e) {
+
+                    let valor =
+                        e.target.value
+                            .replace(/\D/g, "");
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d)/,
+                            "$1.$2"
+                        );
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d)/,
+                            "$1.$2"
+                        );
+
+                    valor =
+                        valor.replace(
+                            /(\d{3})(\d{1,2})$/,
+                            "$1-$2"
+                        );
+
+                    e.target.value =
+                        valor;
+
+                }
+
+            );
+
+        /* =========================
+           MÁSCARA TELEFONE
+        ========================= */
+
+        document
+            .getElementById("telefone")
+            .addEventListener(
+
+                "input",
+
+                function (e) {
+
+                    let valor =
+                        e.target.value
+                            .replace(/\D/g, "");
+
+                    valor =
+                        valor.replace(
+                            /^(\d{2})(\d)/g,
+                            "($1) $2"
+                        );
+
+                    valor =
+                        valor.replace(
+                            /(\d{5})(\d)/,
+                            "$1-$2"
+                        );
+
+                    e.target.value =
+                        valor;
+
+                }
+
+            );
+
+        /* =========================
+           MÁSCARA CEP
+        ========================= */
+
+        document
+            .getElementById("cep")
+            .addEventListener(
+
+                "input",
+
+                function (e) {
+
+                    let valor =
+                        e.target.value
+                            .replace(/\D/g, "");
+
+                    valor =
+                        valor.replace(
+                            /(\d{5})(\d)/,
+                            "$1-$2"
+                        );
+
+                    e.target.value =
+                        valor;
+
+                }
+
+            );
+
+    </script>
+
+</body>
+
+</html>

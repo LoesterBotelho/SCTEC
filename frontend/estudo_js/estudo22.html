@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jogo da Velha</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            background: #111827;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+
+            color: #fff;
+        }
+
+        .container {
+
+            width: 420px;
+
+            background: #1f2937;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+
+            margin-bottom: 20px;
+
+            font-size: 38px;
+        }
+
+        .status {
+
+            margin-bottom: 20px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .tabuleiro {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+        .casa {
+
+            width: 110px;
+
+            height: 110px;
+
+            background: #374151;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 48px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .casa:hover {
+            background: #4b5563;
+        }
+
+        button {
+
+            padding: 12px 20px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .info {
+
+            margin-top: 20px;
+
+            text-align: left;
+
+            background: #111827;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Jogo da Velha</h1>
+
+        <div class="status" id="status">
+            Jogador atual: X
+        </div>
+
+        <!-- TABULEIRO -->
+
+        <div class="tabuleiro" id="tabuleiro">
+
+            <div class="casa" data-index="0"></div>
+
+            <div class="casa" data-index="1"></div>
+
+            <div class="casa" data-index="2"></div>
+
+            <div class="casa" data-index="3"></div>
+
+            <div class="casa" data-index="4"></div>
+
+            <div class="casa" data-index="5"></div>
+
+            <div class="casa" data-index="6"></div>
+
+            <div class="casa" data-index="7"></div>
+
+            <div class="casa" data-index="8"></div>
+
+        </div>
+
+        <button onclick="reiniciarJogo()">
+            Reiniciar Jogo
+        </button>
+
+        <!-- EXPLICAÇÃO -->
+
+        <div class="info">
+
+            <b>Conceitos usados:</b>
+
+            <br><br>
+
+            • HTML5 → estrutura da página
+
+            • CSS3 → visual do jogo
+
+            • JavaScript → lógica do jogo
+
+            • DOM → manipular elementos
+
+            • Arrays → guardar posições
+
+            • if → verificar vitória
+
+            • for → percorrer combinações
+
+            • addEventListener → clique
+
+            • Funções → organizar código
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           DOM
+        ========================= */
+
+        /*
+          Pegando elementos HTML
+        */
+
+        const casas =
+            document.querySelectorAll(".casa");
+
+        const statusTexto =
+            document.getElementById("status");
+
+        /* =========================
+           ARRAY TABULEIRO
+        ========================= */
+
+        /*
+          Array guarda as jogadas
+        */
+
+        let tabuleiro = [
+
+            "", "", "",
+
+            "", "", "",
+
+            "", "", ""
+
+        ];
+
+        /* =========================
+           JOGADOR
+        ========================= */
+
+        let jogadorAtual = "X";
+
+        /* =========================
+           JOGO ATIVO
+        ========================= */
+
+        let jogoAtivo = true;
+
+        /* =========================
+           COMBINAÇÕES VITÓRIA
+        ========================= */
+
+        const vitorias = [
+
+            [0, 1, 2],
+
+            [3, 4, 5],
+
+            [6, 7, 8],
+
+            [0, 3, 6],
+
+            [1, 4, 7],
+
+            [2, 5, 8],
+
+            [0, 4, 8],
+
+            [2, 4, 6]
+
+        ];
+
+        /* =========================
+           EVENTO CLIQUE
+        ========================= */
+
+        /*
+          forEach percorre
+          todas as casas
+        */
+
+        casas.forEach(function (casa) {
+
+            casa.addEventListener(
+
+                "click",
+
+                clicarCasa
+
+            );
+
+        });
+
+        /* =========================
+           CLICAR CASA
+        ========================= */
+
+        function clicarCasa(evento) {
+
+            /*
+              data-index do HTML
+            */
+
+            const index =
+                evento.target.dataset.index;
+
+            /*
+              Se já possui valor
+              ou jogo terminou
+            */
+
+            if (
+
+                tabuleiro[index] != ""
+
+                ||
+
+                jogoAtivo == false
+
+            ) {
+
+                return;
+
+            }
+
+            /*
+              Salva no array
+            */
+
+            tabuleiro[index] =
+                jogadorAtual;
+
+            /*
+              Atualiza DOM
+            */
+
+            evento.target.innerHTML =
+                jogadorAtual;
+
+            /*
+              Verifica vitória
+            */
+
+            verificarVitoria();
+
+        }
+
+        /* =========================
+           VERIFICAR VITÓRIA
+        ========================= */
+
+        function verificarVitoria() {
+
+            /*
+              for percorre vitórias
+            */
+
+            for (
+
+                let i = 0;
+
+                i < vitorias.length;
+
+                i++
+
+            ) {
+
+                /*
+                  Combinação atual
+                */
+
+                const combinacao =
+                    vitorias[i];
+
+                /*
+                  Posições
+                */
+
+                const a =
+                    tabuleiro[combinacao[0]];
+
+                const b =
+                    tabuleiro[combinacao[1]];
+
+                const c =
+                    tabuleiro[combinacao[2]];
+
+                /*
+                  Se vazio
+                */
+
+                if (
+
+                    a == ""
+
+                    ||
+
+                    b == ""
+
+                    ||
+
+                    c == ""
+
+                ) {
+
+                    continue;
+
+                }
+
+                /*
+                  Vitória
+                */
+
+                if (
+
+                    a == b
+
+                    &&
+
+                    b == c
+
+                ) {
+
+                    statusTexto.innerHTML =
+
+                        "Jogador "
+
+                        +
+
+                        jogadorAtual
+
+                        +
+
+                        " venceu!";
+
+                    jogoAtivo = false;
+
+                    return;
+
+                }
+
+            }
+
+            /*
+              Empate
+            */
+
+            if (
+
+                !tabuleiro.includes("")
+
+            ) {
+
+                statusTexto.innerHTML =
+                    "Empate!";
+
+                jogoAtivo = false;
+
+                return;
+
+            }
+
+            /*
+              Troca jogador
+            */
+
+            trocarJogador();
+
+        }
+
+        /* =========================
+           TROCAR JOGADOR
+        ========================= */
+
+        function trocarJogador() {
+
+            /*
+              Operador ternário
+            */
+
+            jogadorAtual =
+
+                jogadorAtual == "X"
+
+                    ?
+
+                    "O"
+
+                    :
+
+                    "X";
+
+            /*
+              Atualiza DOM
+            */
+
+            statusTexto.innerHTML =
+
+                "Jogador atual: "
+
+                +
+
+                jogadorAtual;
+
+        }
+
+        /* =========================
+           REINICIAR
+        ========================= */
+
+        function reiniciarJogo() {
+
+            /*
+              Limpa array
+            */
+
+            tabuleiro = [
+
+                "", "", "",
+
+                "", "", "",
+
+                "", "", ""
+
+            ];
+
+            /*
+              Reinicia jogador
+            */
+
+            jogadorAtual = "X";
+
+            /*
+              Ativa jogo
+            */
+
+            jogoAtivo = true;
+
+            /*
+              Atualiza status
+            */
+
+            statusTexto.innerHTML =
+                "Jogador atual: X";
+
+            /*
+              Limpa HTML
+            */
+
+            casas.forEach(function (casa) {
+
+                casa.innerHTML = "";
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

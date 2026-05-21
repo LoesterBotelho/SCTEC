@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Campo Minado</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #c0c0c0;
+        }
+
+        .tabuleiro {
+            display: grid;
+            grid-template-columns: repeat(8, 30px);
+            gap: 2px;
+            margin-top: 20px;
+            background: #808080;
+            padding: 2px;
+            border: 3px outset #fff;
+        }
+
+        .casa {
+            width: 30px;
+            height: 30px;
+            background: #c0c0c0;
+            border: 3px outset #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .aberta {
+            border: 1px solid #808080;
+            background: #bdc3c7;
+        }
+
+        .bomba {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Campo Minado</h1>
+    <div id="tabuleiro" class="tabuleiro"></div>
+    <button onclick="iniciarJogo()">Reiniciar</button>
+
+    <script>
+        const TAMANHO = 8;
+        const NUM_BOMBAS = 10;
+        let tabuleiro = [];
+
+        function iniciarJogo() {
+            const divTabuleiro = document.getElementById('tabuleiro');
+            divTabuleiro.innerHTML = '';
+            tabuleiro = Array(TAMANHO * TAMANHO).fill(0);
+
+            // Adicionar bombas aleatórias
+            let bombasColocadas = 0;
+            while (bombasColocadas < NUM_BOMBAS) {
+                let pos = Math.floor(Math.random() * (TAMANHO * TAMANHO));
+                if (tabuleiro[pos] !== 'B') {
+                    tabuleiro[pos] = 'B';
+                    bombasColocadas++;
+                }
+            }
+
+            // Criar elementos no DOM
+            tabuleiro.forEach((valor, index) => {
+                const div = document.createElement('div');
+                div.className = 'casa';
+                div.dataset.index = index;
+                div.addEventListener('click', abrirCasa);
+                divTabuleiro.appendChild(div);
+            });
+        }
+
+        function abrirCasa(e) {
+            const index = e.target.dataset.index;
+            if (tabuleiro[index] === 'B') {
+                e.target.classList.add('bomba');
+                alert('BOOM! Você perdeu.');
+                iniciarJogo();
+            } else {
+                e.target.classList.add('aberta');
+                e.target.innerText = '✓';
+            }
+        }
+
+        iniciarJogo();
+    </script>
+
+</body>
+
+</html>

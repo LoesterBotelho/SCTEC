@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Snake Game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html,
+        body {
+
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+        }
+
+        body {
+
+            background: #111827;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            color: #fff;
+        }
+
+        .container {
+
+            background: #1f2937;
+
+            padding: 20px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.4);
+
+            width: 95vw;
+
+            max-width: 500px;
+        }
+
+        h1 {
+
+            margin-bottom: 15px;
+
+            font-size: 36px;
+        }
+
+        .info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+
+            font-size: 18px;
+        }
+
+        canvas {
+
+            background: #000;
+
+            border: 5px solid #374151;
+
+            border-radius: 10px;
+
+            width: 100%;
+
+            max-width: 400px;
+
+            height: auto;
+        }
+
+        button {
+
+            margin-top: 15px;
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #22c55e;
+
+            color: #fff;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .controls {
+
+            margin-top: 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 70px);
+
+            gap: 10px;
+
+            justify-content: center;
+        }
+
+        .control-btn {
+
+            width: 70px;
+
+            height: 60px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #374151;
+
+            color: #fff;
+
+            font-size: 24px;
+
+            cursor: pointer;
+        }
+
+        .control-btn:hover {
+            background: #4b5563;
+        }
+
+        .explicacao {
+
+            margin-top: 20px;
+
+            background: #111827;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            text-align: left;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+        @media(max-width:500px) {
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .controls {
+
+                grid-template-columns:
+                    repeat(3, 60px);
+
+            }
+
+            .control-btn {
+
+                width: 60px;
+
+                height: 50px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🐍 Snake Game</h1>
+
+        <div class="info">
+
+            <div>
+                Pontos:
+                <span id="pontos">0</span>
+            </div>
+
+            <div>
+                Recorde:
+                <span id="recorde">0</span>
+            </div>
+
+        </div>
+
+        <!-- CANVAS -->
+
+        <canvas id="game" width="400" height="400">
+        </canvas>
+
+        <br>
+
+        <button onclick="reiniciarJogo()">
+            Reiniciar
+        </button>
+
+        <!-- CONTROLES -->
+
+        <div class="controls">
+
+            <div></div>
+
+            <button class="control-btn" onclick="mudarDirecao('cima')">
+                ⬆
+            </button>
+
+            <div></div>
+
+            <button class="control-btn" onclick="mudarDirecao('esquerda')">
+                ⬅
+            </button>
+
+            <button class="control-btn" onclick="mudarDirecao('baixo')">
+                ⬇
+            </button>
+
+            <button class="control-btn" onclick="mudarDirecao('direita')">
+                ➡
+            </button>
+
+        </div>
+
+        <div class="explicacao">
+
+            <b>Controles:</b>
+
+            <br><br>
+
+            • Setas teclado
+
+            <br>
+
+            • Botões tela
+
+            <br><br>
+
+            <b>Conceitos usados:</b>
+
+            <br><br>
+
+            • HTML5 Canvas
+
+            • CSS3
+
+            • JavaScript
+
+            • DOM
+
+            • Arrays
+
+            • Loops
+
+            • Colisão
+
+            • Eventos
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           CANVAS
+        ========================= */
+
+        const canvas =
+            document.getElementById("game");
+
+        const ctx =
+            canvas.getContext("2d");
+
+        /* =========================
+           DOM
+        ========================= */
+
+        const pontosHTML =
+            document.getElementById("pontos");
+
+        const recordeHTML =
+            document.getElementById("recorde");
+
+        /* =========================
+           CONFIG
+        ========================= */
+
+        const tamanho = 20;
+
+        const total = 20;
+
+        /* =========================
+           COBRA
+        ========================= */
+
+        let cobra = [
+
+            {
+                x: 10,
+                y: 10
+            }
+
+        ];
+
+        /* =========================
+           DIREÇÃO
+        ========================= */
+
+        let dx = 1;
+
+        let dy = 0;
+
+        let proximaDirecao = null;
+
+        /* =========================
+           COMIDA
+        ========================= */
+
+        let comida = {
+
+            x: 5,
+
+            y: 5
+
+        };
+
+        /* =========================
+           PONTOS
+        ========================= */
+
+        let pontos = 0;
+
+        let recorde = 0;
+
+        /* =========================
+           LOOP
+        ========================= */
+
+        let jogo =
+            setInterval(loop, 120);
+
+        /* =========================
+           DESENHAR
+        ========================= */
+
+        function desenhar() {
+
+            ctx.fillStyle = "#000";
+
+            ctx.fillRect(
+
+                0,
+
+                0,
+
+                canvas.width,
+
+                canvas.height
+
+            );
+
+            /* cobra */
+
+            for (
+
+                let i = 0;
+
+                i < cobra.length;
+
+                i++
+
+            ) {
+
+                ctx.fillStyle =
+
+                    i == 0
+
+                        ?
+
+                        "#22c55e"
+
+                        :
+
+                        "#4ade80";
+
+                ctx.fillRect(
+
+                    cobra[i].x * tamanho,
+
+                    cobra[i].y * tamanho,
+
+                    tamanho - 2,
+
+                    tamanho - 2
+
+                );
+
+            }
+
+            /* comida */
+
+            ctx.fillStyle = "#ef4444";
+
+            ctx.fillRect(
+
+                comida.x * tamanho,
+
+                comida.y * tamanho,
+
+                tamanho - 2,
+
+                tamanho - 2
+
+            );
+
+        }
+
+        /* =========================
+           LOOP
+        ========================= */
+
+        function loop() {
+
+            aplicarDirecao();
+
+            mover();
+
+            colisao();
+
+            desenhar();
+
+        }
+
+        /* =========================
+           APLICAR DIREÇÃO
+        ========================= */
+
+        function aplicarDirecao() {
+
+            if (proximaDirecao == "cima") {
+
+                if (dy != 1) {
+
+                    dx = 0;
+                    dy = -1;
+
+                }
+
+            }
+
+            else if (proximaDirecao == "baixo") {
+
+                if (dy != -1) {
+
+                    dx = 0;
+                    dy = 1;
+
+                }
+
+            }
+
+            else if (proximaDirecao == "esquerda") {
+
+                if (dx != 1) {
+
+                    dx = -1;
+                    dy = 0;
+
+                }
+
+            }
+
+            else if (proximaDirecao == "direita") {
+
+                if (dx != -1) {
+
+                    dx = 1;
+                    dy = 0;
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           MOVER
+        ========================= */
+
+        function mover() {
+
+            const cabeca = {
+
+                x:
+                    cobra[0].x + dx,
+
+                y:
+                    cobra[0].y + dy
+
+            };
+
+            cobra.unshift(cabeca);
+
+            /* comida */
+
+            if (
+
+                cabeca.x == comida.x
+
+                &&
+
+                cabeca.y == comida.y
+
+            ) {
+
+                pontos++;
+
+                pontosHTML.innerHTML =
+                    pontos;
+
+                if (pontos > recorde) {
+
+                    recorde = pontos;
+
+                    recordeHTML.innerHTML =
+                        recorde;
+
+                }
+
+                gerarComida();
+
+            }
+
+            else {
+
+                cobra.pop();
+
+            }
+
+        }
+
+        /* =========================
+           COMIDA
+        ========================= */
+
+        function gerarComida() {
+
+            comida = {
+
+                x:
+                    Math.floor(
+                        Math.random() * total
+                    ),
+
+                y:
+                    Math.floor(
+                        Math.random() * total
+                    )
+
+            };
+
+        }
+
+        /* =========================
+           COLISÃO
+        ========================= */
+
+        function colisao() {
+
+            const cabeca = cobra[0];
+
+            /* parede */
+
+            if (
+
+                cabeca.x < 0
+
+                ||
+
+                cabeca.y < 0
+
+                ||
+
+                cabeca.x >= total
+
+                ||
+
+                cabeca.y >= total
+
+            ) {
+
+                gameOver();
+
+            }
+
+            /* corpo */
+
+            for (
+
+                let i = 1;
+
+                i < cobra.length;
+
+                i++
+
+            ) {
+
+                if (
+
+                    cabeca.x == cobra[i].x
+
+                    &&
+
+                    cabeca.y == cobra[i].y
+
+                ) {
+
+                    gameOver();
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           GAME OVER
+        ========================= */
+
+        function gameOver() {
+
+            clearInterval(jogo);
+
+            alert(
+
+                "Game Over! Pontos: "
+
+                +
+
+                pontos
+
+            );
+
+        }
+
+        /* =========================
+           REINICIAR
+        ========================= */
+
+        function reiniciarJogo() {
+
+            cobra = [
+
+                {
+                    x: 10,
+                    y: 10
+                }
+
+            ];
+
+            dx = 1;
+
+            dy = 0;
+
+            proximaDirecao = null;
+
+            pontos = 0;
+
+            pontosHTML.innerHTML = 0;
+
+            gerarComida();
+
+            clearInterval(jogo);
+
+            jogo =
+                setInterval(loop, 120);
+
+        }
+
+        /* =========================
+           DIREÇÃO
+        ========================= */
+
+        function mudarDirecao(dir) {
+
+            proximaDirecao = dir;
+
+        }
+
+        /* =========================
+           TECLADO
+        ========================= */
+
+        document.addEventListener(
+
+            "keydown",
+
+            function (evento) {
+
+                /* bloqueia scroll */
+
+                if (
+
+                    evento.key == "ArrowUp"
+
+                    ||
+
+                    evento.key == "ArrowDown"
+
+                    ||
+
+                    evento.key == "ArrowLeft"
+
+                    ||
+
+                    evento.key == "ArrowRight"
+
+                ) {
+
+                    evento.preventDefault();
+
+                }
+
+                if (evento.key == "ArrowUp") {
+
+                    mudarDirecao("cima");
+
+                }
+
+                else if (
+                    evento.key == "ArrowDown"
+                ) {
+
+                    mudarDirecao("baixo");
+
+                }
+
+                else if (
+                    evento.key == "ArrowLeft"
+                ) {
+
+                    mudarDirecao("esquerda");
+
+                }
+
+                else if (
+                    evento.key == "ArrowRight"
+                ) {
+
+                    mudarDirecao("direita");
+
+                }
+
+            }
+
+        );
+
+        /* =========================
+           START
+        ========================= */
+
+        gerarComida();
+
+        desenhar();
+
+    </script>
+
+</body>
+
+</html>

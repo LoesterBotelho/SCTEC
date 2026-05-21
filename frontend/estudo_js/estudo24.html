@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campo Minado</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        body {
+
+            background: #008080;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        .janela {
+
+            background: #c0c0c0;
+
+            border-top: 4px solid #fff;
+
+            border-left: 4px solid #fff;
+
+            border-right: 4px solid #555;
+
+            border-bottom: 4px solid #555;
+
+            padding: 10px;
+
+            width: 420px;
+        }
+
+        .topo {
+
+            background: #000080;
+
+            color: #fff;
+
+            padding: 8px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+        .painel {
+
+            background: #bdbdbd;
+
+            border-top: 3px solid #555;
+
+            border-left: 3px solid #555;
+
+            border-right: 3px solid #fff;
+
+            border-bottom: 3px solid #fff;
+
+            padding: 10px;
+
+            margin-bottom: 10px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .contador {
+
+            background: #000;
+
+            color: red;
+
+            font-size: 28px;
+
+            width: 80px;
+
+            text-align: center;
+
+            padding: 5px;
+
+            font-family: monospace;
+        }
+
+        .botao {
+
+            width: 50px;
+
+            height: 50px;
+
+            background: #c0c0c0;
+
+            border-top: 3px solid #fff;
+
+            border-left: 3px solid #fff;
+
+            border-right: 3px solid #555;
+
+            border-bottom: 3px solid #555;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+        .tabuleiro {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(10, 1fr);
+
+            gap: 2px;
+
+            background: #7b7b7b;
+
+            padding: 4px;
+        }
+
+        .casa {
+
+            width: 36px;
+
+            height: 36px;
+
+            background: #c0c0c0;
+
+            border-top: 3px solid #fff;
+
+            border-left: 3px solid #fff;
+
+            border-right: 3px solid #555;
+
+            border-bottom: 3px solid #555;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            user-select: none;
+        }
+
+        .aberta {
+
+            border: 1px solid #999;
+
+            background: #d9d9d9;
+        }
+
+        .bomba {
+            background: #ff4d4d;
+        }
+
+        .info {
+
+            margin-top: 15px;
+
+            background: #e5e5e5;
+
+            padding: 10px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="janela">
+
+        <div class="topo">
+            💣 Campo Minado
+        </div>
+
+        <div class="painel">
+
+            <div class="contador" id="contadorBombas">
+                10
+            </div>
+
+            <div class="botao" onclick="reiniciar()">
+                🙂
+            </div>
+
+            <div class="contador" id="contadorTempo">
+                0
+            </div>
+
+        </div>
+
+        <!-- TABULEIRO -->
+
+        <div class="tabuleiro" id="tabuleiro"></div>
+
+        <!-- INFO -->
+
+        <div class="info">
+
+            <b>Controles:</b>
+
+            <br><br>
+
+            • Clique esquerdo → abrir casa
+
+            • Clique direito → bandeira 🚩
+
+            <br><br>
+
+            <b>Conceitos usados:</b>
+
+            <br><br>
+
+            • HTML5
+
+            • CSS3
+
+            • JavaScript
+
+            • DOM
+
+            • Arrays
+
+            • Arrays bidimensionais
+
+            • for
+
+            • if
+
+            • funções
+
+            • eventos
+
+            • addEventListener
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           CONFIG
+        ========================= */
+
+        const linhas = 10;
+
+        const colunas = 10;
+
+        const totalBombas = 10;
+
+        /* =========================
+           VARIÁVEIS
+        ========================= */
+
+        let tabuleiro = [];
+
+        let jogoFinalizado = false;
+
+        let tempo = 0;
+
+        let timer;
+
+        /* =========================
+           DOM
+        ========================= */
+
+        const tabuleiroHTML =
+            document.getElementById(
+                "tabuleiro"
+            );
+
+        const tempoHTML =
+            document.getElementById(
+                "contadorTempo"
+            );
+
+        /* =========================
+           INICIAR
+        ========================= */
+
+        function iniciar() {
+
+            tabuleiro = [];
+
+            jogoFinalizado = false;
+
+            tempo = 0;
+
+            tempoHTML.innerHTML = "0";
+
+            clearInterval(timer);
+
+            iniciarTempo();
+
+            tabuleiroHTML.innerHTML = "";
+
+            /* cria matriz */
+
+            for (
+
+                let linha = 0;
+
+                linha < linhas;
+
+                linha++
+
+            ) {
+
+                let linhaArray = [];
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < colunas;
+
+                    coluna++
+
+                ) {
+
+                    linhaArray.push({
+
+                        bomba: false,
+
+                        aberta: false,
+
+                        bandeira: false,
+
+                        numero: 0
+
+                    });
+
+                }
+
+                tabuleiro.push(linhaArray);
+
+            }
+
+            colocarBombas();
+
+            calcularNumeros();
+
+            criarDOM();
+
+        }
+
+        /* =========================
+           TEMPO
+        ========================= */
+
+        function iniciarTempo() {
+
+            timer = setInterval(function () {
+
+                tempo++;
+
+                tempoHTML.innerHTML = tempo;
+
+            }, 1000);
+
+        }
+
+        /* =========================
+           BOMBAS
+        ========================= */
+
+        function colocarBombas() {
+
+            let bombas = 0;
+
+            while (bombas < totalBombas) {
+
+                let linha =
+                    Math.floor(
+                        Math.random() * linhas
+                    );
+
+                let coluna =
+                    Math.floor(
+                        Math.random() * colunas
+                    );
+
+                if (
+
+                    tabuleiro[linha][coluna]
+                        .bomba == false
+
+                ) {
+
+                    tabuleiro[linha][coluna]
+                        .bomba = true;
+
+                    bombas++;
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           NÚMEROS
+        ========================= */
+
+        function calcularNumeros() {
+
+            for (
+
+                let linha = 0;
+
+                linha < linhas;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < colunas;
+
+                    coluna++
+
+                ) {
+
+                    if (
+                        tabuleiro[linha][coluna]
+                            .bomba
+                    ) {
+
+                        continue;
+
+                    }
+
+                    let total = 0;
+
+                    for (
+
+                        let l = -1;
+
+                        l <= 1;
+
+                        l++
+
+                    ) {
+
+                        for (
+
+                            let c = -1;
+
+                            c <= 1;
+
+                            c++
+
+                        ) {
+
+                            let novaLinha =
+                                linha + l;
+
+                            let novaColuna =
+                                coluna + c;
+
+                            if (
+
+                                novaLinha >= 0
+
+                                &&
+
+                                novaLinha < linhas
+
+                                &&
+
+                                novaColuna >= 0
+
+                                &&
+
+                                novaColuna < colunas
+
+                            ) {
+
+                                if (
+
+                                    tabuleiro
+                                    [novaLinha]
+                                    [novaColuna]
+                                        .bomba
+
+                                ) {
+
+                                    total++;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    tabuleiro[linha][coluna]
+                        .numero = total;
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           DOM
+        ========================= */
+
+        function criarDOM() {
+
+            for (
+
+                let linha = 0;
+
+                linha < linhas;
+
+                linha++
+
+            ) {
+
+                for (
+
+                    let coluna = 0;
+
+                    coluna < colunas;
+
+                    coluna++
+
+                ) {
+
+                    const casa =
+                        document.createElement("div");
+
+                    casa.classList.add("casa");
+
+                    casa.dataset.linha = linha;
+
+                    casa.dataset.coluna = coluna;
+
+                    /* clique esquerdo */
+
+                    casa.addEventListener(
+
+                        "click",
+
+                        abrirCasa
+
+                    );
+
+                    /* clique direito */
+
+                    casa.addEventListener(
+
+                        "contextmenu",
+
+                        colocarBandeira
+
+                    );
+
+                    tabuleiroHTML
+                        .appendChild(casa);
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           ABRIR CASA
+        ========================= */
+
+        function abrirCasa(evento) {
+
+            if (jogoFinalizado) {
+
+                return;
+
+            }
+
+            const linha =
+                evento.target.dataset.linha;
+
+            const coluna =
+                evento.target.dataset.coluna;
+
+            const item =
+                tabuleiro[linha][coluna];
+
+            if (
+
+                item.aberta
+
+                ||
+
+                item.bandeira
+
+            ) {
+
+                return;
+
+            }
+
+            item.aberta = true;
+
+            evento.target.classList
+                .add("aberta");
+
+            /* bomba */
+
+            if (item.bomba) {
+
+                evento.target.innerHTML =
+                    "💣";
+
+                evento.target.classList
+                    .add("bomba");
+
+                fimDeJogo();
+
+                return;
+
+            }
+
+            /* número */
+
+            if (item.numero > 0) {
+
+                evento.target.innerHTML =
+                    item.numero;
+
+            }
+
+            /* vazio */
+
+            if (item.numero == 0) {
+
+                abrirVizinhos(
+                    Number(linha),
+                    Number(coluna)
+                );
+
+            }
+
+        }
+
+        /* =========================
+           VIZINHOS
+        ========================= */
+
+        function abrirVizinhos(
+
+            linha,
+
+            coluna
+
+        ) {
+
+            for (
+
+                let l = -1;
+
+                l <= 1;
+
+                l++
+
+            ) {
+
+                for (
+
+                    let c = -1;
+
+                    c <= 1;
+
+                    c++
+
+                ) {
+
+                    let novaLinha =
+                        linha + l;
+
+                    let novaColuna =
+                        coluna + c;
+
+                    if (
+
+                        novaLinha >= 0
+
+                        &&
+
+                        novaLinha < linhas
+
+                        &&
+
+                        novaColuna >= 0
+
+                        &&
+
+                        novaColuna < colunas
+
+                    ) {
+
+                        let item =
+                            tabuleiro
+                            [novaLinha]
+                            [novaColuna];
+
+                        if (
+
+                            !item.aberta
+
+                            &&
+
+                            !item.bomba
+
+                        ) {
+
+                            const elemento =
+
+                                document.querySelector(
+
+                                    `[data-linha='${novaLinha}']
+            [data-coluna='${novaColuna}']`
+
+                                );
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        /* =========================
+           BANDEIRA
+        ========================= */
+
+        function colocarBandeira(evento) {
+
+            evento.preventDefault();
+
+            if (jogoFinalizado) {
+
+                return;
+
+            }
+
+            const linha =
+                evento.target.dataset.linha;
+
+            const coluna =
+                evento.target.dataset.coluna;
+
+            const item =
+                tabuleiro[linha][coluna];
+
+            if (item.aberta) {
+
+                return;
+
+            }
+
+            item.bandeira =
+                !item.bandeira;
+
+            if (item.bandeira) {
+
+                evento.target.innerHTML =
+                    "🚩";
+
+            } else {
+
+                evento.target.innerHTML =
+                    "";
+
+            }
+
+        }
+
+        /* =========================
+           FIM
+        ========================= */
+
+        function fimDeJogo() {
+
+            jogoFinalizado = true;
+
+            clearInterval(timer);
+
+            alert("Game Over!");
+
+        }
+
+        /* =========================
+           REINICIAR
+        ========================= */
+
+        function reiniciar() {
+
+            iniciar();
+
+        }
+
+        /* =========================
+           START
+        ========================= */
+
+        iniciar();
+
+    </script>
+
+</body>
+
+</html>

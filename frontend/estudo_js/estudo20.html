@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Pedidos - Pizzaria</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #e11d48;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Pizzaria JavaScript</h2>
+        <input type="number" id="numPedido" placeholder="Digite o nº do pedido (1-4)">
+        <button onclick="processarPedido()">Verificar Pedido</button>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        // 1. Criar a função clientePedido que recebe numeropedido
+        function clientePedido(numeropedido) {
+            // 2. Condições para cada tipo de pizza
+            if (numeropedido == 1) {
+                return 'Pizza de Calabresa';
+            } else if (numeropedido == 2) {
+                return 'Pizza de Quatro Queijos';
+            } else if (numeropedido == 3) {
+                return 'Pizza de Frango com Catupiry';
+            } else if (numeropedido == 4) {
+                return 'Pizza de Brigadeiro';
+            } else {
+                return 'Número do pedido inválido!';
+            }
+        }
+
+        // Função auxiliar para exibir na tela
+        function processarPedido() {
+            const input = document.getElementById('numPedido').value;
+            const resultado = clientePedido(input);
+            document.getElementById('resultado').innerText = resultado;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todo List Moderno</title>
+
+    <style>
+        /* =========================
+   RESET
+========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(135deg,
+                    #0f172a,
+                    #1e293b,
+                    #334155);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        /* =========================
+   CONTAINER
+========================= */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 750px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* =========================
+   HEADER
+========================= */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        h1 {
+
+            font-size: 38px;
+
+            color: #111827;
+        }
+
+        .total {
+
+            background: #2563eb;
+
+            color: #fff;
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            font-weight: bold;
+        }
+
+        /* =========================
+   FORM
+========================= */
+
+        .form {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .form input {
+
+            flex: 1;
+
+            height: 52px;
+
+            border: none;
+
+            outline: none;
+
+            background: #f1f5f9;
+
+            border-radius: 14px;
+
+            padding: 0 16px;
+
+            font-size: 16px;
+        }
+
+        .form button {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            padding: 0 24px;
+
+            border-radius: 14px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .form button:hover {
+
+            background: #1d4ed8;
+        }
+
+        /* =========================
+   FILTERS
+========================= */
+
+        .filters {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+
+            border: none;
+
+            background: #e2e8f0;
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .filter-btn.active {
+
+            background: #2563eb;
+
+            color: #fff;
+        }
+
+        .filter-btn:hover {
+
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+   LISTA
+========================= */
+
+        .todo-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+        }
+
+        /* =========================
+   CARD
+========================= */
+
+        .todo {
+
+            background: #f8fafc;
+
+            border-radius: 18px;
+
+            padding: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            border: 2px solid transparent;
+
+            transition: 0.2s;
+        }
+
+        .todo:hover {
+
+            transform: translateY(-2px);
+
+            border-color: #2563eb;
+        }
+
+        /* =========================
+   INFO
+========================= */
+
+        .todo-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            flex: 1;
+        }
+
+        .todo-check {
+
+            width: 24px;
+
+            height: 24px;
+
+            cursor: pointer;
+        }
+
+        .todo-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 6px;
+        }
+
+        .todo-title {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #111827;
+        }
+
+        .completed .todo-title {
+
+            text-decoration: line-through;
+
+            opacity: 0.5;
+        }
+
+        .todo-date {
+
+            font-size: 13px;
+
+            color: #64748b;
+        }
+
+        /* =========================
+   BADGE
+========================= */
+
+        .badge {
+
+            padding: 8px 14px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+        .done {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        /* =========================
+   ACTIONS
+========================= */
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .actions button {
+
+            border: none;
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            transition: 0.2s;
+        }
+
+        .edit {
+
+            background: #dbeafe;
+        }
+
+        .delete {
+
+            background: #fee2e2;
+        }
+
+        .actions button:hover {
+
+            transform: scale(1.05);
+        }
+
+        /* =========================
+   EMPTY
+========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #64748b;
+
+            font-size: 18px;
+        }
+
+        /* =========================
+   RESPONSIVO
+========================= */
+
+        @media(max-width:700px) {
+
+            .form {
+
+                flex-direction: column;
+            }
+
+            .form button {
+
+                height: 52px;
+            }
+
+            .todo {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .actions {
+
+                width: 100%;
+
+                justify-content: flex-end;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>📝 Todo List</h1>
+
+            <div class="total" id="totalTasks">
+                0 tarefas
+            </div>
+
+        </div>
+
+        <!-- FORM -->
+
+        <div class="form">
+
+            <input type="text" id="taskInput" placeholder="Digite uma tarefa...">
+
+            <button onclick="addTask()">
+                Adicionar
+            </button>
+
+        </div>
+
+        <!-- FILTROS -->
+
+        <div class="filters">
+
+            <button class="filter-btn active" onclick="setFilter('all', this)">
+                Todas
+            </button>
+
+            <button class="filter-btn" onclick="setFilter('pending', this)">
+                Pendentes
+            </button>
+
+            <button class="filter-btn" onclick="setFilter('done', this)">
+                Concluídas
+            </button>
+
+        </div>
+
+        <!-- IMPORT / EXPORT -->
+
+        <div class="filters">
+
+            <button class="filter-btn" onclick="exportJson()">
+                ⬇️ Exportar JSON
+            </button>
+
+            <label class="filter-btn" style="cursor:pointer;">
+
+                ⬆️ Importar JSON
+
+                <input type="file" accept=".json" onchange="importJson(event)" hidden>
+
+            </label>
+
+        </div>
+
+        <!-- LISTA -->
+
+        <div class="todo-list" id="todoList"></div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           ARRAY / JSON
+        ========================= */
+
+        let tasks = [
+
+            {
+                id: 1,
+                title: "Estudar JavaScript",
+                completed: false,
+                createdAt: "21/05/2026"
+            },
+
+            {
+                id: 2,
+                title: "Treinar HTML e CSS",
+                completed: true,
+                createdAt: "20/05/2026"
+            },
+
+            {
+                id: 3,
+                title: "Criar projeto Todo List",
+                completed: false,
+                createdAt: "19/05/2026"
+            }
+
+        ];
+
+        /* =========================
+           FILTRO
+        ========================= */
+
+        let currentFilter = "all";
+
+        /* =========================
+           DOM
+        ========================= */
+
+        const todoList =
+            document.getElementById("todoList");
+
+        const totalTasks =
+            document.getElementById("totalTasks");
+
+        const taskInput =
+            document.getElementById("taskInput");
+
+        /* =========================
+           RENDER
+        ========================= */
+
+        function renderTasks() {
+
+            todoList.innerHTML = "";
+
+            let filteredTasks =
+                tasks;
+
+            if (currentFilter == "pending") {
+
+                filteredTasks =
+                    tasks.filter(task =>
+                        !task.completed
+                    );
+
+            }
+
+            if (currentFilter == "done") {
+
+                filteredTasks =
+                    tasks.filter(task =>
+                        task.completed
+                    );
+
+            }
+
+            totalTasks.innerHTML =
+                `${tasks.length} tarefas`;
+
+            if (filteredTasks.length == 0) {
+
+                todoList.innerHTML = `
+
+      <div class="empty">
+
+        Nenhuma tarefa encontrada 😢
+
+      </div>
+
+    `;
+
+                return;
+
+            }
+
+            filteredTasks.forEach(task => {
+
+                const div =
+                    document.createElement("div");
+
+                div.className =
+                    task.completed
+                        ?
+                        "todo completed"
+                        :
+                        "todo";
+
+                div.innerHTML = `
+
+      <div class="todo-info">
+
+        <input
+        type="checkbox"
+        class="todo-check"
+        ${task.completed ? "checked" : ""}
+        onchange="toggleTask(${task.id})"
+        >
+
+        <div class="todo-text">
+
+          <div class="todo-title">
+            ${task.title}
+          </div>
+
+          <div class="todo-date">
+            Criado em: ${task.createdAt}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="badge ${task.completed
+                        ?
+                        "done"
+                        :
+                        "pending"
+                    }">
+
+        ${task.completed
+                        ?
+                        "Concluído"
+                        :
+                        "Pendente"
+                    }
+
+      </div>
+
+      <div class="actions">
+
+        <button
+        class="edit"
+        onclick="editTask(${task.id})"
+        >
+          ✏️
+        </button>
+
+        <button
+        class="delete"
+        onclick="deleteTask(${task.id})"
+        >
+          🗑️
+        </button>
+
+      </div>
+
+    `;
+
+                todoList.appendChild(div);
+
+            });
+
+        }
+
+        /* =========================
+           ADICIONAR
+        ========================= */
+
+        function addTask() {
+
+            const value =
+                taskInput.value.trim();
+
+            if (value == "") {
+
+                alert("Digite uma tarefa");
+
+                return;
+
+            }
+
+            const today =
+                new Date();
+
+            const date =
+                today.toLocaleDateString("pt-BR");
+
+            tasks.push({
+
+                id: Date.now(),
+
+                title: value,
+
+                completed: false,
+
+                createdAt: date
+
+            });
+
+            taskInput.value = "";
+
+            renderTasks();
+
+        }
+
+        /* =========================
+           TOGGLE
+        ========================= */
+
+        function toggleTask(id) {
+
+            tasks.forEach(task => {
+
+                if (task.id == id) {
+
+                    task.completed =
+                        !task.completed;
+
+                }
+
+            });
+
+            renderTasks();
+
+        }
+
+        /* =========================
+           DELETE
+        ========================= */
+
+        function deleteTask(id) {
+
+            tasks =
+                tasks.filter(task =>
+                    task.id != id
+                );
+
+            renderTasks();
+
+        }
+
+        /* =========================
+           EDIT
+        ========================= */
+
+        function editTask(id) {
+
+            const task =
+                tasks.find(task =>
+                    task.id == id
+                );
+
+            const novoTexto =
+                prompt(
+                    "Editar tarefa:",
+                    task.title
+                );
+
+            if (
+
+                novoTexto != null
+
+                &&
+
+                novoTexto.trim() != ""
+
+            ) {
+
+                task.title =
+                    novoTexto;
+
+                renderTasks();
+
+            }
+
+        }
+
+        /* =========================
+           FILTRO
+        ========================= */
+
+        function setFilter(
+
+            filter,
+            button
+
+        ) {
+
+            currentFilter = filter;
+
+            document
+                .querySelectorAll(".filter-btn")
+                .forEach(btn => {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                });
+
+            button.classList.add(
+                "active"
+            );
+
+            renderTasks();
+
+        }
+
+        /* =========================
+           EXPORTAR JSON
+        ========================= */
+
+        function exportJson() {
+
+            const json =
+                JSON.stringify(
+                    tasks,
+                    null,
+                    2
+                );
+
+            const blob =
+                new Blob(
+                    [json],
+                    {
+                        type: "application/json"
+                    }
+                );
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const a =
+                document.createElement("a");
+
+            a.href = url;
+
+            a.download =
+                "todo-list.json";
+
+            a.click();
+
+            URL.revokeObjectURL(url);
+
+        }
+
+        /* =========================
+           IMPORTAR JSON
+        ========================= */
+
+        function importJson(event) {
+
+            const file =
+                event.target.files[0];
+
+            if (!file) {
+
+                return;
+
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function (e) {
+
+                    try {
+
+                        const importedTasks =
+                            JSON.parse(
+                                e.target.result
+                            );
+
+                        if (
+
+                            Array.isArray(
+                                importedTasks
+                            )
+
+                        ) {
+
+                            tasks =
+                                importedTasks;
+
+                            renderTasks();
+
+                            alert(
+                                "JSON importado com sucesso!"
+                            );
+
+                        }
+
+                        else {
+
+                            alert(
+                                "Arquivo inválido."
+                            );
+
+                        }
+
+                    }
+
+                    catch (error) {
+
+                        alert(
+                            "Erro ao importar JSON."
+                        );
+
+                        console.log(error);
+
+                    }
+
+                };
+
+            reader.readAsText(file);
+
+        }
+
+        /* =========================
+           ENTER
+        ========================= */
+
+        taskInput.addEventListener(
+            "keypress",
+            function (event) {
+
+                if (event.key == "Enter") {
+
+                    addTask();
+
+                }
+
+            }
+        );
+
+        /* =========================
+           INIT
+        ========================= */
+
+        renderTasks();
+
+    </script>
+
+</body>
+
+</html>
