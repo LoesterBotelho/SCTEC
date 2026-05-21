@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Arrays e forEach</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            font-size: 34px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #1d4ed8;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f3f4f6;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-family: Consolas, monospace;
+        }
+
+        button {
+
+            padding: 12px 20px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        ul {
+            margin-left: 20px;
+            line-height: 1.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript - Arrays e forEach</h1>
+
+        <!-- NOMES -->
+
+        <div class="card">
+
+            <h2>1. Lista de Nomes</h2>
+
+            <p>
+                Um array pode guardar vários nomes.
+            </p>
+
+            <div class="code">
+
+                const nomes = [
+
+                "João",
+
+                "Maria",
+
+                "Pedro"
+
+                ];
+
+            </div>
+
+            <button onclick="mostrarNomes()">
+                Mostrar nomes
+            </button>
+
+            <div class="resultado" id="resultadoNomes"></div>
+
+        </div>
+
+        <!-- FRUTAS -->
+
+        <div class="card">
+
+            <h2>2. Lista de Frutas</h2>
+
+            <p>
+                Arrays são muito usados para listas.
+            </p>
+
+            <div class="code">
+
+                let frutas = [
+
+                "Maçã",
+
+                "Banana",
+
+                "Laranja"
+
+                ];
+
+            </div>
+
+            <button onclick="mostrarFrutas()">
+                Mostrar frutas
+            </button>
+
+            <div class="resultado" id="resultadoFrutas"></div>
+
+        </div>
+
+        <!-- COMIDAS -->
+
+        <div class="card">
+
+            <h2>3. Lista de Comidas</h2>
+
+            <p>
+                Você pode adicionar itens usando push().
+            </p>
+
+            <div class="code">
+
+                let comidas = [
+
+                "Pizza",
+
+                "Hambúrguer"
+
+                ];
+
+                comidas.push("Lasanha");
+
+            </div>
+
+            <button onclick="mostrarComidas()">
+                Mostrar comidas
+            </button>
+
+            <div class="resultado" id="resultadoComidas"></div>
+
+        </div>
+
+        <!-- LISTA COMPRAS -->
+
+        <div class="card">
+
+            <h2>4. Lista de Compras</h2>
+
+            <p>
+                Exemplo simples de mercado.
+            </p>
+
+            <div class="code">
+
+                const compras = [
+
+                "Arroz",
+
+                "Feijão",
+
+                "Leite",
+
+                "Café"
+
+                ];
+
+            </div>
+
+            <button onclick="mostrarCompras()">
+                Mostrar compras
+            </button>
+
+            <div class="resultado" id="resultadoCompras"></div>
+
+        </div>
+
+        <!-- CONST -->
+
+        <div class="card">
+
+            <h2>5. const</h2>
+
+            <p>
+                const cria um valor fixo.
+            </p>
+
+            <p>
+                Você NÃO pode trocar o valor.
+            </p>
+
+            <div class="code">
+
+                const cidade = "Florianópolis";
+
+            </div>
+
+            <button onclick="mostrarConst()">
+                Mostrar const
+            </button>
+
+            <div class="resultado" id="resultadoConst"></div>
+
+        </div>
+
+        <!-- LET -->
+
+        <div class="card">
+
+            <h2>6. let</h2>
+
+            <p>
+                let permite alterar o valor.
+            </p>
+
+            <div class="code">
+
+                let idade = 20;
+
+                idade = 30;
+
+            </div>
+
+            <button onclick="mostrarLet()">
+                Mostrar let
+            </button>
+
+            <div class="resultado" id="resultadoLet"></div>
+
+        </div>
+
+        <!-- FOREACH -->
+
+        <div class="card">
+
+            <h2>7. forEach</h2>
+
+            <p>
+                forEach percorre todos os itens do array.
+            </p>
+
+            <div class="code">
+
+                const frutas = [
+
+                "Maçã",
+
+                "Banana",
+
+                "Laranja"
+
+                ];
+
+                frutas.forEach(function(fruta){
+
+                console.log(fruta);
+
+                });
+
+            </div>
+
+            <button onclick="mostrarForEach()">
+                Executar forEach
+            </button>
+
+            <div class="resultado" id="resultadoForEach"></div>
+
+        </div>
+
+        <!-- ARRAY BIDIMENSIONAL -->
+
+        <div class="card">
+
+            <h2>8. Array Bidimensional</h2>
+
+            <p>
+                Array dentro de array.
+            </p>
+
+            <p>
+                Muito usado em tabelas.
+            </p>
+
+            <div class="code">
+
+                const alunos = [
+
+                ["João",20],
+
+                ["Maria",25],
+
+                ["Pedro",30]
+
+                ];
+
+            </div>
+
+            <button onclick="mostrarBidimensional()">
+                Mostrar alunos
+            </button>
+
+            <div class="resultado" id="resultadoBi"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================
+           NOMES
+        ========================= */
+
+        function mostrarNomes() {
+
+            const nomes = [
+
+                "João",
+
+                "Maria",
+
+                "Pedro"
+
+            ];
+
+            let html = "<ul>";
+
+            nomes.forEach(function (nome) {
+
+                html += "<li>" + nome + "</li>";
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultadoNomes"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           FRUTAS
+        ========================= */
+
+        function mostrarFrutas() {
+
+            let frutas = [
+
+                "Maçã",
+
+                "Banana",
+
+                "Laranja"
+
+            ];
+
+            let texto = "";
+
+            frutas.forEach(function (fruta) {
+
+                texto += fruta + "<br>";
+
+            });
+
+            document.getElementById(
+                "resultadoFrutas"
+            ).innerHTML = texto;
+
+        }
+
+        /* =========================
+           COMIDAS
+        ========================= */
+
+        function mostrarComidas() {
+
+            let comidas = [
+
+                "Pizza",
+
+                "Hambúrguer"
+
+            ];
+
+            // adicionando item
+
+            comidas.push("Lasanha");
+
+            let html = "<ul>";
+
+            comidas.forEach(function (comida) {
+
+                html += "<li>" + comida + "</li>";
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultadoComidas"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           COMPRAS
+        ========================= */
+
+        function mostrarCompras() {
+
+            const compras = [
+
+                "Arroz",
+
+                "Feijão",
+
+                "Leite",
+
+                "Café"
+
+            ];
+
+            let html = "<ul>";
+
+            compras.forEach(function (item) {
+
+                html += "<li>" + item + "</li>";
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultadoCompras"
+            ).innerHTML = html;
+
+        }
+
+        /* =========================
+           CONST
+        ========================= */
+
+        function mostrarConst() {
+
+            const cidade = "Florianópolis";
+
+            document.getElementById(
+                "resultadoConst"
+            ).innerHTML =
+
+                "Cidade: " + cidade;
+
+        }
+
+        /* =========================
+           LET
+        ========================= */
+
+        function mostrarLet() {
+
+            let idade = 20;
+
+            idade = 30;
+
+            document.getElementById(
+                "resultadoLet"
+            ).innerHTML =
+
+                "Nova idade: " + idade;
+
+        }
+
+        /* =========================
+           FOREACH
+        ========================= */
+
+        function mostrarForEach() {
+
+            const frutas = [
+
+                "Maçã",
+
+                "Banana",
+
+                "Laranja"
+
+            ];
+
+            let texto = "";
+
+            frutas.forEach(function (fruta) {
+
+                texto +=
+                    "Fruta: " +
+                    fruta +
+                    "<br>";
+
+            });
+
+            document.getElementById(
+                "resultadoForEach"
+            ).innerHTML = texto;
+
+        }
+
+        /* =========================
+           ARRAY BIDIMENSIONAL
+        ========================= */
+
+        function mostrarBidimensional() {
+
+            const alunos = [
+
+                ["João", 20],
+
+                ["Maria", 25],
+
+                ["Pedro", 30]
+
+            ];
+
+            let html = "<ul>";
+
+            alunos.forEach(function (aluno) {
+
+                html +=
+                    "<li>" +
+                    aluno[0] +
+                    " - " +
+                    aluno[1] +
+                    " anos" +
+                    "</li>";
+
+            });
+
+            html += "</ul>";
+
+            document.getElementById(
+                "resultadoBi"
+            ).innerHTML = html;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
