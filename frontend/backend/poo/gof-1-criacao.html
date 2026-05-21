@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GoF Creational Patterns (Simple JS)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #222;
+        }
+
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>GoF Creational Patterns (JavaScript Simple Examples)</h1>
+
+    <div class="box">
+        <h2>1. Singleton</h2>
+        <p>Only ONE instance is allowed.</p>
+        <pre id="singleton"></pre>
+    </div>
+
+    <div class="box">
+        <h2>2. Factory Method</h2>
+        <p>Create objects without knowing exact class.</p>
+        <pre id="factory"></pre>
+    </div>
+
+    <div class="box">
+        <h2>3. Abstract Factory</h2>
+        <p>Create families of related objects.</p>
+        <pre id="abstractFactory"></pre>
+    </div>
+
+    <div class="box">
+        <h2>4. Builder</h2>
+        <p>Build complex object step by step.</p>
+        <pre id="builder"></pre>
+    </div>
+
+    <div class="box">
+        <h2>5. Prototype</h2>
+        <p>Create new objects from existing ones.</p>
+        <pre id="prototype"></pre>
+    </div>
+
+    <script>
+
+        // 1. Singleton Pattern
+        // Only one instance exists
+        class Database {
+            constructor() {
+                if (Database.instance) {
+                    return Database.instance;
+                }
+                this.data = "I am single instance";
+                Database.instance = this;
+            }
+        }
+
+        const db1 = new Database();
+        const db2 = new Database();
+
+        document.getElementById("singleton").textContent =
+            "db1 === db2 ? " + (db1 === db2);
+
+
+        // 2. Factory Method
+        // Create objects without using 'new' directly
+        class Car {
+            drive() {
+                return "Driving car";
+            }
+        }
+
+        class Bike {
+            drive() {
+                return "Riding bike";
+            }
+        }
+
+        class VehicleFactory {
+            create(type) {
+                if (type === "car") return new Car();
+                if (type === "bike") return new Bike();
+            }
+        }
+
+        const factory = new VehicleFactory();
+        const vehicle = factory.create("car");
+
+        document.getElementById("factory").textContent =
+            vehicle.drive();
+
+
+        // 3. Abstract Factory
+        // Factory that creates families of objects
+        class WindowsButton {
+            click() {
+                return "Windows Button";
+            }
+        }
+
+        class MacButton {
+            click() {
+                return "Mac Button";
+            }
+        }
+
+        class GUIFactory {
+            createButton(os) {
+                if (os === "windows") return new WindowsButton();
+                if (os === "mac") return new MacButton();
+            }
+        }
+
+        const guiFactory = new GUIFactory();
+        const button = guiFactory.createButton("mac");
+
+        document.getElementById("abstractFactory").textContent =
+            button.click();
+
+
+        // 4. Builder Pattern
+        // Build object step by step
+        class House {
+            constructor() {
+                this.parts = [];
+            }
+
+            add(part) {
+                this.parts.push(part);
+                return this;
+            }
+
+            show() {
+                return this.parts.join(", ");
+            }
+        }
+
+        const house = new House()
+            .add("walls")
+            .add("roof")
+            .add("windows");
+
+
+        document.getElementById("builder").textContent =
+            house.show();
+
+
+        // 5. Prototype Pattern
+        // Clone existing object
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+
+            clone() {
+                return new Animal(this.name);
+            }
+        }
+
+        const dog1 = new Animal("Dog");
+        const dog2 = dog1.clone();
+
+
+        document.getElementById("prototype").textContent =
+            "dog1 === dog2 ? " + (dog1 === dog2);
+
+    </script>
+
+</body>
+
+</html>

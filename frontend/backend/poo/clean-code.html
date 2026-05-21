@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Clean Code (EN + PT-BR)</title>
+
+    <style>
+        /* =========================
+   CLEAN CSS PRACTICES
+   ========================= */
+
+        /* EN: Use simple and readable styles */
+        /* PT-BR: Use estilos simples e fáceis de ler */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Clean Code Examples (EN + PT-BR)</h1>
+
+    <div class="card">
+        <h2>1. Meaningful Names</h2>
+        <pre id="names"></pre>
+    </div>
+
+    <div class="card">
+        <h2>2. Small Functions</h2>
+        <pre id="functions"></pre>
+    </div>
+
+    <div class="card">
+        <h2>3. DRY (Don't Repeat Yourself)</h2>
+        <pre id="dry"></pre>
+    </div>
+
+    <div class="card">
+        <h2>4. Single Responsibility</h2>
+        <pre id="srp"></pre>
+    </div>
+
+    <div class="card">
+        <h2>5. Constants (Avoid Magic Numbers)</h2>
+        <pre id="constants"></pre>
+    </div>
+
+    <div class="card">
+        <h2>6. Clean Conditions</h2>
+        <pre id="conditions"></pre>
+    </div>
+
+    <script>
+
+        /* =========================
+           1. MEANINGFUL NAMES
+           ========================= */
+
+        // EN: Use clear variable names
+        // PT-BR: Use nomes claros para variáveis
+
+        const userAge = 21;
+        const isAdult = userAge >= 18;
+
+        document.getElementById("names").textContent =
+            "Age: " + userAge + " | Adult: " + isAdult;
+
+
+        /* =========================
+           2. SMALL FUNCTIONS
+           ========================= */
+
+        // EN: Function should do ONE thing only
+        // PT-BR: Função deve fazer apenas UMA coisa
+
+        function getFullName(firstName, lastName) {
+            return firstName + " " + lastName;
+        }
+
+        const fullName = getFullName("John", "Doe");
+
+        document.getElementById("functions").textContent = fullName;
+
+
+        /* =========================
+           3. DRY (DON'T REPEAT YOURSELF)
+           ========================= */
+
+        // EN: Avoid repeating code
+        // PT-BR: Evite repetir código
+
+        function greet(name) {
+            return "Hello " + name;
+        }
+
+        const g1 = greet("Anna");
+        const g2 = greet("Peter");
+
+        document.getElementById("dry").textContent =
+            g1 + " | " + g2;
+
+
+        /* =========================
+           4. SINGLE RESPONSIBILITY
+           ========================= */
+
+        // EN: Each function has ONE job
+        // PT-BR: Cada função tem UMA responsabilidade
+
+        function calculateTax(price) {
+            return price * 0.2;
+        }
+
+        function formatPrice(price) {
+            return "$" + price.toFixed(2);
+        }
+
+        const price = 100;
+        const total = price + calculateTax(price);
+
+        document.getElementById("srp").textContent =
+            formatPrice(total);
+
+
+        /* =========================
+           5. CONSTANTS (NO MAGIC NUMBERS)
+           ========================= */
+
+        // EN: Use constants instead of random numbers
+        // PT-BR: Use constantes em vez de números soltos
+
+        const TAX_RATE = 0.2;
+        const BASE_PRICE = 100;
+
+        const finalPrice = BASE_PRICE + (BASE_PRICE * TAX_RATE);
+
+        document.getElementById("constants").textContent =
+            finalPrice;
+
+
+        /* =========================
+           6. CLEAN CONDITIONS
+           ========================= */
+
+        // EN: Keep conditions simple
+        // PT-BR: Mantenha condições simples
+
+        const user = {
+            name: "John",
+            isActive: true
+        };
+
+        function canLogin(user) {
+            return user.isActive;
+        }
+
+        const result = canLogin(user) ? "Allowed" : "Blocked";
+
+        document.getElementById("conditions").textContent =
+            result;
+
+    </script>
+
+</body>
+
+</html>

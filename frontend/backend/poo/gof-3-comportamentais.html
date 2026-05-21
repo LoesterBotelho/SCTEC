@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GoF Behavioral Patterns (Simple JS)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #222;
+        }
+
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>GoF Behavioral Patterns (JavaScript Simple Examples)</h1>
+
+    <div class="box">
+        <h2>1. Observer</h2>
+        <p>One object notifies many others.</p>
+        <pre id="observer"></pre>
+    </div>
+
+    <div class="box">
+        <h2>2. Strategy</h2>
+        <p>Change algorithm at runtime.</p>
+        <pre id="strategy"></pre>
+    </div>
+
+    <div class="box">
+        <h2>3. Command</h2>
+        <p>Wrap a request as an object.</p>
+        <pre id="command"></pre>
+    </div>
+
+    <div class="box">
+        <h2>4. State</h2>
+        <p>Object changes behavior when state changes.</p>
+        <pre id="state"></pre>
+    </div>
+
+    <div class="box">
+        <h2>5. Chain of Responsibility</h2>
+        <p>Pass request along a chain.</p>
+        <pre id="chain"></pre>
+    </div>
+
+    <div class="box">
+        <h2>6. Iterator</h2>
+        <p>Access elements one by one.</p>
+        <pre id="iterator"></pre>
+    </div>
+
+    <div class="box">
+        <h2>7. Mediator</h2>
+        <p>Central object controls communication.</p>
+        <pre id="mediator"></pre>
+    </div>
+
+    <div class="box">
+        <h2>8. Memento</h2>
+        <p>Save and restore state.</p>
+        <pre id="memento"></pre>
+    </div>
+
+    <div class="box">
+        <h2>9. Template Method</h2>
+        <p>Define steps, subclasses fill details.</p>
+        <pre id="template"></pre>
+    </div>
+
+    <div class="box">
+        <h2>10. Visitor</h2>
+        <p>Add new operations without changing classes.</p>
+        <pre id="visitor"></pre>
+    </div>
+
+    <script>
+
+        // 1. Observer
+        class Subject {
+            constructor() {
+                this.observers = [];
+            }
+            subscribe(fn) {
+                this.observers.push(fn);
+            }
+            notify(msg) {
+                this.observers.forEach(fn => fn(msg));
+            }
+        }
+
+        const subject = new Subject();
+        let obsResult = "";
+        subject.subscribe(msg => obsResult += "A: " + msg + "\n");
+        subject.subscribe(msg => obsResult += "B: " + msg + "\n");
+        subject.notify("Hello");
+
+        document.getElementById("observer").textContent = obsResult;
+
+
+        // 2. Strategy
+        class Add {
+            execute(a, b) { return a + b; }
+        }
+        class Multiply {
+            execute(a, b) { return a * b; }
+        }
+
+        class Context {
+            setStrategy(strategy) { this.strategy = strategy; }
+            execute(a, b) { return this.strategy.execute(a, b); }
+        }
+
+        const context = new Context();
+        context.setStrategy(new Add());
+        const strategyResult = context.execute(2, 3);
+
+        document.getElementById("strategy").textContent = strategyResult;
+
+
+        // 3. Command
+        class Light {
+            on() { return "Light ON"; }
+        }
+
+        class TurnOnCommand {
+            constructor(light) { this.light = light; }
+            execute() { return this.light.on(); }
+        }
+
+        const light = new Light();
+        const cmd = new TurnOnCommand(light);
+
+        document.getElementById("command").textContent = cmd.execute();
+
+
+        // 4. State
+        class StateA {
+            handle() { return "State A"; }
+        }
+        class StateB {
+            handle() { return "State B"; }
+        }
+
+        class ContextState {
+            setState(s) { this.state = s; }
+            request() { return this.state.handle(); }
+        }
+
+        const c = new ContextState();
+        c.setState(new StateA());
+        const stateResult = c.request();
+
+        document.getElementById("state").textContent = stateResult;
+
+
+        // 5. Chain of Responsibility
+        class Handler1 {
+            setNext(h) { this.next = h; }
+            handle(req) {
+                if (req < 10) return "Handled by H1";
+                if (this.next) return this.next.handle(req);
+            }
+        }
+
+        class Handler2 {
+            handle(req) { return "Handled by H2"; }
+        }
+
+        const h1 = new Handler1();
+        const h2 = new Handler2();
+        h1.setNext(h2);
+
+        document.getElementById("chain").textContent = h1.handle(20);
+
+
+        // 6. Iterator
+        class Numbers {
+            constructor() { this.data = [1, 2, 3]; }
+            [Symbol.iterator]() {
+                let i = 0;
+                let data = this.data;
+                return {
+                    next() {
+                        return i < data.length ? { value: data[i++], done: false } : { done: true };
+                    }
+                };
+            }
+        }
+
+        let iterResult = "";
+        for (let n of new Numbers()) {
+            iterResult += n + " ";
+        }
+
+        document.getElementById("iterator").textContent = iterResult;
+
+
+        // 7. Mediator
+        class ChatRoom {
+            send(msg, user) { return user + ": " + msg; }
+        }
+
+        const chat = new ChatRoom();
+        const mediatorResult = chat.send("Hi", "John");
+
+        document.getElementById("mediator").textContent = mediatorResult;
+
+
+        // 8. Memento
+        class Memento {
+            constructor(state) { this.state = state; }
+            getState() { return this.state; }
+        }
+
+        class Originator {
+            setState(s) { this.state = s; }
+            save() { return new Memento(this.state); }
+            restore(m) { this.state = m.getState(); }
+        }
+
+        const origin = new Originator();
+        origin.setState("A");
+        const saved = origin.save();
+        origin.setState("B");
+        origin.restore(saved);
+
+
+        document.getElementById("memento").textContent = origin.state;
+
+
+        // 9. Template Method
+        class Game {
+            start() { return this.init() + " -> " + this.play(); }
+            init() { return "init"; }
+            play() { return "play"; }
+        }
+
+        const game = new Game();
+
+        document.getElementById("template").textContent = game.start();
+
+
+        // 10. Visitor
+        class Element {
+            accept(visitor) { return visitor.visit(this); }
+        }
+
+        class Visitor {
+            visit(el) { return "Visited element"; }
+        }
+
+        const el = new Element();
+        const visitor = new Visitor();
+
+        document.getElementById("visitor").textContent = el.accept(visitor);
+
+    </script>
+
+</body>
+
+</html>

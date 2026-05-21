@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GoF Structural Patterns (Simple JS)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #222;
+        }
+
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>GoF Structural Patterns (JavaScript Simple Examples)</h1>
+
+    <div class="box">
+        <h2>1. Adapter</h2>
+        <p>Make two different systems work together.</p>
+        <pre id="adapter"></pre>
+    </div>
+
+    <div class="box">
+        <h2>2. Bridge</h2>
+        <p>Separate abstraction from implementation.</p>
+        <pre id="bridge"></pre>
+    </div>
+
+    <div class="box">
+        <h2>3. Composite</h2>
+        <p>Treat single object and group the same way.</p>
+        <pre id="composite"></pre>
+    </div>
+
+    <div class="box">
+        <h2>4. Decorator</h2>
+        <p>Add features without changing original object.</p>
+        <pre id="decorator"></pre>
+    </div>
+
+    <div class="box">
+        <h2>5. Facade</h2>
+        <p>Simple interface for complex system.</p>
+        <pre id="facade"></pre>
+    </div>
+
+    <div class="box">
+        <h2>6. Flyweight</h2>
+        <p>Reuse objects to save memory.</p>
+        <pre id="flyweight"></pre>
+    </div>
+
+    <div class="box">
+        <h2>7. Proxy</h2>
+        <p>Control access to another object.</p>
+        <pre id="proxy"></pre>
+    </div>
+
+    <script>
+
+        // 1. Adapter Pattern
+        class OldSystem {
+            oldRequest() {
+                return "Old system response";
+            }
+        }
+
+        class Adapter {
+            constructor(oldSystem) {
+                this.oldSystem = oldSystem;
+            }
+
+            request() {
+                return this.oldSystem.oldRequest();
+            }
+        }
+
+        const oldSystem = new OldSystem();
+        const adapter = new Adapter(oldSystem);
+
+        document.getElementById("adapter").textContent = adapter.request();
+
+
+        // 2. Bridge Pattern
+        class TV {
+            turnOn() {
+                return "TV ON";
+            }
+        }
+
+        class Radio {
+            turnOn() {
+                return "Radio ON";
+            }
+        }
+
+        class Remote {
+            constructor(device) {
+                this.device = device;
+            }
+
+            pressPower() {
+                return this.device.turnOn();
+            }
+        }
+
+        const remoteTV = new Remote(new TV());
+
+        document.getElementById("bridge").textContent = remoteTV.pressPower();
+
+
+        // 3. Composite Pattern
+        class File {
+            constructor(name) {
+                this.name = name;
+            }
+
+            show() {
+                return this.name;
+            }
+        }
+
+        class Folder {
+            constructor(name) {
+                this.name = name;
+                this.items = [];
+            }
+
+            add(item) {
+                this.items.push(item);
+            }
+
+            show() {
+                return this.name + ": " + this.items.map(i => i.show()).join(", ");
+            }
+        }
+
+        const file1 = new File("file1.txt");
+        const file2 = new File("file2.txt");
+        const folder = new Folder("MyFolder");
+        folder.add(file1);
+        folder.add(file2);
+
+        document.getElementById("composite").textContent = folder.show();
+
+
+        // 4. Decorator Pattern
+        class Coffee {
+            cost() {
+                return 5;
+            }
+        }
+
+        class MilkDecorator {
+            constructor(coffee) {
+                this.coffee = coffee;
+            }
+
+            cost() {
+                return this.coffee.cost() + 2;
+            }
+        }
+
+        const coffee = new Coffee();
+        const milkCoffee = new MilkDecorator(coffee);
+
+        document.getElementById("decorator").textContent = milkCoffee.cost();
+
+
+        // 5. Facade Pattern
+        class CPU {
+            start() { return "CPU start"; }
+        }
+        class Memory {
+            load() { return "Memory load"; }
+        }
+        class Disk {
+            read() { return "Disk read"; }
+        }
+
+        class Computer {
+            constructor() {
+                this.cpu = new CPU();
+                this.memory = new Memory();
+                this.disk = new Disk();
+            }
+
+            start() {
+                return this.cpu.start() + " | " + this.memory.load() + " | " + this.disk.read();
+            }
+        }
+
+        const pc = new Computer();
+
+        document.getElementById("facade").textContent = pc.start();
+
+
+        // 6. Flyweight Pattern
+        class Tree {
+            constructor(type) {
+                this.type = type;
+            }
+        }
+
+        class TreeFactory {
+            constructor() {
+                this.trees = {};
+            }
+
+            getTree(type) {
+                if (!this.trees[type]) {
+                    this.trees[type] = new Tree(type);
+                }
+                return this.trees[type];
+            }
+        }
+
+        const factory = new TreeFactory();
+        const t1 = factory.getTree("oak");
+        const t2 = factory.getTree("oak");
+
+        document.getElementById("flyweight").textContent = t1 === t2;
+
+
+        // 7. Proxy Pattern
+        class RealImage {
+            display() {
+                return "Displaying image";
+            }
+        }
+
+        class ProxyImage {
+            constructor() {
+                this.realImage = new RealImage();
+            }
+
+            display() {
+                return "Proxy -> " + this.realImage.display();
+            }
+        }
+
+        const img = new ProxyImage();
+
+        document.getElementById("proxy").textContent = img.display();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Estudo de POO com Carros</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Estudo de Programação Orientada a Objetos (POO)</h1>
+    <p>Abra o console do navegador (F12) para ver os resultados dos objetos em ação!</p>
+
+    <script>
+        /*
+         * CONCEITOS INICIAIS
+         * Classe: O "molde" ou planta do objeto. Define o que ele terá.
+         * Objeto: A entidade real criada a partir da classe.
+         * Instância: O ato de criar um objeto a partir da classe (ex: 'meuUno = new Uno()').
+         */
+
+        // --- INTERFACE (Conceito de Contrato) ---
+        // Em JS não existe 'interface' nativa, mas simulamos um contrato:
+        // "Todo carro DEVE ter estes métodos."
+
+        // --- CLASSE BASE (Herança e Abstração) ---
+        // Abstração: Focar no que é essencial (ligar, acelerar, etc) e esconder detalhes complexos.
+        class Carro {
+            constructor(marca, modelo) {
+                // Encapsulamento: Usamos '#' para tornar a variável privada
+                this.marca = marca;
+                this.modelo = modelo;
+                this._combustivel = 100;
+            }
+
+            ligar() { console.log(`${this.modelo} ligado!`); }
+            acelerar() { console.log(`${this.modelo} acelerando...`); }
+            parar() { console.log(`${this.modelo} parou.`); }
+
+            // Polimorfismo: O método existe na base, mas cada filho pode agir diferente
+            abastecer() { console.log("Abastecendo combustível comum..."); }
+        }
+
+        // --- HERANÇA ---
+        // Uno herda tudo de Carro
+        class Uno extends Carro {
+            constructor() { super("Fiat", "Uno com escada"); }
+        }
+
+        class BMW extends Carro {
+            constructor() { super("BMW", "M3"); }
+            // Polimorfismo aplicado: BMW abastece de forma diferente
+            abastecer() { console.log("Abastecendo com gasolina aditivada de alta performance!"); }
+        }
+
+        // --- INSTÂNCIA ---
+        const meuUno = new Uno();
+        const minhaBMW = new BMW();
+
+        meuUno.ligar();
+        minhaBMW.abastecer(); // Demonstra polimorfismo
+
+        /*
+         * SOLID E GoF (Breve resumo)
+         * SOLID:
+         * S (Single Responsibility): Cada classe deve ter apenas uma responsabilidade.
+         * O (Open/Closed): Aberto para extensão, fechado para modificação (ex: usamos herança).
+         * L (Liskov Substitution): Objetos filhos devem substituir objetos pais sem quebrar o sistema.
+         * * GoF (Design Patterns - Exemplo Factory):
+         * O padrão Factory cria objetos sem expor a lógica de criação.
+         */
+        class CarroFactory {
+            static criarCarro(tipo) {
+                if (tipo === 'economico') return new Uno();
+                return new BMW();
+            }
+        }
+
+        const carroExtra = CarroFactory.criarCarro('economico');
+        carroExtra.ligar();
+    </script>
+</body>
+
+</html>

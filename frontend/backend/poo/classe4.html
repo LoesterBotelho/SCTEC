@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Veículos (31 dias - custo total)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+            color: #222;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚗 Simulador 31 Dias (Fusca vs BYD)</h1>
+    <p>Abra o console (F12) para ver o resultado detalhado.</p>
+
+    <div class="card">
+        <h2>📊 Configuração</h2>
+        <p>Distância diária: 700 km</p>
+        <p>Duração: 31 dias</p>
+        <p>Gasolina SC: R$ 6,51/L</p>
+        <p>Fusca: 10 km/L</p>
+        <p>BYD: 5 km/kWh</p>
+        <p>Energia casa: R$ 0,75/kWh</p>
+    </div>
+
+    <script>
+
+        // =========================
+        // CONSTANTES
+        // =========================
+        const DAYS = 31;
+        const DAILY_KM = 700;
+
+        const GAS_PRICE = 6.51;
+        const KM_PER_LITER = 10;
+
+        const KM_PER_KWH = 5;
+        const HOME_KWH_PRICE = 0.75;
+
+        // =========================
+        // FUNÇÕES AUXILIARES
+        // =========================
+        function resetVehicle(vehicle) {
+            vehicle.kmRodados = 0;
+        }
+
+        // =========================
+        // SIMULAÇÃO FUSCA
+        // =========================
+        class FuscaSim {
+            constructor() {
+                this.totalKm = 0;
+                this.totalCost = 0;
+            }
+
+            runDay(km) {
+                const litros = km / KM_PER_LITER;
+                const cost = litros * GAS_PRICE;
+
+                this.totalKm += km;
+                this.totalCost += cost;
+            }
+        }
+
+        // =========================
+        // SIMULAÇÃO BYD
+        // =========================
+        class BYDSim {
+            constructor() {
+                this.totalKm = 0;
+                this.totalCost = 0;
+            }
+
+            runDay(km) {
+                const kwh = km / KM_PER_KWH;
+                const cost = kwh * HOME_KWH_PRICE;
+
+                this.totalKm += km;
+                this.totalCost += cost;
+            }
+        }
+
+        // =========================
+        // EXECUÇÃO 31 DIAS
+        // =========================
+        const fusca = new FuscaSim();
+        const byd = new BYDSim();
+
+        for (let day = 1; day <= DAYS; day++) {
+            fusca.runDay(DAILY_KM);
+            byd.runDay(DAILY_KM);
+
+            console.log(`Dia ${day} concluído`);
+        }
+
+        // =========================
+        // RESULTADO FINAL
+        // =========================
+        console.log("\n========================");
+        console.log("📊 RESULTADO FINAL (31 DIAS)");
+        console.log("========================");
+
+        console.log(`🚗 Fusca:`);
+        console.log(`Km total: ${fusca.totalKm}`);
+        console.log(`Custo total: R$ ${fusca.totalCost.toFixed(2)}`);
+
+        console.log(`\n⚡ BYD:`);
+        console.log(`Km total: ${byd.totalKm}`);
+        console.log(`Custo total: R$ ${byd.totalCost.toFixed(2)}`);
+
+        // =========================
+        // VENCEDOR
+        // =========================
+        const winner = fusca.totalCost < byd.totalCost ? "FUSCA" : "BYD";
+
+        console.log("\n🏆 VENCEDOR (mais barato): " + winner);
+
+    </script>
+
+</body>
+
+</html>

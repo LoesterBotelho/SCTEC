@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Veículos Corrigido (POO + Realista)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 20px;
+            color: #222;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🚗 Simulador de Veículos (POO + Limite de Autonomia)</h1>
+    <p>Abra o console (F12) para ver os detalhes.</p>
+
+    <div class="card">
+        <h2>📊 Regras do Sistema</h2>
+        <p>Gasolina: R$ 6,51/L (SC média)</p>
+        <p>Fusca: ~10 km/L | Tanque: 40L | Autonomia: ~400 km</p>
+        <p>BYD: ~5 km/kWh | Bateria: 60 kWh | Autonomia: ~300 km</p>
+        <p>Energia: R$ 0,75/kWh (casa) | R$ 2,00/kWh (público)</p>
+    </div>
+
+    <script>
+
+        // =========================
+        // CONSTANTES REALISTAS
+        // =========================
+        const GAS_PRICE = 6.51;
+        const KM_PER_LITER = 10;
+        const FUSCA_RANGE_MAX = 400; // km
+
+        const KM_PER_KWH = 5;
+        const HOME_KWH_PRICE = 0.75;
+        const PUBLIC_KWH_PRICE = 2.00;
+
+        // =========================
+        // DIREÇÃO (POO - composição)
+        // =========================
+        class Direcao {
+            constructor(tipo) {
+                this.tipo = tipo;
+            }
+            info() { return `Direção: ${this.tipo}`; }
+        }
+
+        // =========================
+        // MOTOR BASE
+        // =========================
+        class Motor {
+            constructor(tipo) { this.tipo = tipo; }
+            info() { return `Motor: ${this.tipo}`; }
+        }
+
+        // =========================
+        // MOTOR COMBUSTÃO
+        // =========================
+        class MotorCombustao extends Motor {
+            constructor() { super("Combustão"); }
+            litrosNecessarios(km) { return km / KM_PER_LITER; }
+        }
+
+        // =========================
+        // MOTOR ELÉTRICO
+        // =========================
+        class MotorEletrico extends Motor {
+            constructor(bateriaKwh) {
+                super("Elétrico BYD Brasil");
+                this.bateriaMax = bateriaKwh;
+            }
+        }
+
+        // =========================
+        // VEÍCULO BASE
+        // =========================
+        class Veiculo {
+            constructor(modelo, motor, direcao) {
+                this.modelo = modelo;
+                this.motor = motor;
+                this.direcao = direcao;
+                this.ligado = false;
+            }
+
+            ligar() { this.ligado = true; console.log(`${this.modelo} ligado`); }
+            desligar() { this.ligado = false; console.log(`${this.modelo} desligado`); }
+        }
+
+        // =========================
+        // CARRO COMBUSTÃO (FUSCA)
+        // =========================
+        class CarroCombustao extends Veiculo {
+            constructor(modelo, motor, direcao, tanqueMax) {
+                super(modelo, motor, direcao);
+                this.tanqueMax = tanqueMax;
+                this.tanqueAtual = tanqueMax;
+                this.kmRodados = 0;
+            }
+
+            abastecer(litros) {
+                const espaco = this.tanqueMax - this.tanqueAtual;
+                const colocado = Math.min(litros, espaco);
+                this.tanqueAtual += colocado;
+
+                const custo = colocado * GAS_PRICE;
+
+                console.log(`⛽ ${this.modelo} abastecido: ${colocado.toFixed(2)}L | R$ ${custo.toFixed(2)}`);
+            }
+
+            dirigir(km) {
+                const litros = this.motor.litrosNecessarios(km);
+
+                if (this.kmRodados + km > FUSCA_RANGE_MAX) {
+                    console.log("❌ Limite de autonomia atingido (Fusca ~400km)");
+                    return;
+                }
+
+                if (this.tanqueAtual >= litros) {
+                    this.tanqueAtual -= litros;
+                    this.kmRodados += km;
+
+                    console.log(`🚗 ${this.modelo} rodou ${km}km | total: ${this.kmRodados}km`);
+                } else {
+                    console.log("❌ Combustível insuficiente");
+                }
+            }
+        }
+
+        // =========================
+        // CARRO ELÉTRICO (BYD BRASIL)
+        // =========================
+        class CarroEletrico extends Veiculo {
+            constructor(modelo, motor, direcao) {
+                super(modelo, motor, direcao);
+                this.bateria = motor.bateriaMax;
+                this.kmRodados = 0;
+            }
+
+            dirigir(km) {
+                const kwh = km / KM_PER_KWH;
+
+                if (this.kmRodados + km > this.motor.bateriaMax * KM_PER_KWH) {
+                    console.log("❌ Limite de autonomia BYD atingido (~300km)");
+                    return;
+                }
+
+                if (this.bateria >= kwh) {
+                    this.bateria -= kwh;
+                    this.kmRodados += km;
+
+                    console.log(`⚡ ${this.modelo} rodou ${km}km | total: ${this.kmRodados}km`);
+                } else {
+                    console.log("❌ Bateria insuficiente");
+                }
+            }
+
+            carregar(kwh, tipo = "home") {
+                const preco = tipo === "home" ? HOME_KWH_PRICE : PUBLIC_KWH_PRICE;
+
+                const espaco = this.motor.bateriaMax - this.bateria;
+                const carga = Math.min(kwh, espaco);
+
+                this.bateria += carga;
+
+                const custo = carga * preco;
+
+                console.log(`🔌 ${this.modelo} carregado: ${carga} kWh | R$ ${custo.toFixed(2)}`);
+            }
+        }
+
+        // =========================
+        // TESTE
+        // =========================
+
+        const fusca = new CarroCombustao(
+            "Fusca",
+            new MotorCombustao(),
+            new Direcao("mecânica"),
+            40
+        );
+
+        const byd = new CarroEletrico(
+            "BYD Dolphin Brasil",
+            new MotorEletrico(60),
+            new Direcao("elétrica")
+        );
+
+        console.log("=== FUSCA ===");
+        fusca.ligar();
+        fusca.dirigir(100);
+        fusca.abastecer(10);
+
+        console.log("\n=== BYD ===");
+        byd.ligar();
+        byd.dirigir(120);
+        byd.carregar(20, "home");
+        byd.dirigir(150);
+
+    </script>
+
+</body>
+
+</html>

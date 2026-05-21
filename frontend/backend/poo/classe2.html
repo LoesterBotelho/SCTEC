@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>POO Completo JavaScript</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+
+            background: #f1f5f9;
+
+            color: #111827;
+
+            padding: 30px;
+        }
+
+        .container {
+
+            max-width: 1300px;
+
+            margin: auto;
+        }
+
+        h1 {
+
+            font-size: 42px;
+
+            margin-bottom: 10px;
+
+            color: #0f172a;
+        }
+
+        .subtitle {
+
+            color: #475569;
+
+            margin-bottom: 40px;
+
+            font-size: 18px;
+        }
+
+        .section {
+
+            background: #ffffff;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .section h2 {
+
+            margin-bottom: 18px;
+
+            color: #1e293b;
+        }
+
+        .section p {
+
+            line-height: 1.7;
+
+            margin-bottom: 15px;
+        }
+
+        .code {
+
+            background: #0f172a;
+
+            color: #e2e8f0;
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .button-area {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        button {
+
+            border: none;
+
+            padding: 14px 20px;
+
+            border-radius: 12px;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+
+            opacity: 0.9;
+
+            transform: translateY(-2px);
+        }
+
+        .output {
+
+            margin-top: 20px;
+
+            background: #0f172a;
+
+            color: #4ade80;
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            min-height: 120px;
+
+            white-space: pre-line;
+
+            font-family: Consolas;
+        }
+
+        .card-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 20px;
+        }
+
+        .card {
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 20px;
+
+            border-radius: 16px;
+        }
+
+        .card h3 {
+
+            margin-bottom: 12px;
+
+            color: #1d4ed8;
+        }
+
+        @media(max-width:700px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+            h1 {
+
+                font-size: 32px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+            POO JavaScript Completo
+        </h1>
+
+        <p class="subtitle">
+
+            Programação Orientada a Objetos
+            explicada de forma simples.
+
+        </p>
+
+        <!-- ========================================= -->
+        <!-- O QUE É POO -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                O que é POO?
+            </h2>
+
+            <p>
+
+                POO significa:
+
+                <b>
+                    Programação Orientada a Objetos
+                </b>
+
+            </p>
+
+            <p>
+
+                A ideia é representar objetos do mundo real
+                dentro do código.
+
+            </p>
+
+            <p>
+
+                Exemplo:
+
+            </p>
+
+            <ul>
+
+                <li>Carro</li>
+
+                <li>Cliente</li>
+
+                <li>Conta Bancária</li>
+
+                <li>Animal</li>
+
+                <li>Usuário</li>
+
+            </ul>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- CLASSE -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Classe
+            </h2>
+
+            <p>
+
+                Classe é um molde.
+
+            </p>
+
+            <p>
+
+                Ela define:
+
+            </p>
+
+            <ul>
+
+                <li>dados</li>
+
+                <li>atributos</li>
+
+                <li>métodos</li>
+
+            </ul>
+
+            <p>
+
+                Exemplo:
+
+                A classe Carro define como os carros serão.
+
+            </p>
+
+            <div class="code">
+
+                class Carro {
+
+                constructor(){
+
+                }
+
+                }
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- OBJETO -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Objeto
+            </h2>
+
+            <p>
+
+                Objeto é a criação real da classe.
+
+            </p>
+
+            <p>
+
+                Exemplo:
+
+            </p>
+
+            <div class="code">
+
+                const carro1 = new Carro();
+
+            </div>
+
+            <p>
+
+                Agora carro1 é um objeto.
+
+            </p>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- INSTÂNCIA -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Instância
+            </h2>
+
+            <p>
+
+                Instância é o objeto criado pela classe.
+
+            </p>
+
+            <div class="code">
+
+                const bmw = new Carro();
+
+            </div>
+
+            <p>
+
+                A BMW é uma instância da classe Carro.
+
+            </p>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- CLASSE COMPLETA -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Classe Completa
+            </h2>
+
+            <div class="code">
+
+                class Carro {
+
+                // constructor = construtor
+                // executa ao criar objeto
+
+                constructor(
+
+                marca,
+                modelo,
+                combustivel
+
+                ){
+
+                // atributos
+
+                this.marca = marca;
+
+                this.modelo = modelo;
+
+                this.combustivel = combustivel;
+
+                this.ligado = false;
+
+                this.velocidade = 0;
+
+                }
+
+                // método
+
+                ligar(){
+
+                this.ligado = true;
+
+                return this.modelo + " ligou.";
+
+                }
+
+                acelerar(){
+
+                this.velocidade += 10;
+
+                return this.modelo +
+                " acelerou para " +
+                this.velocidade + " km/h";
+
+                }
+
+                parar(){
+
+                this.velocidade = 0;
+
+                return this.modelo + " parou.";
+
+                }
+
+                }
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- PILARES -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                4 Pilares da POO
+            </h2>
+
+            <div class="card-grid">
+
+                <div class="card">
+
+                    <h3>
+                        1. Abstração
+                    </h3>
+
+                    <p>
+
+                        Mostrar apenas o necessário.
+
+                    </p>
+
+                    <p>
+
+                        Você dirige o carro sem saber
+                        como funciona o motor internamente.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        2. Encapsulamento
+                    </h3>
+
+                    <p>
+
+                        Proteger dados internos.
+
+                    </p>
+
+                    <p>
+
+                        Evita alterações erradas.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        3. Herança
+                    </h3>
+
+                    <p>
+
+                        Uma classe pode herdar
+                        de outra.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        4. Polimorfismo
+                    </h3>
+
+                    <p>
+
+                        Mesmo método pode ter
+                        comportamentos diferentes.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- ENCAPSULAMENTO -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Encapsulamento
+            </h2>
+
+            <p>
+
+                Usamos # para atributo privado.
+
+            </p>
+
+            <div class="code">
+
+                class Conta {
+
+                #saldo = 0;
+
+                depositar(valor){
+
+                this.#saldo += valor;
+
+                }
+
+                verSaldo(){
+
+                return this.#saldo;
+
+                }
+
+                }
+
+            </div>
+
+            <p>
+
+                Não pode acessar:
+
+            </p>
+
+            <div class="code">
+
+                conta.#saldo
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- HERANÇA -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Herança
+            </h2>
+
+            <div class="code">
+
+                class Veiculo {
+
+                ligar(){
+
+                return "Veículo ligado";
+
+                }
+
+                }
+
+                class BMW extends Veiculo {
+
+                }
+
+                const carro = new BMW();
+
+            </div>
+
+            <p>
+
+                BMW herdou os métodos de Veiculo.
+
+            </p>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- POLIMORFISMO -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Polimorfismo
+            </h2>
+
+            <div class="code">
+
+                class Animal {
+
+                emitirSom(){
+
+                return "Som genérico";
+
+                }
+
+                }
+
+                class Cachorro extends Animal {
+
+                emitirSom(){
+
+                return "Au Au";
+
+                }
+
+                }
+
+                class Gato extends Animal {
+
+                emitirSom(){
+
+                return "Miau";
+
+                }
+
+                }
+
+            </div>
+
+            <p>
+
+                Mesmo método:
+                emitirSom()
+
+                Mas comportamentos diferentes.
+
+            </p>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- INTERFACE -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Interface
+            </h2>
+
+            <p>
+
+                JavaScript puro não possui interface real
+                como Java ou C#.
+
+            </p>
+
+            <p>
+
+                Mas podemos simular.
+
+            </p>
+
+            <div class="code">
+
+                class InterfaceCarro {
+
+                ligar(){}
+
+                acelerar(){}
+
+                parar(){}
+
+                abastecer(){}
+
+                trocarPneu(){}
+
+                }
+
+            </div>
+
+            <p>
+
+                Toda classe carro deveria implementar
+                esses métodos.
+
+            </p>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- EXEMPLO CARROS -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Exemplo Completo Carros
+            </h2>
+
+            <div class="code">
+
+                class Carro {
+
+                constructor(
+
+                marca,
+                modelo
+
+                ){
+
+                this.marca = marca;
+
+                this.modelo = modelo;
+
+                this.ligado = false;
+
+                this.combustivel = 100;
+
+                }
+
+                ligar(){
+
+                this.ligado = true;
+
+                return this.modelo + " ligado.";
+
+                }
+
+                acelerar(){
+
+                return this.modelo + " acelerando.";
+
+                }
+
+                dirigir(){
+
+                return this.modelo + " dirigindo.";
+
+                }
+
+                parar(){
+
+                return this.modelo + " parado.";
+
+                }
+
+                abastecer(){
+
+                this.combustivel = 100;
+
+                return this.modelo + " abastecido.";
+
+                }
+
+                trocarPneu(){
+
+                return this.modelo + " pneu trocado.";
+
+                }
+
+                }
+
+                class BMW extends Carro {
+
+                }
+
+                class Uno extends Carro {
+
+                }
+
+                class Gol extends Carro {
+
+                }
+
+            </div>
+
+            <div class="button-area">
+
+                <button onclick="testarBMW()">
+                    Testar BMW
+                </button>
+
+                <button onclick="testarUno()">
+                    Testar Uno
+                </button>
+
+                <button onclick="testarGol()">
+                    Testar Gol
+                </button>
+
+                <button onclick="limparLog()">
+                    Limpar
+                </button>
+
+            </div>
+
+            <div class="output" id="output"></div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- SOLID -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                SOLID
+            </h2>
+
+            <div class="card-grid">
+
+                <div class="card">
+
+                    <h3>
+                        S - Single Responsibility
+                    </h3>
+
+                    <p>
+
+                        Cada classe deve ter
+                        uma única responsabilidade.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        O - Open Closed
+                    </h3>
+
+                    <p>
+
+                        Aberto para extensão,
+                        fechado para modificação.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        L - Liskov
+                    </h3>
+
+                    <p>
+
+                        Classe filha deve substituir
+                        a classe pai sem quebrar sistema.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        I - Interface Segregation
+                    </h3>
+
+                    <p>
+
+                        Interfaces pequenas
+                        são melhores.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        D - Dependency Inversion
+                    </h3>
+
+                    <p>
+
+                        Depender de abstrações,
+                        não implementações.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- GOF -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                GOF - Design Patterns
+            </h2>
+
+            <p>
+
+                GOF significa:
+
+                <b>
+                    Gang of Four
+                </b>
+
+            </p>
+
+            <p>
+
+                São padrões de projeto.
+
+            </p>
+
+            <div class="card-grid">
+
+                <div class="card">
+
+                    <h3>
+                        Singleton
+                    </h3>
+
+                    <p>
+
+                        Apenas uma instância.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        Factory
+                    </h3>
+
+                    <p>
+
+                        Classe cria objetos.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        Observer
+                    </h3>
+
+                    <p>
+
+                        Observa mudanças.
+
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        Strategy
+                    </h3>
+
+                    <p>
+
+                        Troca comportamento.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- EXEMPLO FACTORY -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Exemplo Factory Pattern
+            </h2>
+
+            <div class="code">
+
+                class FabricaCarro {
+
+                criarCarro(tipo){
+
+                if(tipo === "BMW"){
+
+                return new BMW(
+                "BMW",
+                "X6"
+                );
+
+                }
+
+                if(tipo === "UNO"){
+
+                return new Uno(
+                "Fiat",
+                "Uno"
+                );
+
+                }
+
+                }
+
+                }
+
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- EXEMPLO SINGLETON -->
+        <!-- ========================================= -->
+
+        <div class="section">
+
+            <h2>
+                Exemplo Singleton
+            </h2>
+
+            <div class="code">
+
+                class BancoDados {
+
+                static instancia;
+
+                constructor(){
+
+                if(BancoDados.instancia){
+
+                return BancoDados.instancia;
+
+                }
+
+                BancoDados.instancia = this;
+
+                }
+
+                }
+
+            </div>
+
+            <p>
+
+                Garante apenas 1 instância.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* =========================================
+           CLASSE BASE
+        ========================================= */
+
+        class Carro {
+
+            constructor(
+
+                marca,
+                modelo
+
+            ) {
+
+                this.marca = marca;
+
+                this.modelo = modelo;
+
+                this.ligado = false;
+
+                this.combustivel = 100;
+
+                this.velocidade = 0;
+
+            }
+
+            ligar() {
+
+                this.ligado = true;
+
+                return this.modelo +
+                    " ligou.";
+            }
+
+            acelerar() {
+
+                this.velocidade += 20;
+
+                return this.modelo +
+                    " acelerou para " +
+                    this.velocidade + " km/h";
+            }
+
+            dirigir() {
+
+                return this.modelo +
+                    " está dirigindo.";
+            }
+
+            parar() {
+
+                this.velocidade = 0;
+
+                return this.modelo +
+                    " parou.";
+            }
+
+            abastecer() {
+
+                this.combustivel = 100;
+
+                return this.modelo +
+                    " abastecido.";
+            }
+
+            trocarPneu() {
+
+                return this.modelo +
+                    " trocou pneu.";
+            }
+
+        }
+
+        /* =========================================
+           HERANÇA
+        ========================================= */
+
+        class BMW extends Carro {
+
+            modoEsportivo() {
+
+                return "BMW ativou modo sport.";
+            }
+
+        }
+
+        class Uno extends Carro {
+
+            economizar() {
+
+                return "Uno economizando combustível.";
+            }
+
+        }
+
+        class Gol extends Carro {
+
+            viajar() {
+
+                return "Gol iniciou viagem.";
+            }
+
+        }
+
+        /* =========================================
+           LOG
+        ========================================= */
+
+        const output =
+            document.getElementById(
+                "output"
+            );
+
+        function log(texto) {
+
+            output.innerHTML +=
+                texto + "\n";
+
+        }
+
+        function limparLog() {
+
+            output.innerHTML = "";
+
+        }
+
+        /* =========================================
+           TESTAR BMW
+        ========================================= */
+
+        function testarBMW() {
+
+            const carro =
+                new BMW(
+                    "BMW",
+                    "BMW X6"
+                );
+
+            log(
+                carro.ligar()
+            );
+
+            log(
+                carro.acelerar()
+            );
+
+            log(
+                carro.dirigir()
+            );
+
+            log(
+                carro.modoEsportivo()
+            );
+
+            log(
+                carro.parar()
+            );
+
+        }
+
+        /* =========================================
+           TESTAR UNO
+        ========================================= */
+
+        function testarUno() {
+
+            const carro =
+                new Uno(
+                    "Fiat",
+                    "Uno"
+                );
+
+            log(
+                carro.ligar()
+            );
+
+            log(
+                carro.acelerar()
+            );
+
+            log(
+                carro.economizar()
+            );
+
+            log(
+                carro.abastecer()
+            );
+
+        }
+
+        /* =========================================
+           TESTAR GOL
+        ========================================= */
+
+        function testarGol() {
+
+            const carro =
+                new Gol(
+                    "Volkswagen",
+                    "Gol"
+                );
+
+            log(
+                carro.ligar()
+            );
+
+            log(
+                carro.viajar()
+            );
+
+            log(
+                carro.trocarPneu()
+            );
+
+            log(
+                carro.parar()
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

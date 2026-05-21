@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SOLID em JavaScript</title>
+</head>
+
+<body>
+    <h1>Estudo SOLID - Console (F12)</h1>
+
+    <script>
+        /**
+         * 1. SRP (Single Responsibility Principle)
+         * Uma classe deve ter apenas um motivo para mudar.
+         */
+        class Carro {
+            constructor(modelo) { this.modelo = modelo; }
+            getModelo() { return this.modelo; }
+        }
+        // Classe separada apenas para salvar dados (responsabilidade única)
+        class CarroRepository {
+            salvar(carro) { console.log(`Salvando ${carro.getModelo()} no banco.`); }
+        }
+
+        /**
+         * 2. OCP (Open/Closed Principle)
+         * Aberto para extensão, fechado para modificação.
+         */
+        class CalculadoraPreco {
+            calcular(carro) { return 10000; } // Base
+        }
+        // Estendemos sem modificar a original
+        class CalculadoraPrecoPremium extends CalculadoraPreco {
+            calcular(carro) { return 20000; }
+        }
+
+        /**
+         * 3. LSP (Liskov Substitution Principle)
+         * Classes filhas devem ser substituíveis por classes pais.
+         */
+        class Motor { ligar() { console.log("Motor ligado"); } }
+        class CarroEsportivo extends Motor { } // Herança correta
+
+        /**
+         * 4. ISP (Interface Segregation Principle)
+         * Classes não devem ser forçadas a depender de métodos que não usam.
+         */
+        // Em JS, fazemos isso evitando classes gigantes
+        const Acelerador = { acelerar: () => console.log("Acelerando") };
+        const Freio = { frear: () => console.log("Freando") };
+        // O objeto só implementa o que precisa
+        const carroSimples = { ...Acelerador, ...Freio };
+
+        /**
+         * 5. DIP (Dependency Inversion Principle)
+         * Dependa de abstrações, não de implementações.
+         */
+        class ProcessadorPedido {
+            constructor(servicoPagamento) {
+                this.servicoPagamento = servicoPagamento; // Injeção de dependência
+            }
+            processar() { this.servicoPagamento.pagar(); }
+        }
+
+        // --- EXECUÇÃO ---
+        const meuCarro = new Carro("Uno");
+        const repo = new CarroRepository();
+        repo.salvar(meuCarro);
+
+        const pagamentoPayPal = { pagar: () => console.log("Pagando com PayPal") };
+        const pedido = new ProcessadorPedido(pagamentoPayPal);
+        pedido.processar();
+    </script>
+</body>
+
+</html>
