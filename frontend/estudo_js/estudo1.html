@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Arrays - Aula Simples</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            padding: 30px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 34px;
+        }
+
+        .card {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #1e3a8a;
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .code {
+
+            background: #111827;
+
+            color: #f3f4f6;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            overflow: auto;
+
+            margin-top: 15px;
+
+            font-family: Consolas, monospace;
+        }
+
+        button {
+
+            padding: 12px 20px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: #fff;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            margin-top: 15px;
+
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resultado {
+
+            margin-top: 15px;
+
+            background: #eef2ff;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            min-height: 50px;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+        table th,
+        table td {
+
+            border: 1px solid #ccc;
+
+            padding: 10px;
+
+            text-align: left;
+        }
+
+        table th {
+            background: #e5e7eb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>JavaScript - Arrays e Variáveis</h1>
+
+        <!-- VAR -->
+
+        <div class="card">
+
+            <h2>1. var</h2>
+
+            <p>
+                A palavra <strong>var</strong> é usada para criar variáveis.
+            </p>
+
+            <p>
+                Ela é mais antiga no JavaScript.
+            </p>
+
+            <p>
+                Hoje usamos mais <strong>let</strong> e <strong>const</strong>.
+            </p>
+
+            <div class="code">
+
+                // VAR = variável antiga
+
+                var nome = "João";
+
+                console.log(nome);
+
+            </div>
+
+            <button onclick="exemploVar()">
+                Executar exemplo var
+            </button>
+
+            <div class="resultado" id="resultadoVar"></div>
+
+        </div>
+
+        <!-- LET -->
+
+        <div class="card">
+
+            <h2>2. let</h2>
+
+            <p>
+                <strong>let</strong> cria variáveis modernas.
+            </p>
+
+            <p>
+                Você pode mudar o valor depois.
+            </p>
+
+            <div class="code">
+
+                // LET = variável moderna
+
+                let idade = 20;
+
+                idade = 25;
+
+                console.log(idade);
+
+            </div>
+
+            <button onclick="exemploLet()">
+                Executar exemplo let
+            </button>
+
+            <div class="resultado" id="resultadoLet"></div>
+
+        </div>
+
+        <!-- CONST -->
+
+        <div class="card">
+
+            <h2>3. const</h2>
+
+            <p>
+                <strong>const</strong> cria constantes.
+            </p>
+
+            <p>
+                O valor NÃO pode mudar.
+            </p>
+
+            <div class="code">
+
+                // CONST = valor fixo
+
+                const pais = "Brasil";
+
+                console.log(pais);
+
+            </div>
+
+            <button onclick="exemploConst()">
+                Executar exemplo const
+            </button>
+
+            <div class="resultado" id="resultadoConst"></div>
+
+        </div>
+
+        <!-- ARRAY -->
+
+        <div class="card">
+
+            <h2>4. Array</h2>
+
+            <p>
+                Array é uma lista de valores.
+            </p>
+
+            <p>
+                Você pode guardar:
+            </p>
+
+            <ul style="margin-left:20px; line-height:1.8;">
+                <li>nomes</li>
+                <li>idades</li>
+                <li>números</li>
+                <li>produtos</li>
+            </ul>
+
+            <div class="code">
+
+                // ARRAY = lista
+
+                let frutas = [
+                "Maçã",
+                "Banana",
+                "Laranja"
+                ];
+
+                console.log(frutas);
+
+            </div>
+
+            <button onclick="exemploArray()">
+                Mostrar array
+            </button>
+
+            <div class="resultado" id="resultadoArray"></div>
+
+        </div>
+
+        <!-- ARRAY POSIÇÃO -->
+
+        <div class="card">
+
+            <h2>5. Posição do Array</h2>
+
+            <p>
+                Cada item possui uma posição.
+            </p>
+
+            <p>
+                A contagem começa no ZERO.
+            </p>
+
+            <div class="code">
+
+                let frutas = [
+                "Maçã",
+                "Banana",
+                "Laranja"
+                ];
+
+                // posição 0
+                console.log(frutas[0]);
+
+                // posição 1
+                console.log(frutas[1]);
+
+            </div>
+
+            <button onclick="exemploPosicao()">
+                Mostrar posições
+            </button>
+
+            <div class="resultado" id="resultadoPosicao"></div>
+
+        </div>
+
+        <!-- ARRAY BIDIMENSIONAL -->
+
+        <div class="card">
+
+            <h2>6. Array Bidimensional</h2>
+
+            <p>
+                É um array dentro de outro array.
+            </p>
+
+            <p>
+                Parece uma tabela.
+            </p>
+
+            <div class="code">
+
+                let alunos = [
+
+                ["João", 20],
+
+                ["Maria", 25],
+
+                ["Pedro", 30]
+
+                ];
+
+                console.log(alunos);
+
+            </div>
+
+            <button onclick="exemploBidimensional()">
+                Mostrar tabela
+            </button>
+
+            <div class="resultado" id="resultadoBi"></div>
+
+        </div>
+
+        <!-- LOOP -->
+
+        <div class="card">
+
+            <h2>7. Percorrendo Array</h2>
+
+            <p>
+                Usamos <strong>for</strong> para repetir.
+            </p>
+
+            <div class="code">
+
+                let numeros = [10,20,30];
+
+                for(let i = 0; i < numeros.length; i++){ console.log(numeros[i]); } </div>
+
+                    <button onclick="exemploLoop()">
+                        Executar loop
+                    </button>
+
+                    <div class="resultado" id="resultadoLoop"></div>
+
+            </div>
+
+        </div>
+
+        <script>
+
+            /* =========================
+               EXEMPLO VAR
+            ========================= */
+
+            function exemploVar() {
+
+                // VAR = variável antiga
+
+                var nome = "João";
+
+                document.getElementById(
+                    "resultadoVar"
+                ).innerHTML =
+
+                    "Nome: " + nome;
+
+            }
+
+            /* =========================
+               EXEMPLO LET
+            ========================= */
+
+            function exemploLet() {
+
+                // LET = variável moderna
+
+                let idade = 20;
+
+                // alterando valor
+
+                idade = 25;
+
+                document.getElementById(
+                    "resultadoLet"
+                ).innerHTML =
+
+                    "Idade alterada: " + idade;
+
+            }
+
+            /* =========================
+               EXEMPLO CONST
+            ========================= */
+
+            function exemploConst() {
+
+                // CONST = valor fixo
+
+                const pais = "Brasil";
+
+                document.getElementById(
+                    "resultadoConst"
+                ).innerHTML =
+
+                    "País: " + pais;
+
+            }
+
+            /* =========================
+               EXEMPLO ARRAY
+            ========================= */
+
+            function exemploArray() {
+
+                // ARRAY simples
+
+                let frutas = [
+
+                    "Maçã",
+
+                    "Banana",
+
+                    "Laranja"
+
+                ];
+
+                document.getElementById(
+                    "resultadoArray"
+                ).innerHTML =
+
+                    frutas.join(" - ");
+
+            }
+
+            /* =========================
+               EXEMPLO POSIÇÃO
+            ========================= */
+
+            function exemploPosicao() {
+
+                let frutas = [
+
+                    "Maçã",
+
+                    "Banana",
+
+                    "Laranja"
+
+                ];
+
+                document.getElementById(
+                    "resultadoPosicao"
+                ).innerHTML =
+
+                    `
+  Posição 0: ${frutas[0]} <br>
+  Posição 1: ${frutas[1]} <br>
+  Posição 2: ${frutas[2]}
+  `;
+
+            }
+
+            /* =========================
+               ARRAY BIDIMENSIONAL
+            ========================= */
+
+            function exemploBidimensional() {
+
+                // ARRAY dentro de ARRAY
+
+                let alunos = [
+
+                    ["João", 20],
+
+                    ["Maria", 25],
+
+                    ["Pedro", 30]
+
+                ];
+
+                let html = `
+
+  <table>
+
+    <tr>
+
+      <th>Nome</th>
+
+      <th>Idade</th>
+
+    </tr>
+
+  `;
+
+                // LOOP
+
+                for (let i = 0; i < alunos.length; i++) {
+
+                    html += `
+
+    <tr>
+
+      <td>${alunos[i][0]}</td>
+
+      <td>${alunos[i][1]}</td>
+
+    </tr>
+
+    `;
+
+                }
+
+                html += `</table>`;
+
+                document.getElementById(
+                    "resultadoBi"
+                ).innerHTML = html;
+
+            }
+
+            /* =========================
+               LOOP
+            ========================= */
+
+            function exemploLoop() {
+
+                let numeros = [
+
+                    10,
+
+                    20,
+
+                    30,
+
+                    40
+
+                ];
+
+                let texto = "";
+
+                // FOR = repetição
+
+                for (let i = 0; i < numeros.length; i++) {
+
+                    texto +=
+                        "Número: " +
+                        numeros[i] +
+                        "<br>";
+
+                }
+
+                document.getElementById(
+                    "resultadoLoop"
+                ).innerHTML = texto;
+
+            }
+
+        </script>
+
+</body>
+
+</html>
