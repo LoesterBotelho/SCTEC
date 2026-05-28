@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SCTEC - Processo Seletivo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f3f3f3;
+            color: #111;
+        }
+
+        /* HEADER */
+        header {
+            width: 100%;
+            height: 82px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .logo {
+            width: 145px;
+        }
+
+        .menu {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .search-box {
+            width: 620px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 50px;
+            border-radius: 40px;
+            border: 1px solid #d8d8d8;
+            outline: none;
+            padding: 0 60px 0 24px;
+            font-size: 16px;
+            background: #fff;
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #fff;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            color: #0057c2;
+        }
+
+        .user-area svg {
+            width: 34px;
+            fill: #0057c2;
+        }
+
+        .user-area strong {
+            color: #0057c2;
+        }
+
+        /* MAIN */
+        .container {
+            width: 100%;
+            max-width: 1220px;
+            margin: 25px auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 240px;
+            min-height: 760px;
+            background: #ececec;
+            border-radius: 10px;
+        }
+
+        .content {
+            flex: 1;
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* COURSE HEADER */
+        .course-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+
+        .course-left {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .course-image {
+            width: 120px;
+            height: 85px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #56a647;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .course-title {
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .process-status {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .green-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00c853;
+            margin-top: 4px;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            margin-left: 48px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 40px;
+            border-left: 6px solid #72b8ff;
+            margin-left: -3px;
+            padding-left: 38px;
+        }
+
+        .timeline-item:last-child {
+            border-left: 6px solid #ccc;
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #0058a8;
+            z-index: 1;
+        }
+
+        .timeline-item:last-child::before {
+            background: #ccc;
+        }
+
+        .timeline-date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 33px;
+            line-height: 1.25;
+            font-weight: 500;
+        }
+
+        /* FLOAT BUTTONS */
+        .accessibility-btn,
+        .whatsapp-btn {
+            position: fixed;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .accessibility-btn {
+            left: 10px;
+            bottom: 28px;
+            background: #fff;
+            border: 5px solid #1e7ae6;
+            width: 76px;
+            height: 76px;
+        }
+
+        .whatsapp-btn {
+            right: 18px;
+            bottom: 18px;
+            background: #25d366;
+        }
+
+        @media(max-width:1050px) {
+            header {
+                height: auto;
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: 120px;
+            }
+
+            .course-header {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-left">
+            <img class="logo" src="https://cursos.sesisenai.org.br/images/shared/sctec-logo.svg" alt="SCTEC Logo">
+            <div class="menu">Explorar ▼</div>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="O que você quer aprender?">
+            <button>🔍</button>
+        </div>
+        <div class="user-area">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path
+                    d="M480-800q-33 0-56.5-23.5T400-880q0-33 23.5-56.5T480-960q33 0 56.5 23.5T560-880q0 33-23.5 56.5T480-800ZM360-200v-480q-60-5-122-15t-118-25l20-80q78 21 166 30.5t174 9.5q86 0 174-9.5T820-800l20 80q-56 15-118 25t-122 15v480h-80v-240h-80v240h-80ZM320 0q-17 0-28.5-11.5T280-40q0-17 11.5-28.5T320-80q17 0 28.5 11.5T360-40q0 17-11.5 28.5T320 0Zm160 0q-17 0-28.5-11.5T440-40q0-17 11.5-28.5T480-80q17 0 28.5 11.5T520-40q0 17-11.5 28.5T480 0Zm160 0q-17 0-28.5-11.5T600-40q0-17 11.5-28.5T640-80q17 0 28.5 11.5T680-40q0 17-11.5 28.5T640 0Z" />
+            </svg>
+            <div>Olá, <strong>Loester!</strong></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <aside class="sidebar"></aside>
+        <section class="content">
+            <div class="course-header">
+                <div class="course-left">
+                    <div class="course-image">
+                        <img src="https://cursos.sesisenai.org.br/images/product/areas_group/desenvolvimento-de-sistemas/desenvolvimento-de-sistemas-desk.webp"
+                            alt="Curso">
+                    </div>
+                    <div>
+                        <div class="badge">SCTEC</div>
+                        <div class="course-title">IA para Desenvolvedores</div>
+                    </div>
+                </div>
+                <div class="process-status">
+                    <div class="green-dot"></div>
+                    <div>PROCESSO<br>SELETIVO</div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">28 FEV 2026 | 17:24</div>
+                    <div class="timeline-title">Inscrição iniciada</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">28 FEV 2026 | 17:25</div>
+                    <div class="timeline-title">Inscrição em andamento / dados pessoais</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">28 FEV 2026 | 17:39</div>
+                    <div class="timeline-title">Inscrição em andamento / envio de documentos</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">28 FEV 2026 | 17:39</div>
+                    <div class="timeline-title">Processo seletivo / apuração</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="accessibility-btn" id="accessibilityBtn"><img
+            src="https://vlibras.gov.br/app//assets/access_icon.svg?v=20260510" alt="Acessibilidade"></div>
+    <div class="whatsapp-btn" id="whatsappBtn"><img src="https://cursos.sesisenai.org.br/images/shared/whatsapp.svg"
+            alt="WhatsApp"></div>
+
+    <script>
+        document.getElementById('accessibilityBtn').addEventListener('click', () => alert('Menu de acessibilidade'));
+        document.getElementById('whatsappBtn').addEventListener('click', () => window.open('https://wa.me/5511999999999', '_blank'));
+    </script>
+</body>
+
+</html>
