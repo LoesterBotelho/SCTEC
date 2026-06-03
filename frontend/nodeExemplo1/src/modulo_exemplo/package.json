@@ -1,12 +1,13 @@
 {
-  "name": "nodeexemplo1",
+  "name": "modulo_exemplo",
   "version": "1.0.0",
-  "description": "LIVROS\r     CAPITULOS",
+  "description": "Exemplo de módulos Node.js",
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "OlaMundo.js",
+  "main": "App.js",
   "scripts": {
+    "run": "node App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
