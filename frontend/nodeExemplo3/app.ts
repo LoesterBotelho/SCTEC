@@ -1,23 +1,15 @@
 import express from "express";
+import clientsRouter from "./Router/clients";
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// assim ele usa apartir do /clients
+// app.use('/clients', clientsRouter);
 
-app.get('/sobrenos', (req, res) => {
-  res.send('Rota falando sobre a empresa');
-});
+// assim ele usa apartir do /
+app.use(clientsRouter);
 
-app.get('/trabalheconosco', (req, res) => {
-  res.send('opções de carreira');
-});
-
-app.get('/contato', (req, res) => {
-  res.send('(48) 99999-9999');
-});
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
