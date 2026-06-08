@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Reading Tracker</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- HEADER -->
+
+      <header class="header">
+        <div>
+          <h1>📚 Reading Tracker</h1>
+
+          <p>Track reading progress, vocabulary growth and review schedule</p>
+        </div>
+
+        <div class="header-actions">
+          <button id="btnExportPdf" class="btn btn-dark">Export PDF</button>
+
+          <button id="btnExportJson" class="btn btn-primary">
+            Export JSON
+          </button>
+        </div>
+      </header>
+
+      <!-- DASHBOARD -->
+
+      <section class="dashboard">
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Total Books </span>
+
+          <span id="totalBooks" class="dashboard-value"> 0 </span>
+        </div>
+
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Reviews Due </span>
+
+          <span id="reviewsDue" class="dashboard-value"> 0 </span>
+        </div>
+
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Overdue Reviews </span>
+
+          <span id="overdueReviews" class="dashboard-value"> 0 </span>
+        </div>
+
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Average Vocabulary </span>
+
+          <span id="averageVocabulary" class="dashboard-value"> 0% </span>
+        </div>
+
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Mastered Books </span>
+
+          <span id="masteredBooks" class="dashboard-value"> 0 </span>
+        </div>
+
+        <div class="dashboard-card">
+          <span class="dashboard-label"> Total Reads </span>
+
+          <span id="totalReads" class="dashboard-value"> 0 </span>
+        </div>
+      </section>
+
+      <!-- TOOLBAR -->
+
+      <section class="toolbar">
+        <div class="toolbar-row">
+          <input
+            id="searchInput"
+            class="form-control"
+            type="text"
+            placeholder="Search by title or author"
+          />
+
+          <select id="filterSelect" class="form-control">
+            <option value="all">All Books</option>
+
+            <option value="recent">Recently Read</option>
+
+            <option value="oldest">Oldest Read</option>
+
+            <option value="review">Review Soon</option>
+
+            <option value="overdue">Overdue Reviews</option>
+
+            <option value="highVocabulary">Highest Vocabulary</option>
+
+            <option value="lowVocabulary">Lowest Vocabulary</option>
+
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B1">B1</option>
+            <option value="B2">B2</option>
+            <option value="C1">C1</option>
+            <option value="C2">C2</option>
+          </select>
+
+          <select id="pageSize" class="form-control">
+            <option value="50">50 Books</option>
+
+            <option value="100">100 Books</option>
+          </select>
+        </div>
+
+        <div class="toolbar-row">
+          <button id="btnNewBook" class="btn btn-success">+ New Book</button>
+
+          <label class="btn btn-secondary">
+            Import JSON
+
+            <input hidden id="importJsonFile" type="file" accept=".json" />
+          </label>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+
+      <section class="table-card">
+        <div class="table-responsive">
+          <table id="booksTable">
+            <thead>
+              <tr>
+                <th>Title</th>
+
+                <th>Author</th>
+
+                <th>Level</th>
+
+                <th>Pages</th>
+
+                <th>Vocabulary</th>
+
+                <th>Reads</th>
+
+                <th>Last Reading</th>
+
+                <th>Next Review</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="booksTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PAGINATION -->
+
+      <section id="pagination" class="pagination"></section>
+    </div>
+
+    <!-- BOOK MODAL -->
+
+    <div id="bookModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">New Book</h2>
+
+          <button id="closeModal" class="modal-close">×</button>
+        </div>
+
+        <form id="bookForm">
+          <input id="bookId" type="hidden" />
+
+          <div class="form-grid">
+            <div>
+              <label> Title </label>
+
+              <input id="title" class="form-control" required />
+            </div>
+
+            <div>
+              <label> Author </label>
+
+              <input id="author" class="form-control" required />
+            </div>
+
+            <div>
+              <label> Pages </label>
+
+              <input id="pages" type="number" class="form-control" />
+            </div>
+
+            <div>
+              <label> Level </label>
+
+              <select id="level" class="form-control">
+                <option>A1</option>
+                <option>A2</option>
+                <option>B1</option>
+                <option>B2</option>
+                <option>C1</option>
+                <option>C2</option>
+              </select>
+            </div>
+
+            <div>
+              <label> Total Words </label>
+
+              <input id="totalWords" type="number" class="form-control" />
+            </div>
+
+            <div>
+              <label> Unique Words </label>
+
+              <input id="uniqueWords" type="number" class="form-control" />
+            </div>
+
+            <div>
+              <label> Vocabulary % </label>
+
+              <input
+                id="vocabularyPercent"
+                type="number"
+                min="0"
+                max="100"
+                class="form-control"
+              />
+            </div>
+
+            <div>
+              <label> Times Read </label>
+
+              <input id="timesRead" type="number" class="form-control" />
+            </div>
+
+            <div>
+              <label> Last Reading </label>
+
+              <input id="lastReading" type="date" class="form-control" />
+            </div>
+
+            <div>
+              <label> Next Review </label>
+
+              <input id="nextReading" type="date" class="form-control" />
+            </div>
+          </div>
+
+          <div class="notes-container">
+            <label> Notes </label>
+
+            <textarea id="notes" rows="4" class="form-control"> </textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" id="btnCancel" class="btn btn-secondary">
+              Cancel
+            </button>
+
+            <button type="submit" class="btn btn-success">Save Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- REVIEW HISTORY MODAL -->
+
+    <div id="historyModal" class="modal">
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h2>Review History</h2>
+
+          <button id="closeHistoryModal" class="modal-close">×</button>
+        </div>
+
+        <div id="historyContainer"></div>
+      </div>
+    </div>
+
+    <!-- APP -->
+
+    <script src="app.js"></script>
+  </body>
+</html>

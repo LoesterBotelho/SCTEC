@@ -1,0 +1,23 @@
+{
+  "name": "app_expressjs",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Loester Botelho",
+  "type": "commonjs",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "tsx watch app.ts",
+    "start": "tsx app.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "level": "B2",
+        "vocabularyPercent": 70,
+        "lastReading": "2026-06-01",
+        "nextReading": "2026-07-01"
+    },
+    {
+        "title": "Animal Farm",
+        "author": "George Orwell",
+        "level": "B1",
+        "vocabularyPercent": 82,
+        "lastReading": "2026-06-05",
+        "nextReading": "2026-06-10"
+    },
+    {
+        "title": "Charlotte's Web",
+        "author": "E. B. White",
+        "level": "A2",
+        "vocabularyPercent": 55,
+        "lastReading": "2026-05-15",
+        "nextReading": "2026-06-08"
+    }
+]
