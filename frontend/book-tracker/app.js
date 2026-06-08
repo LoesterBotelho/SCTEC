@@ -1,9 +1,3 @@
-// =====================================================
-// READING TRACKER
-// APP.JS - PARTE 3A
-// Core + CRUD + Dashboard + Search + Filters + Paging
-// =====================================================
-
 const STORAGE_KEY = "readingTrackerBooks";
 
 let books = [];
@@ -16,42 +10,32 @@ let currentFilter = "all";
 
 let searchText = "";
 
+document
+  .getElementById("btnDarkMode")
+  ?.addEventListener("click", toggleDarkMode);
+
 // =====================================================
 // STORAGE
 // =====================================================
 
 function loadBooks() {
+  const data = localStorage.getItem(STORAGE_KEY);
 
-    const data =
-        localStorage.getItem(
-            STORAGE_KEY
-        );
+  if (!data) {
+    books = [];
 
-    if (!data) {
+    return;
+  }
 
-        books = [];
-
-        return;
-    }
-
-    try {
-
-        books =
-            JSON.parse(data);
-
-    }
-    catch {
-
-        books = [];
-    }
+  try {
+    books = JSON.parse(data);
+  } catch {
+    books = [];
+  }
 }
 
 function saveBooks() {
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(books)
-    );
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
 }
 
 // =====================================================
@@ -59,11 +43,7 @@ function saveBooks() {
 // =====================================================
 
 function generateId() {
-
-    return Date.now() +
-        Math.floor(
-            Math.random() * 10000
-        );
+  return Date.now() + Math.floor(Math.random() * 10000);
 }
 
 // =====================================================
@@ -71,107 +51,73 @@ function generateId() {
 // =====================================================
 
 function addBook(book) {
+  book.id = generateId();
 
-    book.id =
-        generateId();
+  book.history = book.history || [];
 
-    book.history =
-        book.history || [];
+  book.createdAt = new Date().toISOString();
 
-    book.createdAt =
-        new Date()
-            .toISOString();
+  books.push(book);
 
-    books.push(book);
+  saveBooks();
 
-    saveBooks();
-
-    refreshUI();
+  refreshUI();
 }
 
 function updateBook(id, updatedBook) {
+  const index = books.findIndex((b) => b.id == id);
 
-    const index =
-        books.findIndex(
-            b => b.id == id
-        );
+  if (index === -1) return;
 
-    if (index === -1)
-        return;
+  books[index] = {
+    ...books[index],
 
-    books[index] = {
+    ...updatedBook,
+  };
 
-        ...books[index],
+  saveBooks();
 
-        ...updatedBook
-    };
-
-    saveBooks();
-
-    refreshUI();
+  refreshUI();
 }
 
 function deleteBook(id) {
+  const confirmed = confirm("Delete this book?");
 
-    const confirmed =
-        confirm(
-            "Delete this book?"
-        );
+  if (!confirmed) return;
 
-    if (!confirmed)
-        return;
+  books = books.filter((b) => b.id != id);
 
-    books =
-        books.filter(
-            b => b.id != id
-        );
+  saveBooks();
 
-    saveBooks();
-
-    refreshUI();
+  refreshUI();
 }
 
 function getBook(id) {
-
-    return books.find(
-        b => b.id == id
-    );
+  return books.find((b) => b.id == id);
 }
 
 // =====================================================
 // HISTORY
 // =====================================================
 
-function addHistoryRecord(
-    bookId,
-    vocabularyPercent
-) {
+function addHistoryRecord(bookId, vocabularyPercent) {
+  const book = getBook(bookId);
 
-    const book =
-        getBook(bookId);
+  if (!book) return;
 
-    if (!book)
-        return;
+  if (!book.history) book.history = [];
 
-    if (!book.history)
-        book.history = [];
+  book.history.push({
+    date: new Date().toISOString(),
 
-    book.history.push({
+    vocabularyPercent,
+  });
 
-        date:
-            new Date()
-                .toISOString(),
+  book.vocabularyPercent = vocabularyPercent;
 
-        vocabularyPercent
-    });
+  book.timesRead = (book.timesRead || 0) + 1;
 
-    book.vocabularyPercent =
-        vocabularyPercent;
-
-    book.timesRead =
-        (book.timesRead || 0) + 1;
-
-    saveBooks();
+  saveBooks();
 }
 
 // =====================================================
@@ -179,22 +125,15 @@ function addHistoryRecord(
 // =====================================================
 
 function getBookStatus(book) {
+  const v = Number(book.vocabularyPercent || 0);
 
-    const v =
-        Number(
-            book.vocabularyPercent || 0
-        );
+  if (v >= 90) return "Mastered";
 
-    if (v >= 90)
-        return "Mastered";
+  if (v >= 70) return "Reviewing";
 
-    if (v >= 70)
-        return "Reviewing";
+  if (v >= 50) return "Learning";
 
-    if (v >= 50)
-        return "Learning";
-
-    return "New";
+  return "New";
 }
 
 // =====================================================
@@ -202,106 +141,57 @@ function getBookStatus(book) {
 // =====================================================
 
 function updateDashboard() {
+  const totalBooks = books.length;
 
-    const totalBooks =
-        books.length;
+  const today = new Date();
 
-    const today =
-        new Date();
+  let reviewsDue = 0;
 
-    let reviewsDue = 0;
+  let overdueReviews = 0;
 
-    let overdueReviews = 0;
+  let masteredBooks = 0;
 
-    let masteredBooks = 0;
+  let totalReads = 0;
 
-    let totalReads = 0;
+  let vocabularySum = 0;
 
-    let vocabularySum = 0;
+  books.forEach((book) => {
+    vocabularySum += Number(book.vocabularyPercent || 0);
 
-    books.forEach(book => {
+    totalReads += Number(book.timesRead || 0);
 
-        vocabularySum +=
-            Number(
-                book.vocabularyPercent || 0
-            );
+    if (Number(book.vocabularyPercent || 0) >= 90) {
+      masteredBooks++;
+    }
 
-        totalReads +=
-            Number(
-                book.timesRead || 0
-            );
+    if (book.nextReading) {
+      const nextDate = new Date(book.nextReading);
 
-        if (
-            Number(
-                book.vocabularyPercent || 0
-            ) >= 90
-        ) {
+      if (nextDate <= today) {
+        reviewsDue++;
+      }
 
-            masteredBooks++;
-        }
+      if (nextDate < today) {
+        overdueReviews++;
+      }
+    }
+  });
 
-        if (
-            book.nextReading
-        ) {
+  const averageVocabulary =
+    totalBooks > 0 ? Math.round(vocabularySum / totalBooks) : 0;
 
-            const nextDate =
-                new Date(
-                    book.nextReading
-                );
+  document.getElementById("totalBooks").textContent = totalBooks;
 
-            if (
-                nextDate <= today
-            ) {
+  document.getElementById("reviewsDue").textContent = reviewsDue;
 
-                reviewsDue++;
-            }
+  document.getElementById("overdueReviews").textContent = overdueReviews;
 
-            if (
-                nextDate < today
-            ) {
+  document.getElementById("averageVocabulary").textContent =
+    averageVocabulary + "%";
 
-                overdueReviews++;
-            }
-        }
-    });
+  document.getElementById("masteredBooks").textContent = masteredBooks;
 
-    const averageVocabulary =
-        totalBooks > 0
-            ? Math.round(
-                vocabularySum /
-                totalBooks
-            )
-            : 0;
-
-    document.getElementById(
-        "totalBooks"
-    ).textContent =
-        totalBooks;
-
-    document.getElementById(
-        "reviewsDue"
-    ).textContent =
-        reviewsDue;
-
-    document.getElementById(
-        "overdueReviews"
-    ).textContent =
-        overdueReviews;
-
-    document.getElementById(
-        "averageVocabulary"
-    ).textContent =
-        averageVocabulary + "%";
-
-    document.getElementById(
-        "masteredBooks"
-    ).textContent =
-        masteredBooks;
-
-    document.getElementById(
-        "totalReads"
-    ).textContent =
-        totalReads;
+  document.getElementById("totalReads").textContent = totalReads;
 }
 
 // =====================================================
@@ -309,30 +199,16 @@ function updateDashboard() {
 // =====================================================
 
 function filterBySearch(list) {
+  if (!searchText) return list;
 
-    if (!searchText)
-        return list;
+  const search = searchText.toLowerCase();
 
-    const search =
-        searchText.toLowerCase();
-
-    return list.filter(book => {
-
-        return (
-
-            (book.title || "")
-                .toLowerCase()
-                .includes(search)
-
-            ||
-
-            (book.author || "")
-                .toLowerCase()
-                .includes(search)
-
-        );
-
-    });
+  return list.filter((book) => {
+    return (
+      (book.title || "").toLowerCase().includes(search) ||
+      (book.author || "").toLowerCase().includes(search)
+    );
+  });
 }
 
 // =====================================================
@@ -340,146 +216,63 @@ function filterBySearch(list) {
 // =====================================================
 
 function applyFilter(list) {
+  let filtered = [...list];
 
-    let filtered =
-        [...list];
+  switch (currentFilter) {
+    case "recent":
+      filtered.sort(
+        (a, b) => new Date(b.lastReading || 0) - new Date(a.lastReading || 0),
+      );
 
-    switch (
-        currentFilter
-    ) {
+      break;
 
-        case "recent":
+    case "oldest":
+      filtered.sort(
+        (a, b) => new Date(a.lastReading || 0) - new Date(b.lastReading || 0),
+      );
 
-            filtered.sort(
+      break;
 
-                (a, b) =>
+    case "review":
+      filtered.sort(
+        (a, b) => new Date(a.nextReading || 0) - new Date(b.nextReading || 0),
+      );
 
-                    new Date(
-                        b.lastReading || 0
-                    )
+      break;
 
-                    -
+    case "overdue":
+      filtered = filtered.filter(
+        (book) => book.nextReading && new Date(book.nextReading) < new Date(),
+      );
 
-                    new Date(
-                        a.lastReading || 0
-                    )
+      break;
 
-            );
+    case "highVocabulary":
+      filtered.sort(
+        (a, b) => (b.vocabularyPercent || 0) - (a.vocabularyPercent || 0),
+      );
 
-            break;
+      break;
 
-        case "oldest":
+    case "lowVocabulary":
+      filtered.sort(
+        (a, b) => (a.vocabularyPercent || 0) - (b.vocabularyPercent || 0),
+      );
 
-            filtered.sort(
+      break;
 
-                (a, b) =>
+    case "A1":
+    case "A2":
+    case "B1":
+    case "B2":
+    case "C1":
+    case "C2":
+      filtered = filtered.filter((book) => book.level === currentFilter);
 
-                    new Date(
-                        a.lastReading || 0
-                    )
+      break;
+  }
 
-                    -
-
-                    new Date(
-                        b.lastReading || 0
-                    )
-
-            );
-
-            break;
-
-        case "review":
-
-            filtered.sort(
-
-                (a, b) =>
-
-                    new Date(
-                        a.nextReading || 0
-                    )
-
-                    -
-
-                    new Date(
-                        b.nextReading || 0
-                    )
-
-            );
-
-            break;
-
-        case "overdue":
-
-            filtered =
-                filtered.filter(
-
-                    book =>
-
-                        book.nextReading
-
-                        &&
-
-                        new Date(
-                            book.nextReading
-                        ) < new Date()
-
-                );
-
-            break;
-
-        case "highVocabulary":
-
-            filtered.sort(
-
-                (a, b) =>
-
-                    (b.vocabularyPercent || 0)
-
-                    -
-
-                    (a.vocabularyPercent || 0)
-
-            );
-
-            break;
-
-        case "lowVocabulary":
-
-            filtered.sort(
-
-                (a, b) =>
-
-                    (a.vocabularyPercent || 0)
-
-                    -
-
-                    (b.vocabularyPercent || 0)
-
-            );
-
-            break;
-
-        case "A1":
-        case "A2":
-        case "B1":
-        case "B2":
-        case "C1":
-        case "C2":
-
-            filtered =
-                filtered.filter(
-
-                    book =>
-
-                        book.level ===
-                        currentFilter
-
-                );
-
-            break;
-    }
-
-    return filtered;
+  return filtered;
 }
 
 // =====================================================
@@ -487,18 +280,11 @@ function applyFilter(list) {
 // =====================================================
 
 function paginate(list) {
+  const start = (currentPage - 1) * pageSize;
 
-    const start =
-        (currentPage - 1)
-        * pageSize;
+  const end = start + pageSize;
 
-    const end =
-        start + pageSize;
-
-    return list.slice(
-        start,
-        end
-    );
+  return list.slice(start, end);
 }
 
 // =====================================================
@@ -506,21 +292,13 @@ function paginate(list) {
 // =====================================================
 
 function getVisibleBooks() {
+  let result = [...books];
 
-    let result =
-        [...books];
+  result = filterBySearch(result);
 
-    result =
-        filterBySearch(
-            result
-        );
+  result = applyFilter(result);
 
-    result =
-        applyFilter(
-            result
-        );
-
-    return result;
+  return result;
 }
 
 // =====================================================
@@ -528,61 +306,32 @@ function getVisibleBooks() {
 // =====================================================
 
 function renderTable() {
+  const tbody = document.getElementById("booksTableBody");
 
-    const tbody =
-        document.getElementById(
-            "booksTableBody"
-        );
+  if (!tbody) return;
 
-    if (!tbody)
-        return;
+  const visibleBooks = getVisibleBooks();
 
-    const visibleBooks =
-        getVisibleBooks();
+  const pagedBooks = paginate(visibleBooks);
 
-    const pagedBooks =
-        paginate(
-            visibleBooks
-        );
+  tbody.innerHTML = "";
 
-    tbody.innerHTML = "";
+  pagedBooks.forEach((book) => {
+    const row = document.createElement("tr");
 
-    pagedBooks.forEach(book => {
+    const status = getBookStatus(book);
 
-        const row =
-            document.createElement(
-                "tr"
-            );
+    const badgeClass = `badge-${(book.level || "").toLowerCase()}`;
 
-        const status =
-            getBookStatus(
-                book
-            );
+    const progress = Number(book.vocabularyPercent || 0);
 
-        const badgeClass =
-            `badge-${(
-                book.level || ""
-            ).toLowerCase()}`;
+    const overdue = book.nextReading && new Date(book.nextReading) < new Date();
 
-        const progress =
-            Number(
-                book.vocabularyPercent || 0
-            );
+    if (overdue) {
+      row.classList.add("overdue");
+    }
 
-        const overdue =
-            book.nextReading &&
-            new Date(
-                book.nextReading
-            ) < new Date();
-
-        if (overdue) {
-
-            row.classList.add(
-                "overdue"
-            );
-        }
-
-        row.innerHTML = `
+    row.innerHTML = `
 
             <td>
                 ${book.title || ""}
@@ -667,13 +416,10 @@ function renderTable() {
 
         `;
 
-        tbody.appendChild(
-            row
-        );
+    tbody.appendChild(row);
+  });
 
-    });
-
-    attachTableEvents();
+  attachTableEvents();
 }
 
 // =====================================================
@@ -681,67 +427,37 @@ function renderTable() {
 // =====================================================
 
 function renderPagination() {
+  const container = document.getElementById("pagination");
 
-    const container =
-        document.getElementById(
-            "pagination"
-        );
+  if (!container) return;
 
-    if (!container)
-        return;
+  const total = getVisibleBooks().length;
 
-    const total =
-        getVisibleBooks().length;
+  const pages = Math.ceil(total / pageSize);
 
-    const pages =
-        Math.ceil(
-            total / pageSize
-        );
+  container.innerHTML = "";
 
-    container.innerHTML = "";
+  for (let i = 1; i <= pages; i++) {
+    const btn = document.createElement("button");
 
-    for (
-        let i = 1;
-        i <= pages;
-        i++
-    ) {
+    btn.className = "page-btn";
 
-        const btn =
-            document.createElement(
-                "button"
-            );
-
-        btn.className =
-            "page-btn";
-
-        if (
-            i === currentPage
-        ) {
-
-            btn.classList.add(
-                "active"
-            );
-        }
-
-        btn.textContent = i;
-
-        btn.addEventListener(
-            "click",
-            () => {
-
-                currentPage = i;
-
-                renderTable();
-
-                renderPagination();
-
-            }
-        );
-
-        container.appendChild(
-            btn
-        );
+    if (i === currentPage) {
+      btn.classList.add("active");
     }
+
+    btn.textContent = i;
+
+    btn.addEventListener("click", () => {
+      currentPage = i;
+
+      renderTable();
+
+      renderPagination();
+    });
+
+    container.appendChild(btn);
+  }
 }
 
 // =====================================================
@@ -749,103 +465,44 @@ function renderPagination() {
 // =====================================================
 
 function openModal() {
-
-    document
-        .getElementById(
-            "bookModal"
-        )
-        .classList.add(
-            "active"
-        );
+  document.getElementById("bookModal").classList.add("active");
 }
 
 function closeModal() {
-
-    document
-        .getElementById(
-            "bookModal"
-        )
-        .classList.remove(
-            "active"
-        );
+  document.getElementById("bookModal").classList.remove("active");
 }
 
 function clearForm() {
+  document.getElementById("bookForm").reset();
 
-    document
-        .getElementById(
-            "bookForm"
-        )
-        .reset();
-
-    document
-        .getElementById(
-            "bookId"
-        )
-        .value = "";
+  document.getElementById("bookId").value = "";
 }
 
 function fillForm(book) {
+  document.getElementById("bookId").value = book.id;
 
-    document.getElementById(
-        "bookId"
-    ).value =
-        book.id;
+  document.getElementById("title").value = book.title || "";
 
-    document.getElementById(
-        "title"
-    ).value =
-        book.title || "";
+  document.getElementById("author").value = book.author || "";
 
-    document.getElementById(
-        "author"
-    ).value =
-        book.author || "";
+  document.getElementById("pages").value = book.pages || "";
 
-    document.getElementById(
-        "pages"
-    ).value =
-        book.pages || "";
+  document.getElementById("level").value = book.level || "A1";
 
-    document.getElementById(
-        "level"
-    ).value =
-        book.level || "A1";
+  document.getElementById("totalWords").value = book.totalWords || "";
 
-    document.getElementById(
-        "totalWords"
-    ).value =
-        book.totalWords || "";
+  document.getElementById("uniqueWords").value = book.uniqueWords || "";
 
-    document.getElementById(
-        "uniqueWords"
-    ).value =
-        book.uniqueWords || "";
+  document.getElementById("vocabularyPercent").value =
+    book.vocabularyPercent || "";
 
-    document.getElementById(
-        "vocabularyPercent"
-    ).value =
-        book.vocabularyPercent || "";
+  document.getElementById("timesRead").value = book.timesRead || 0;
 
-    document.getElementById(
-        "timesRead"
-    ).value =
-        book.timesRead || 0;
+  document.getElementById("lastReading").value = book.lastReading || "";
 
-    document.getElementById(
-        "lastReading"
-    ).value =
-        book.lastReading || "";
+  document.getElementById("nextReading").value = book.nextReading || "";
 
-    document.getElementById(
-        "nextReading"
-    ).value =
-        book.nextReading || "";
-
-    document.getElementById(
-        "notes"
-    ).value =
-        book.notes || "";
+  document.getElementById("notes").value = book.notes || "";
 }
 
 // =====================================================
@@ -853,117 +510,41 @@ function fillForm(book) {
 // =====================================================
 
 function saveForm() {
+  const id = document.getElementById("bookId").value;
 
-    const id =
-        document
-            .getElementById(
-                "bookId"
-            )
-            .value;
+  const book = {
+    title: document.getElementById("title").value,
 
-    const book = {
+    author: document.getElementById("author").value,
 
-        title:
-            document
-                .getElementById(
-                    "title"
-                )
-                .value,
+    pages: Number(document.getElementById("pages").value),
 
-        author:
-            document
-                .getElementById(
-                    "author"
-                )
-                .value,
+    level: document.getElementById("level").value,
 
-        pages:
-            Number(
-                document
-                    .getElementById(
-                        "pages"
-                    )
-                    .value
-            ),
+    totalWords: Number(document.getElementById("totalWords").value),
 
-        level:
-            document
-                .getElementById(
-                    "level"
-                )
-                .value,
+    uniqueWords: Number(document.getElementById("uniqueWords").value),
 
-        totalWords:
-            Number(
-                document
-                    .getElementById(
-                        "totalWords"
-                    )
-                    .value
-            ),
+    vocabularyPercent: Number(
+      document.getElementById("vocabularyPercent").value,
+    ),
 
-        uniqueWords:
-            Number(
-                document
-                    .getElementById(
-                        "uniqueWords"
-                    )
-                    .value
-            ),
+    timesRead: Number(document.getElementById("timesRead").value),
 
-        vocabularyPercent:
-            Number(
-                document
-                    .getElementById(
-                        "vocabularyPercent"
-                    )
-                    .value
-            ),
+    lastReading: document.getElementById("lastReading").value,
 
-        timesRead:
-            Number(
-                document
-                    .getElementById(
-                        "timesRead"
-                    )
-                    .value
-            ),
+    nextReading: document.getElementById("nextReading").value,
 
-        lastReading:
-            document
-                .getElementById(
-                    "lastReading"
-                )
-                .value,
+    notes: document.getElementById("notes").value,
+  };
 
-        nextReading:
-            document
-                .getElementById(
-                    "nextReading"
-                )
-                .value,
+  if (id) {
+    updateBook(Number(id), book);
+  } else {
+    addBook(book);
+  }
 
-        notes:
-            document
-                .getElementById(
-                    "notes"
-                )
-                .value
-    };
-
-    if (id) {
-
-        updateBook(
-            Number(id),
-            book
-        );
-
-    } else {
-
-        addBook(book);
-    }
-
-    closeModal();
+  closeModal();
 }
 
 // =====================================================
@@ -971,36 +552,19 @@ function saveForm() {
 // =====================================================
 
 function showHistory(id) {
+  const book = getBook(id);
 
-    const book =
-        getBook(id);
+  if (!book) return;
 
-    if (!book)
-        return;
+  const container = document.getElementById("historyContainer");
 
-    const container =
-        document.getElementById(
-            "historyContainer"
-        );
+  container.innerHTML = `<h3>${book.title}</h3>`;
 
-    container.innerHTML =
-        `<h3>${book.title}</h3>`;
-
-    if (
-        !book.history ||
-        !book.history.length
-    ) {
-
-        container.innerHTML +=
-            "<p>No history.</p>";
-
-    } else {
-
-        book.history.forEach(
-            item => {
-
-                container.innerHTML +=
-                `
+  if (!book.history || !book.history.length) {
+    container.innerHTML += "<p>No history.</p>";
+  } else {
+    book.history.forEach((item) => {
+      container.innerHTML += `
                 <div class="history-item">
 
                     <strong>
@@ -1014,17 +578,10 @@ function showHistory(id) {
 
                 </div>
                 `;
-            }
-        );
-    }
+    });
+  }
 
-    document
-        .getElementById(
-            "historyModal"
-        )
-        .classList.add(
-            "active"
-        );
+  document.getElementById("historyModal").classList.add("active");
 }
 
 // =====================================================
@@ -1032,55 +589,40 @@ function showHistory(id) {
 // =====================================================
 
 function calculateNextReview() {
+  const reads = Number(document.getElementById("timesRead").value || 0);
 
-    const reads =
-        Number(
-            document
-                .getElementById(
-                    "timesRead"
-                )
-                .value || 0
-        );
+  const today = new Date();
 
-    const today =
-        new Date();
+  let days = 1;
 
-    let days = 1;
+  switch (reads) {
+    case 0:
+      days = 1;
+      break;
 
-    switch (reads) {
+    case 1:
+      days = 3;
+      break;
 
-        case 0:
-            days = 1;
-            break;
+    case 2:
+      days = 7;
+      break;
 
-        case 1:
-            days = 3;
-            break;
+    case 3:
+      days = 14;
+      break;
 
-        case 2:
-            days = 7;
-            break;
+    case 4:
+      days = 30;
+      break;
 
-        case 3:
-            days = 14;
-            break;
+    default:
+      days = 90;
+  }
 
-        case 4:
-            days = 30;
-            break;
+  today.setDate(today.getDate() + days);
 
-        default:
-            days = 90;
-    }
-
-    today.setDate(
-        today.getDate()
-        + days
-    );
-
-    return today
-        .toISOString()
-        .split("T")[0];
+  return today.toISOString().split("T")[0];
 }
 
 // =====================================================
@@ -1088,69 +630,31 @@ function calculateNextReview() {
 // =====================================================
 
 function attachTableEvents() {
+  document.querySelectorAll(".btn-edit").forEach((btn) => {
+    btn.onclick = () => {
+      const id = Number(btn.dataset.id);
 
-    document
-        .querySelectorAll(
-            ".btn-edit"
-        )
-        .forEach(btn => {
+      const book = getBook(id);
 
-            btn.onclick =
-                () => {
+      if (!book) return;
 
-                const id =
-                    Number(
-                        btn.dataset.id
-                    );
+      fillForm(book);
 
-                const book =
-                    getBook(id);
+      openModal();
+    };
+  });
 
-                if (!book)
-                    return;
+  document.querySelectorAll(".btn-delete").forEach((btn) => {
+    btn.onclick = () => {
+      deleteBook(Number(btn.dataset.id));
+    };
+  });
 
-                fillForm(book);
-
-                openModal();
-
-            };
-        });
-
-    document
-        .querySelectorAll(
-            ".btn-delete"
-        )
-        .forEach(btn => {
-
-            btn.onclick =
-                () => {
-
-                deleteBook(
-                    Number(
-                        btn.dataset.id
-                    )
-                );
-
-            };
-        });
-
-    document
-        .querySelectorAll(
-            ".btn-history"
-        )
-        .forEach(btn => {
-
-            btn.onclick =
-                () => {
-
-                showHistory(
-                    Number(
-                        btn.dataset.id
-                    )
-                );
-
-            };
-        });
+  document.querySelectorAll(".btn-history").forEach((btn) => {
+    btn.onclick = () => {
+      showHistory(Number(btn.dataset.id));
+    };
+  });
 }
 
 // =====================================================
@@ -1158,13 +662,454 @@ function attachTableEvents() {
 // =====================================================
 
 function refreshUI() {
+  updateDashboard();
 
-    updateDashboard();
+  renderTable();
 
-    renderTable();
+  renderPagination();
 
-    renderPagination();
-
-    saveBooks();
+  saveBooks();
 }
 
+// =====================================================
+// IMPORT JSON
+// =====================================================
+
+function importJsonFile(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = (event) => {
+    try {
+      const importedBooks = JSON.parse(event.target.result);
+
+      if (!Array.isArray(importedBooks)) {
+        throw new Error("Invalid JSON");
+      }
+
+      importedBooks.forEach((book) => {
+        if (!book.id) {
+          book.id = generateId();
+        }
+
+        if (!book.history) {
+          book.history = [];
+        }
+
+        books.push(book);
+      });
+
+      saveBooks();
+
+      refreshUI();
+
+      alert(`${importedBooks.length} books imported`);
+    } catch (error) {
+      alert("Invalid JSON file");
+
+      console.error(error);
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+// =====================================================
+// EXPORT JSON
+// =====================================================
+
+function exportJson() {
+  const blob = new Blob(
+    [JSON.stringify(books, null, 2)],
+
+    {
+      type: "application/json",
+    },
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+
+  link.download = "reading-tracker.json";
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
+
+// =====================================================
+// PDF REPORT
+// =====================================================
+
+function exportPdfReport() {
+  const reportWindow = window.open("", "_blank");
+
+  const rows = books
+    .map((book) => {
+      return `
+
+            <tr>
+
+                <td>
+                    ${book.title || ""}
+                </td>
+
+                <td>
+                    ${book.author || ""}
+                </td>
+
+                <td>
+                    ${book.level || ""}
+                </td>
+
+                <td>
+                    ${book.vocabularyPercent || 0}%
+                </td>
+
+                <td>
+                    ${book.lastReading || ""}
+                </td>
+
+                <td>
+                    ${book.nextReading || ""}
+                </td>
+
+            </tr>
+
+            `;
+    })
+    .join("");
+
+  reportWindow.document.write(`
+
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+        <title>
+            Reading Report
+        </title>
+
+        <style>
+
+            body{
+
+                font-family:
+                    Arial,
+                    sans-serif;
+
+                padding:20px;
+            }
+
+            h1{
+
+                text-align:center;
+            }
+
+            table{
+
+                width:100%;
+
+                border-collapse:
+                    collapse;
+            }
+
+            th{
+
+                background:#666;
+
+                color:white;
+
+                padding:8px;
+
+                border:
+                    1px solid #999;
+            }
+
+            td{
+
+                border:
+                    1px solid #ccc;
+
+                padding:8px;
+            }
+
+            .footer{
+
+                margin-top:20px;
+
+                font-size:12px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>
+            Reading Tracker Report
+        </h1>
+
+        <p>
+
+            Generated:
+
+            ${new Date().toLocaleString()}
+
+        </p>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Title
+                    </th>
+
+                    <th>
+                        Author
+                    </th>
+
+                    <th>
+                        Level
+                    </th>
+
+                    <th>
+                        Vocabulary
+                    </th>
+
+                    <th>
+                        Last Reading
+                    </th>
+
+                    <th>
+                        Next Review
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${rows}
+
+            </tbody>
+
+        </table>
+
+        <div
+            class="footer">
+
+            Total Books:
+            ${books.length}
+
+        </div>
+
+    </body>
+
+    </html>
+
+    `);
+
+  reportWindow.document.close();
+
+  reportWindow.focus();
+
+  reportWindow.print();
+}
+
+// =====================================================
+// DARK MODE
+// =====================================================
+
+const DARK_MODE_KEY = "readingTrackerDarkMode";
+
+function enableDarkMode() {
+  document.body.classList.add("dark");
+
+  localStorage.setItem(DARK_MODE_KEY, "true");
+}
+
+function disableDarkMode() {
+  document.body.classList.remove("dark");
+
+  localStorage.setItem(DARK_MODE_KEY, "false");
+}
+
+function toggleDarkMode() {
+  if (document.body.classList.contains("dark")) {
+    disableDarkMode();
+  } else {
+    enableDarkMode();
+  }
+}
+
+function loadDarkMode() {
+  const value = localStorage.getItem(DARK_MODE_KEY);
+
+  if (value === "true") {
+    enableDarkMode();
+  }
+}
+
+// =====================================================
+// SAMPLE DATA
+// =====================================================
+
+function createSampleBooks() {
+  if (books.length > 0) {
+    return;
+  }
+
+  books.push({
+    id: generateId(),
+
+    title: "The Hobbit",
+
+    author: "J.R.R. Tolkien",
+
+    pages: 310,
+
+    level: "B2",
+
+    vocabularyPercent: 70,
+
+    timesRead: 2,
+
+    totalWords: 95000,
+
+    uniqueWords: 8500,
+
+    lastReading: "2026-06-01",
+
+    nextReading: "2026-06-15",
+
+    notes: "",
+
+    history: [
+      {
+        date: "2026-05-01",
+
+        vocabularyPercent: 55,
+      },
+
+      {
+        date: "2026-06-01",
+
+        vocabularyPercent: 70,
+      },
+    ],
+  });
+
+  saveBooks();
+}
+
+// =====================================================
+// GLOBAL EVENTS
+// =====================================================
+
+function registerEvents() {
+  document.getElementById("btnNewBook")?.addEventListener("click", () => {
+    clearForm();
+
+    openModal();
+  });
+
+  document.getElementById("closeModal")?.addEventListener("click", closeModal);
+
+  document.getElementById("btnCancel")?.addEventListener("click", closeModal);
+
+  document
+    .getElementById("closeHistoryModal")
+    ?.addEventListener("click", () => {
+      document.getElementById("historyModal").classList.remove("active");
+    });
+
+  document.getElementById("bookForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    saveForm();
+  });
+
+  document.getElementById("searchInput")?.addEventListener("input", (event) => {
+    searchText = event.target.value;
+
+    currentPage = 1;
+
+    refreshUI();
+  });
+
+  document
+    .getElementById("filterSelect")
+    ?.addEventListener("change", (event) => {
+      currentFilter = event.target.value;
+
+      currentPage = 1;
+
+      refreshUI();
+    });
+
+  document.getElementById("pageSize")?.addEventListener("change", (event) => {
+    pageSize = Number(event.target.value);
+
+    currentPage = 1;
+
+    refreshUI();
+  });
+
+  document
+    .getElementById("btnExportJson")
+    ?.addEventListener("click", exportJson);
+
+  document
+    .getElementById("btnExportPdf")
+    ?.addEventListener("click", exportPdfReport);
+
+  document
+    .getElementById("importJsonFile")
+    ?.addEventListener("change", (event) => {
+      importJsonFile(event.target.files[0]);
+    });
+}
+
+// =====================================================
+// INIT
+// =====================================================
+
+function initializeApp() {
+  loadBooks();
+
+  createSampleBooks();
+
+  loadDarkMode();
+
+  registerEvents();
+
+  refreshUI();
+
+  console.log("Reading Tracker Ready");
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+
+  initializeApp,
+);
+
+// =====================================================
+// END
+// =====================================================

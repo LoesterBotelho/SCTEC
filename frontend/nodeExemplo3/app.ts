@@ -9,7 +9,8 @@ const port = 3000;
 
 // assim ele usa apartir do /
 app.use(clientsRouter);
-
+app.set('view engine', 'pug');
+app.set('views', './Views');
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

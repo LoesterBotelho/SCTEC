@@ -12,7 +12,11 @@
     "build": "tsc"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "pg": "^8.21.0",
+    "pg-hstore": "^2.3.4",
+    "pug": "^3.0.4",
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
