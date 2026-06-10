@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
+import { IClients } from "./../Interfaces/clients"
+import clientModel from "../Model/clientModel";
 
-function index(req: Request, res: Response, next: any) {
-  res.render("index");
+
+async function index(req: Request, res: Response, next: any) {  
+  // res.render("index");
+  const clients = await clientModel.findAll();
+  res.json(clients);
 }
 
 function sobre(req: Request, res: Response, next: any) {
