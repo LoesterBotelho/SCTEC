@@ -8,10 +8,11 @@
   "main": "app.ts",
   "scripts": {
     "dev": "tsx watch app.ts",
-    "start": "tsx app.ts",
+    "start": "tsx -r dotenv/config app.ts",
     "build": "tsc"
   },
   "dependencies": {
+    "dotenv-safe": "^9.1.0",
     "express": "^5.2.1",
     "pg": "^8.21.0",
     "pg-hstore": "^2.3.4",
