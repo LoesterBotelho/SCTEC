@@ -3,6 +3,9 @@ import clientsRouter from "./Router/clients";
 import db from "./db";
 
 const app = express();
+
+app.use(express.urlencoded({extended: true}));
+
 const port = process.env.PORT;
 
 // assim ele usa apartir do /clients

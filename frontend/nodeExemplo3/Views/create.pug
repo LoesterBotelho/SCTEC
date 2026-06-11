@@ -1,0 +1,20 @@
+head
+  meta(charset='utf-8')
+  title CREATE
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+
+  body
+    p
+    .modal-dialog
+        .modal-content
+          // Modal Body
+          .modal-body
+            //#editForm.form(role='form' method='GET' action='https://www.google.com/')
+            form(role='form' method='POST' action='/create')
+              div.form-group
+                label(for='nome') Nome:
+                input#name.form-control(type='text', placeholder='Nome' name='nome')
+              div.form-group
+                label(for='email') Email:
+                input#email.form-control(type='email', placeholder='name@email.com' name='email')
+              button.btn.btn-primary(type="submit", name="asdf") Adicionar Cliente
