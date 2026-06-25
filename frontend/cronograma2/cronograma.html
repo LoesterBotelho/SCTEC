@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cronograma</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f5f5f5;
+        padding: 20px;
+      }
+
+      h1 {
+        margin-bottom: 15px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      input,
+      select,
+      button {
+        padding: 8px;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+        background: #ccc;
+      }
+
+      .weekday {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+      }
+
+      .day {
+        background: white;
+        min-height: 120px;
+        padding: 4px;
+        position: relative;
+      }
+
+      .day-number {
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .event {
+        color: white;
+        font-size: 11px;
+        border-radius: 4px;
+        padding: 2px 4px;
+        margin-bottom: 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .empty {
+        background: #eee;
+      }
+
+      .legend {
+        margin-top: 20px;
+      }
+
+      .legend-item {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cronograma</h1>
+
+    <div class="toolbar">
+      <select id="month"></select>
+
+      <select id="year"></select>
+
+      <button onclick="exportJSON()">Exportar JSON</button>
+
+      <button onclick="document.getElementById('importFile').click()">
+        Importar JSON
+      </button>
+
+      <input type="file" id="importFile" accept=".json" style="display: none" />
+    </div>
+
+    <div class="form">
+      <input type="text" id="title" placeholder="Compromisso" />
+
+      <input type="date" id="start" />
+
+      <input type="date" id="end" />
+
+      <input type="color" id="color" value="#ff4d4d" />
+
+      <button onclick="addEvent()">Adicionar</button>
+    </div>
+
+    <div id="calendar" class="calendar"></div>
+
+    <script>
+      const STORAGE_KEY = "cronograma_dataset";
+
+      let dataset = {
+        events: [
+          {
+            id: 1,
+            title: "Projeto Alpha",
+            start: "2026-06-01",
+            end: "2026-06-20",
+            color: "#ff4da6",
+          },
+
+          {
+            id: 2,
+            title: "Curso C#",
+            start: "2026-06-05",
+            end: "2026-06-25",
+            color: "#4d79ff",
+          },
+
+          {
+            id: 3,
+            title: "Estudo Inglês",
+            start: "2026-06-15",
+            end: "2026-06-30",
+            color: "#ff8800",
+          },
+        ],
+      };
+
+      if (localStorage.getItem(STORAGE_KEY)) {
+        dataset = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      }
+
+      const monthSelect = document.getElementById("month");
+
+      const yearSelect = document.getElementById("year");
+
+      for (let i = 0; i < 12; i++) {
+        monthSelect.innerHTML += `<option value="${i}">
+    ${new Date(2000, i, 1).toLocaleString("pt-BR", { month: "long" })}
+    </option>`;
+      }
+
+      for (let y = 2020; y <= 2040; y++) {
+        yearSelect.innerHTML += `<option value="${y}">
+    ${y}
+    </option>`;
+      }
+
+      const today = new Date();
+
+      monthSelect.value = today.getMonth();
+
+      yearSelect.value = today.getFullYear();
+
+      monthSelect.onchange = renderCalendar;
+      yearSelect.onchange = renderCalendar;
+
+      function saveData() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataset));
+      }
+
+      function addEvent() {
+        const title = document.getElementById("title").value;
+
+        const start = document.getElementById("start").value;
+
+        const end = document.getElementById("end").value;
+
+        const color = document.getElementById("color").value;
+
+        if (!title || !start || !end) {
+          alert("Preencha todos os campos");
+          return;
+        }
+
+        dataset.events.push({
+          id: Date.now(),
+          title,
+          start,
+          end,
+          color,
+        });
+
+        saveData();
+        renderCalendar();
+      }
+
+      function renderCalendar() {
+        const calendar = document.getElementById("calendar");
+
+        calendar.innerHTML = "";
+
+        const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+        weekDays.forEach((d) => {
+          calendar.innerHTML += `<div class="weekday">${d}</div>`;
+        });
+
+        const year = parseInt(yearSelect.value);
+
+        const month = parseInt(monthSelect.value);
+
+        const firstDay = new Date(year, month, 1);
+
+        const lastDay = new Date(year, month + 1, 0);
+
+        const startWeekDay = firstDay.getDay();
+
+        for (let i = 0; i < startWeekDay; i++) {
+          calendar.innerHTML += `<div class="day empty"></div>`;
+        }
+
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+          const date = new Date(year, month, day);
+
+          const iso = date.toISOString().split("T")[0];
+
+          let html = `
+        <div class="day">
+        <div class="day-number">
+        ${day}
+        </div>
+        `;
+
+          dataset.events.forEach((ev) => {
+            if (iso >= ev.start && iso <= ev.end) {
+              html += `
+                <div
+                class="event"
+                style="background:${ev.color}"
+                title="${ev.title}">
+                ${ev.title}
+                </div>
+                `;
+            }
+          });
+
+          html += "</div>";
+
+          calendar.innerHTML += html;
+        }
+      }
+
+      function exportJSON() {
+        const blob = new Blob([JSON.stringify(dataset, null, 2)], {
+          type: "application/json",
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+
+        a.href = url;
+        a.download = "cronograma.json";
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+      }
+
+      document
+        .getElementById("importFile")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+
+          if (!file) return;
+
+          const reader = new FileReader();
+
+          reader.onload = function (evt) {
+            try {
+              dataset = JSON.parse(evt.target.result);
+
+              saveData();
+              renderCalendar();
+
+              alert("Importado com sucesso");
+            } catch {
+              alert("JSON inválido");
+            }
+          };
+
+          reader.readAsText(file);
+        });
+
+      renderCalendar();
+    </script>
+  </body>
+</html>

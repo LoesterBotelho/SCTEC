@@ -9,6 +9,12 @@ async function index(req: Request, res: Response, next: any) {
   res.json(clients);
 }
 
+async function show(req: Request, res: Response, next: any) {  
+  const id = Number(req.params.id);
+  const client = await clientModel.findByPk(id);
+  res.json(client);
+}
+
 async function create(req: Request, res: Response, next: any) {  
   res.render("create");
   //const clients = await clientModel.findAll();
@@ -48,4 +54,4 @@ function contato(req: Request, res: Response, next: any) {
   res.send("(48) 99999-9999");
 }
 
-export default { index, create, store, sobre, trabalheconosco, contato };
+export default { index, create, show, store, sobre, trabalheconosco, contato };

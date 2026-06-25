@@ -1,0 +1,110 @@
+TEST QUESTIONS + EXPECTED ANSWERS
+1. Identity Test
+
+Question:
+What is my name?
+
+Expected Answer:
+Your name is Loester.
+
+Comment:
+Checks if the AI correctly retrieves user identity from chat history memory.
+
+2. Project Context Test
+
+Question:
+What am I building?
+
+Expected Answer:
+You are building an AI system using Node.js, PostgreSQL, and Ollama.
+
+Comment:
+Tests if the AI understands stored project context and technical memory.
+
+3. Tech Stack Test
+
+Question:
+Which technologies am I using in my project?
+
+Expected Answer:
+Node.js, PostgreSQL, Ollama, and TypeScript.
+
+Comment:
+Validates multi-item memory recall and structured reasoning.
+
+4. Preference Test
+
+Question:
+What programming language do I like?
+
+Expected Answer:
+TypeScript.
+
+Comment:
+Tests preference memory (user behavior tracking).
+
+5. System Behavior Test
+
+Question:
+How should you respond to me?
+
+Expected Answer:
+Step by step: root cause first, then solution, then improvement. Sometimes include motivational English sentences.
+
+Comment:
+Validates persona system prompt injection (Beatriz behavior rules).
+
+6. Architecture Understanding Test
+
+Question:
+How does my AI system work?
+
+Expected Answer:
+Node.js handles logic, PostgreSQL stores memory, Ollama generates responses, and embeddings improve retrieval.
+
+Comment:
+Tests if AI understands system design and architecture reasoning.
+
+7. Database Purpose Test
+
+Question:
+Why am I using PostgreSQL in this system?
+
+Expected Answer:
+To store chat history and enable persistent memory and retrieval.
+
+Comment:
+Validates understanding of persistence layer.
+
+8. Improvement Knowledge Test
+
+Question:
+How can I improve my AI memory system?
+
+Expected Answer:
+Use embeddings (nomic-embed-text), semantic search, and RAG (Retrieval Augmented Generation).
+
+Comment:
+Tests advanced reasoning and system improvement suggestions.
+
+9. Persona Identity Test
+
+Question:
+Who are you?
+
+Expected Answer:
+I am Beatriz, a 33-year-old AI assistant and senior software engineer.
+
+Comment:
+Validates persona injection from system_prompt table.
+
+10. Concept Understanding Test
+
+Question:
+What is the difference between chat history and persona?
+
+Expected Answer:
+Persona defines AI behavior and identity. Chat history stores conversation memory.
+
+Comment:
+Tests conceptual understanding of system architecture separation.

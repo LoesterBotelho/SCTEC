@@ -4,6 +4,7 @@ import clientController from "./../Controller/ClientController";
 const router = Router();
 
 router.get('/', clientController.index);
+router.get('/:id', clientController.show);
 router.get('/create', clientController.create);
 router.post('/create', clientController.store);
 router.get('/sobrenos', clientController.sobre);

@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Cronograma</title>
+
+    <style>
+      :root {
+        --primary: #0d6efd;
+        --success: #198754;
+        --danger: #dc3545;
+
+        --bg: #f8f9fa;
+        --card: #ffffff;
+
+        --text: #212529;
+        --border: #dee2e6;
+
+        --shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme="dark"] {
+        --primary: #3b82f6;
+
+        --bg: #121212;
+        --card: #1e1e1e;
+
+        --text: #f5f5f5;
+        --border: #333;
+
+        --shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      [data-theme="pink"] {
+        --primary: #e83e8c;
+
+        --bg: #fff5f8;
+        --card: #ffffff;
+
+        --text: #343a40;
+        --border: #f3c6d9;
+
+        --shadow: 0 5px 18px rgba(232, 62, 140, 0.15);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      .card {
+        background: var(--card);
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        margin-bottom: 18px;
+      }
+
+      h2 {
+        text-align: center;
+        margin: 5px 0 20px;
+      }
+
+      .toolbar,
+      .form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      input,
+      select {
+        padding: 11px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+      }
+
+      button {
+        padding: 11px 18px;
+        border: 0;
+        border-radius: 8px;
+        cursor: pointer;
+        color: white;
+        font-weight: 600;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+      }
+      .btn-success {
+        background: var(--success);
+      }
+      .btn-danger {
+        background: var(--danger);
+      }
+
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+      }
+
+      .weekday {
+        background: var(--primary);
+        color: white;
+        padding: 12px;
+        text-align: center;
+        border-radius: 10px;
+      }
+
+      .day {
+        background: var(--card);
+        border: 1px solid var(--border);
+        min-height: 130px;
+        padding: 8px;
+        border-radius: 10px;
+      }
+
+      .day-number {
+        font-weight: bold;
+      }
+
+      .event {
+        color: white;
+        padding: 5px;
+        border-radius: 6px;
+        font-size: 12px;
+        margin-top: 5px;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: var(--card);
+        padding: 25px;
+        border-radius: 16px;
+        width: 420px;
+        max-width: 95%;
+      }
+
+      .modal-content input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>Cronograma</h2>
+
+        <div class="toolbar">
+          <select id="themeSelect">
+            <option value="">Light</option>
+            <option value="dark">Dark</option>
+            <option value="pink">Pink</option>
+          </select>
+
+          <select id="month"></select>
+          <select id="year"></select>
+
+          <button class="btn-primary" onclick="exportJSON()">
+            Exportar JSON
+          </button>
+          <button class="btn-success" onclick="importFile.click()">
+            Importar JSON
+          </button>
+
+          <input type="file" id="importFile" hidden />
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form">
+          <input id="title" placeholder="Compromisso" />
+          <input id="start" type="date" />
+          <input id="end" type="date" />
+
+          <button class="btn-success" onclick="addEvent()">Adicionar</button>
+        </div>
+      </div>
+
+      <div id="calendar" class="calendar"></div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3>Editar Evento</h3>
+
+        <input id="mTitle" />
+        <input id="mStart" type="date" />
+        <input id="mEnd" type="date" />
+
+        <div class="actions">
+          <button class="btn-danger" onclick="deleteEvent()">Excluir</button>
+          <button class="btn-success" onclick="saveEdit()">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const KEY = "cronograma_v2";
+      let currentId = null;
+
+      let dataset = JSON.parse(localStorage.getItem(KEY) || '{"events":[]}');
+
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(dataset));
+      }
+
+      function randomColor() {
+        const colors = [
+          "#0d6efd",
+          "#3b82f6",
+          "#60a5fa",
+          "#1d4ed8",
+          "#2563eb",
+          "#198754",
+          "#22c55e",
+          "#16a34a",
+          "#10b981",
+          "#34d399",
+          "#dc3545",
+          "#ef4444",
+          "#f43f5e",
+          "#e11d48",
+          "#fb7185",
+          "#ffc107",
+          "#f59e0b",
+          "#fbbf24",
+          "#f97316",
+          "#ea580c",
+          "#6f42c1",
+          "#8b5cf6",
+          "#a855f7",
+          "#7c3aed",
+          "#6366f1",
+          "#20c997",
+          "#14b8a6",
+          "#06b6d4",
+          "#0ea5e9",
+          "#38bdf8",
+        ];
+
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      themeSelect.onchange = function () {
+        document.documentElement.setAttribute("data-theme", this.value);
+        localStorage.setItem("theme", this.value);
+      };
+
+      let savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeSelect.value = savedTheme;
+      }
+
+      for (let i = 0; i < 12; i++) {
+        month.innerHTML += `<option value="${i}">
+${new Date(2000, i, 1).toLocaleString("pt-BR", { month: "long" })}
+</option>`;
+      }
+
+      for (let y = 2020; y <= 2040; y++) {
+        year.innerHTML += `<option>${y}</option>`;
+      }
+
+      let now = new Date();
+      month.value = now.getMonth();
+      year.value = now.getFullYear();
+
+      month.onchange = render;
+      year.onchange = render;
+
+      function addEvent() {
+        if (!title.value || !start.value || !end.value)
+          return alert("Preencha todos os campos");
+
+        dataset.events.push({
+          id: Date.now(),
+          title: title.value,
+          start: start.value,
+          end: end.value,
+          color: randomColor(),
+        });
+
+        save();
+        render();
+
+        title.value = "";
+        start.value = "";
+        end.value = "";
+      }
+
+      function render() {
+        calendar.innerHTML = "";
+
+        ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].forEach((d) => {
+          calendar.innerHTML += `<div class="weekday">${d}</div>`;
+        });
+
+        let y = +year.value;
+        let m = +month.value;
+
+        let first = new Date(y, m, 1);
+        let last = new Date(y, m + 1, 0);
+
+        for (let i = 0; i < first.getDay(); i++) {
+          calendar.innerHTML += `<div class="day"></div>`;
+        }
+
+        for (let d = 1; d <= last.getDate(); d++) {
+          let date = new Date(y, m, d).toISOString().split("T")[0];
+
+          let html = `<div class="day"><div class="day-number">${d}</div>`;
+
+          dataset.events.forEach((ev) => {
+            if (date >= ev.start && date <= ev.end) {
+              html += `<div class="event" onclick="openEdit(${ev.id})" style="background:${ev.color}">${ev.title}</div>`;
+            }
+          });
+
+          html += "</div>";
+          calendar.innerHTML += html;
+        }
+      }
+
+      function openEdit(id) {
+        currentId = id;
+        let e = dataset.events.find((x) => x.id == id);
+        mTitle.value = e.title;
+        mStart.value = e.start;
+        mEnd.value = e.end;
+        modal.classList.add("show");
+      }
+
+      function saveEdit() {
+        let e = dataset.events.find((x) => x.id == currentId);
+        e.title = mTitle.value;
+        e.start = mStart.value;
+        e.end = mEnd.value;
+        save();
+        render();
+        modal.classList.remove("show");
+      }
+
+      function deleteEvent() {
+        dataset.events = dataset.events.filter((x) => x.id != currentId);
+        save();
+        render();
+        modal.classList.remove("show");
+      }
+
+      modal.onclick = (e) => {
+        if (e.target === modal) modal.classList.remove("show");
+      };
+
+      function exportJSON() {
+        let blob = new Blob([JSON.stringify(dataset, null, 2)], {
+          type: "application/json",
+        });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "cronograma.json";
+        a.click();
+      }
+
+      importFile.onchange = (e) => {
+        let r = new FileReader();
+        r.onload = () => {
+          dataset = JSON.parse(r.result);
+          save();
+          render();
+        };
+        r.readAsText(e.target.files[0]);
+      };
+
+      render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cronograma</title>
+    <style>
+      :root {
+        --primary: #0d6efd;
+        --success: #198754;
+        --danger: #dc3545;
+        --bg: #f4f6f9;
+        --card: #fff;
+        --border: #dfe3e8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1400px;
+        margin: auto;
+      }
+      .card {
+        background: #fff;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 16px;
+      }
+      .toolbar,
+      .form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      input,
+      select,
+      button {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+      button {
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--primary);
+      }
+      .btn-success {
+        background: var(--success);
+      }
+      .btn-danger {
+        background: var(--danger);
+      }
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+      .weekday {
+        background: #1f2937;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px;
+      }
+      .day {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        min-height: 130px;
+        padding: 5px;
+        border-radius: 8px;
+      }
+      .day-number {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .event {
+        color: #fff;
+        padding: 4px 6px;
+        border-radius: 6px;
+        font-size: 12px;
+        margin-bottom: 3px;
+        cursor: pointer;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        align-items: center;
+        justify-content: center;
+      }
+      .modal.show {
+        display: flex;
+      }
+      .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        width: 420px;
+        max-width: 95%;
+      }
+      .modal-content h3 {
+        margin-top: 0;
+      }
+      .modal-content input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>Cronograma</h2>
+        <div class="toolbar">
+          <select id="month"></select>
+          <select id="year"></select>
+          <button class="btn-primary" onclick="exportJSON()">
+            Exportar JSON
+          </button>
+          <button
+            class="btn-success"
+            onclick="document.getElementById('importFile').click()"
+          >
+            Importar JSON
+          </button>
+          <input type="file" id="importFile" hidden />
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form">
+          <input id="title" placeholder="Compromisso" />
+          <input id="start" type="date" />
+          <input id="end" type="date" />
+          <input id="color" type="color" value="#0d6efd" />
+          <button class="btn-success" onclick="addEvent()">Adicionar</button>
+        </div>
+      </div>
+
+      <div id="calendar" class="calendar"></div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h3>Editar Evento</h3>
+        <input id="mTitle" />
+        <input id="mStart" type="date" />
+        <input id="mEnd" type="date" />
+        <input id="mColor" type="color" />
+        <div class="actions">
+          <button class="btn-danger" onclick="deleteEvent()">Excluir</button>
+          <button class="btn-success" onclick="saveEdit()">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const KEY = "cronograma_v2";
+      let currentId = null;
+
+      let dataset = JSON.parse(
+        localStorage.getItem(KEY) ||
+          `{
+"events":[
+{"id":1,"title":"Projeto Alpha","start":"2026-06-01","end":"2026-06-15","color":"#0d6efd"},
+{"id":2,"title":"Curso Inglês","start":"2026-06-10","end":"2026-06-25","color":"#198754"}
+]}`,
+      );
+
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(dataset));
+      }
+
+      const month = document.getElementById("month");
+      const year = document.getElementById("year");
+
+      for (let i = 0; i < 12; i++)
+        month.innerHTML += `<option value="${i}">${new Date(2000, i, 1).toLocaleString("pt-BR", { month: "long" })}</option>`;
+      for (let y = 2020; y <= 2040; y++)
+        year.innerHTML += `<option>${y}</option>`;
+
+      const now = new Date();
+      month.value = now.getMonth();
+      year.value = now.getFullYear();
+
+      month.onchange = render;
+      year.onchange = render;
+
+      function addEvent() {
+        const t = title.value.trim();
+        if (!t || !start.value || !end.value)
+          return alert("Preencha todos os campos");
+        dataset.events.push({
+          id: Date.now(),
+          title: t,
+          start: start.value,
+          end: end.value,
+          color: color.value,
+        });
+        save();
+        render();
+      }
+
+      function render() {
+        const cal = document.getElementById("calendar");
+        cal.innerHTML = "";
+        ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].forEach(
+          (d) => (cal.innerHTML += `<div class="weekday">${d}</div>`),
+        );
+
+        const y = parseInt(year.value),
+          m = parseInt(month.value);
+        const first = new Date(y, m, 1);
+        const last = new Date(y, m + 1, 0);
+
+        for (let i = 0; i < first.getDay(); i++)
+          cal.innerHTML += '<div class="day"></div>';
+
+        for (let d = 1; d <= last.getDate(); d++) {
+          const date = new Date(y, m, d).toISOString().split("T")[0];
+          let html = `<div class="day"><div class="day-number">${d}</div>`;
+          dataset.events.forEach((ev) => {
+            if (date >= ev.start && date <= ev.end) {
+              html += `<div class="event" onclick="openEdit(${ev.id})" style="background:${ev.color}">${ev.title}</div>`;
+            }
+          });
+          html += "</div>";
+          cal.innerHTML += html;
+        }
+      }
+
+      function openEdit(id) {
+        currentId = id;
+        const e = dataset.events.find((x) => x.id === id);
+        mTitle.value = e.title;
+        mStart.value = e.start;
+        mEnd.value = e.end;
+        mColor.value = e.color;
+        modal.classList.add("show");
+      }
+
+      function saveEdit() {
+        const e = dataset.events.find((x) => x.id === currentId);
+        e.title = mTitle.value;
+        e.start = mStart.value;
+        e.end = mEnd.value;
+        e.color = mColor.value;
+        save();
+        render();
+        modal.classList.remove("show");
+      }
+
+      function deleteEvent() {
+        if (!confirm("Excluir evento?")) return;
+        dataset.events = dataset.events.filter((x) => x.id !== currentId);
+        save();
+        render();
+        modal.classList.remove("show");
+      }
+
+      modal.onclick = (e) => {
+        if (e.target === modal) modal.classList.remove("show");
+      };
+
+      function exportJSON() {
+        const blob = new Blob([JSON.stringify(dataset, null, 2)], {
+          type: "application/json",
+        });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "cronograma.json";
+        a.click();
+      }
+
+      importFile.addEventListener("change", (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => {
+          dataset = JSON.parse(r.result);
+          save();
+          render();
+        };
+        r.readAsText(f);
+      });
+
+      render();
+    </script>
+  </body>
+</html>
