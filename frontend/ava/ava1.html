@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SESI SENAI - Curso</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: #f5f7fb;
+        color: #172033;
+      }
+      header {
+        height: 64px;
+        background: white;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 25px;
+      }
+      .logo {
+        font-size: 28px;
+        font-weight: 900;
+        color: #1648b8;
+        font-style: italic;
+      }
+      nav {
+        display: flex;
+        gap: 35px;
+        font-size: 14px;
+      }
+      .icons {
+        display: flex;
+        gap: 18px;
+      }
+      .container {
+        padding: 30px 7%;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+      }
+      h1 {
+        font-size: 28px;
+        max-width: 760px;
+        margin: 20px 0 10px;
+      }
+      .info {
+        color: #243b72;
+        font-size: 14px;
+      }
+      .description {
+        max-width: 850px;
+        line-height: 1.6;
+        margin-top: 35px;
+      }
+      .progress {
+        background: white;
+        width: 270px;
+        height: 320px;
+        border-radius: 22px;
+        padding: 25px;
+        box-shadow: 0 5px 20px #00000010;
+      }
+      .circle {
+        margin: 30px auto;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 18px solid #dcecff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 34px;
+        color: #34445f;
+      }
+      .units {
+        background: white;
+        margin-top: 35px;
+        padding: 25px;
+        border-radius: 22px;
+      }
+      .search {
+        float: right;
+        border: 0;
+        background: #f5f7fb;
+        padding: 12px 25px;
+        border-radius: 20px;
+      }
+      .period {
+        margin-top: 25px;
+        border: 1px solid #dce3ef;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .tag {
+        background: #d9ebff;
+        color: #1251b7;
+        padding: 10px;
+        border-radius: 8px;
+        display: inline-block;
+      }
+      .card {
+        margin-top: 15px;
+        width: 340px;
+        height: 205px;
+        border-radius: 22px;
+        background: #39aaa5;
+        color: white;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .card h3 {
+        font-size: 15px;
+        width: 230px;
+      }
+      .badge {
+        background: white;
+        color: #333;
+        border-radius: 15px;
+        padding: 5px 10px;
+        margin-right: 5px;
+        font-size: 13px;
+      }
+      .bottom {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      button {
+        border: 0;
+        background: #fff;
+        padding: 10px;
+        border-radius: 50%;
+      }
+      @media (max-width: 800px) {
+        .top {
+          flex-direction: column;
+        }
+        .progress {
+          margin-top: 20px;
+        }
+        nav {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">SESI SENAI</div>
+
+      <nav>
+        <span>⌂ Página inicial</span>
+        <span>🎧 Falar com o suporte</span>
+        <span>☷ Notas</span>
+        <span>Mais⌄</span>
+      </nav>
+
+      <div class="icons">
+        <span>✉</span>
+        <span>🔔</span>
+        <span>👤⌄</span>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="top">
+        <section>
+          <div>
+            ← &nbsp; Página inicial &gt; Inglês para Projetos de Software
+          </div>
+
+          <h1>
+            Inglês para Projetos de Software, Comunicação Técnica e Apresentação
+            Profissional
+          </h1>
+
+          <div class="info">
+            Matrícula: 2688025 - Blumenau &nbsp;&nbsp; Carga horária: 80h
+          </div>
+
+          <p class="description">
+            Esta iniciativa busca impulsionar o potencial tecnológico da cidade,
+            oferecendo capacitação profissional para jovens e adultos com
+            potencial de desenvolvimento de habilidades técnicas em programação
+            de sistemas.
+          </p>
+
+          <p>
+            📍 EAD - Polo Blumenau &nbsp;&nbsp; 📅 Começa em 30/06/2026 📅
+            Termina em 17/11/2026
+            <br />
+            🏅 Certificação com qualidade SENAI
+          </p>
+        </section>
+
+        <div class="progress">
+          <h2>Meu progresso do curso</h2>
+          <p>UCs completas: 0/1</p>
+
+          <div class="circle">0%</div>
+        </div>
+      </div>
+
+      <div class="units">
+        <h2>Unidades Curriculares</h2>
+
+        <input class="search" placeholder="Buscar" />
+
+        <div style="clear: both"></div>
+
+        <div class="period">
+          <span class="tag">1º Período</span>
+        </div>
+
+        <div class="card">
+          <h3>
+            Inglês para Projetos de Software,<br />
+            Comunicação...
+          </h3>
+
+          <span class="badge">Não liberado</span>
+          <span class="badge">80h</span>
+
+          <p>Status: Cursando</p>
+
+          <div class="bottom">
+            <span>
+              Começa em:<br />
+              30/06/2026
+            </span>
+
+            <span>
+              Termina em:<br />
+              17/11/2026
+            </span>
+
+            <button>⚿</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(".search").addEventListener("input", (e) => {
+        console.log("Buscando:", e.target.value);
+      });
+    </script>
+  </body>
+</html>
