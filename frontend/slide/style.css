@@ -22,7 +22,7 @@ body {
    PRINT CONFIGURATION
 ============================ */
 @page {
-    size: A4 landscape;
+    size: 326.7mm 231mm;
     margin: 0;
 }
 
@@ -39,8 +39,8 @@ body {
    SLIDE
 ============================ */
 .slide {
-    width: 297mm;
-    height: 210mm;
+    width: 326.7mm;
+    height: 231mm;
     page-break-after: always;
     break-after: page;
     overflow: hidden;
@@ -49,7 +49,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20mm 25mm;
+    padding: 22mm 27.5mm;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
@@ -61,12 +61,12 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #00c7fd;
-    padding-bottom: 4mm;
-    margin-bottom: 6mm;
+    padding-bottom: 4.4mm;
+    margin-bottom: 5mm;
 }
 
 .brand-title {
-    font-size: 16pt;
+    font-size: 17.5pt;
     font-weight: 700;
     letter-spacing: 1px;
     color: #00c7fd;
@@ -74,7 +74,7 @@ body {
 }
 
 .brand-logo {
-    font-size: 14pt;
+    font-size: 15.4pt;
     font-weight: 800;
     color: #ffffff;
 }
@@ -91,8 +91,8 @@ body {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 4mm;
-    font-size: 9pt;
+    padding-top: 3mm;
+    font-size: 10pt;
     color: #94a3b8;
 }
 
@@ -107,23 +107,23 @@ body {
 }
 
 h1 {
-    font-size: 32pt;
+    font-size: 35.2pt;
     font-weight: 800;
-    margin-bottom: 6mm;
+    margin-bottom: 6.6mm;
     color: #ffffff;
 }
 
 h2 {
-    font-size: 22pt;
+    font-size: 24.2pt;
     font-weight: 700;
-    margin-bottom: 5mm;
+    margin-bottom: 4mm;
     color: #00c7fd;
 }
 
 p {
-    font-size: 14pt;
+    font-size: 15.4pt;
     line-height: 1.6;
-    margin-bottom: 4mm;
+    margin-bottom: 4.4mm;
     color: #cbd5e1;
 }
 
@@ -132,14 +132,14 @@ p {
 ============================ */
 .highlight-box {
     background: rgba(0, 199, 253, 0.08);
-    border-left: 4px solid #00c7fd;
-    padding: 5mm 6mm;
+    border-left: 4.4px solid #00c7fd;
+    padding: 5.5mm 6.6mm;
     border-radius: 0 8px 8px 0;
-    margin-bottom: 6mm;
+    margin-bottom: 6.6mm;
 }
 
 .profile-highlight-text {
-    font-size: 16pt;
+    font-size: 17.5pt;
     color: #ffffff;
 }
 
@@ -149,54 +149,57 @@ p {
 .grid-5 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4mm;
+    gap: 4.4mm;
 }
 
 .card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 4mm;
+    padding: 4.4mm;
     border-radius: 8px;
 }
 
 .card h3 {
-    font-size: 11.5pt;
+    font-size: 12.6pt;
     color: #38bdf8;
-    margin-bottom: 1.5mm;
+    margin-bottom: 1.6mm;
 }
 
 .card p {
-    font-size: 10pt;
+    font-size: 11pt;
     margin-bottom: 0;
     line-height: 1.4;
 }
 
 /* ============================
-   TABLE
+   TABLE (Otimizado para tabelas cheias e espaçamento vertical ideal)
 ============================ */
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 10pt;
+    font-size: 10.5pt; /* Ajustado para caber linhas densas perfeitamente */
 }
 
 th, td {
-    padding: 3mm 4mm;
+    padding: 3.2mm 3.5mm; /* Preenchimento balanceado para evitar corte vertical */
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    vertical-align: middle;
 }
 
 th {
     background: rgba(0, 199, 253, 0.15);
     color: #00c7fd;
+    font-weight: 700;
 }
 
 .col-time {
-    width: 20%;
+    width: 15%;
+    white-space: nowrap; /* Impede que o horário quebre em duas linhas */
 }
 
 .col-desc {
-    width: 80%;
+    width: 85%;
 }
 
 /* ============================
@@ -205,7 +208,7 @@ th {
 .slide-centered {
     justify-content: center;
     align-items: center;
-    padding: 10mm;
+    padding: 11mm;
 }
 
 .slide-content-centered {
@@ -232,14 +235,14 @@ th {
 .badge-card {
     background: #ffffff;
     color: #0f172a;
-    width: 110mm;
-    height: 175mm;
+    width: 121mm;
+    height: 192.5mm;
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 8mm;
+    padding: 8.8mm;
     overflow: hidden;
     border: 2px solid #cbd5e1;
 }
@@ -249,17 +252,17 @@ th {
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #0068b5;
-    padding-bottom: 3mm;
+    padding-bottom: 3.3mm;
 }
 
 .badge-intel-title {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: 900;
     color: #0068b5;
 }
 
 .badge-intel-subtitle {
-    font-size: 8pt;
+    font-size: 8.8pt;
     font-weight: 700;
     color: #0068b5;
     text-align: right;
@@ -268,18 +271,18 @@ th {
 .badge-body {
     display: flex;
     flex-direction: column;
-    gap: 4mm;
+    gap: 4.4mm;
 }
 
 .badge-row {
     display: flex;
-    gap: 4mm;
+    gap: 4.4mm;
     align-items: center;
 }
 
 .badge-img-container {
-    width: 38mm;
-    height: 48mm;
+    width: 41.8mm;
+    height: 52.8mm;
     background: #e2e8f0;
     border-radius: 6px;
     overflow: hidden;
@@ -294,22 +297,22 @@ th {
 }
 
 .badge-name {
-    font-size: 13pt;
+    font-size: 14.3pt;
     font-weight: 900;
     color: #0f172a;
 }
 
 .badge-role {
-    font-size: 8.5pt;
+    font-size: 9.3pt;
     font-weight: 700;
     color: #0068b5;
 }
 
 .badge-info-box {
-    font-size: 8pt;
+    font-size: 8.8pt;
     color: #334155;
     background: #f8fafc;
-    padding: 3mm;
+    padding: 3.3mm;
     border-radius: 6px;
     border: 1px solid #e2e8f0;
 }
@@ -317,9 +320,9 @@ th {
 .badge-quote {
     background: #0068b5;
     color: white;
-    padding: 3mm;
+    padding: 3.3mm;
     border-radius: 6px;
-    font-size: 7.5pt;
+    font-size: 8.2pt;
     font-style: italic;
     text-align: center;
 }
@@ -329,14 +332,14 @@ th {
 ============================ */
 .image-container {
     margin-top: 0;
-    max-height: 204mm;
+    max-height: 224.4mm;
     display: flex;
     justify-content: center;
 }
 
 .image-container img {
     max-width: 100%;
-    max-height: 202mm;
+    max-height: 222.2mm;
     width: auto;
     height: auto;
     border-radius: 12px;
