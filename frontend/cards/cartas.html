@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcards - English Interview</title>
+    <style>
+      :root {
+        --bg-color: #dfe6e9;
+        --card-bg: #ffffff;
+        --text-main: #111;
+        --text-sub: #444;
+
+        /* Cores dos níveis (Bootstrap style) */
+        --color-easy: #d1e7dd;
+        --border-easy: #0f5132;
+
+        --color-medium: #fff3cd;
+        --border-medium: #664d03;
+        --text-medium: #664d03;
+
+        --color-hard: #f8d7da;
+        --border-hard: #842029;
+      }
+
+      @page {
+        size: A4;
+        margin: 5mm;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-main);
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4mm;
+        padding: 5mm;
+      }
+      .card {
+        width: 63.5mm;
+        height: 88.9mm;
+        background: var(--card-bg);
+        border: 2px solid #ccc;
+        border-radius: 4mm;
+        padding: 3mm;
+        display: flex;
+        flex-direction: column;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        position: relative;
+        overflow: hidden;
+
+        word-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
+      }
+
+      /* Bordas em todos os lados com destaque maior na esquerda */
+      .card.easy {
+        border-color: var(--border-easy);
+        border-left-width: 6mm;
+      }
+      .card.intermediate {
+        border-color: var(--border-medium);
+        border-left-width: 6mm;
+      }
+      .card.hard {
+        border-color: var(--border-hard);
+        border-left-width: 6mm;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5mm;
+      }
+      .id-label {
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--text-sub);
+      }
+      .difficulty {
+        padding: 0.6mm 1.8mm;
+        border-radius: 2mm;
+        font-size: 7pt;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      .badge-easy {
+        background: var(--color-easy);
+        color: var(--border-easy);
+      }
+      .badge-intermediate {
+        background: var(--color-medium);
+        color: var(--text-medium);
+      }
+      .badge-hard {
+        background: var(--color-hard);
+        color: var(--border-hard);
+      }
+
+      .front-pt {
+        color: var(--text-sub);
+        font-style: italic;
+        margin-bottom: 1mm;
+      }
+
+      .front-en {
+        font-weight: bold;
+        line-height: 1.1;
+        margin-bottom: auto;
+      }
+
+      .back {
+        line-height: 1.1;
+        border-top: 1px solid #eee;
+        padding-top: 1.5mm;
+        margin-top: auto;
+        color: var(--text-main);
+      }
+
+      /* Escalas máximas para preencher perfeitamente os cartões */
+      .card.scale-xl .front-pt {
+        font-size: 13pt;
+      }
+      .card.scale-xl .front-en {
+        font-size: 18.5pt;
+      }
+      .card.scale-xl .back {
+        font-size: 13.5pt;
+      }
+
+      .card.scale-lg .front-pt {
+        font-size: 12pt;
+      }
+      .card.scale-lg .front-en {
+        font-size: 17pt;
+      }
+      .card.scale-lg .back {
+        font-size: 12.5pt;
+      }
+
+      .card.scale-md .front-pt {
+        font-size: 11pt;
+      }
+      .card.scale-md .front-en {
+        font-size: 15.5pt;
+      }
+      .card.scale-md .back {
+        font-size: 11.5pt;
+      }
+
+      .card.scale-sm .front-pt {
+        font-size: 10pt;
+      }
+      .card.scale-sm .front-en {
+        font-size: 14pt;
+      }
+      .card.scale-sm .back {
+        font-size: 10.5pt;
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+        .container {
+          padding: 0;
+          gap: 3mm;
+        }
+        .card {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+
+    <script>
+      fetch("flashcards.json")
+        .then((response) => {
+          if (!response.ok) throw new Error("Erro ao carregar o JSON");
+          return response.json();
+        })
+        .then((cards) => {
+          const container = document.querySelector(".container");
+
+          cards.forEach((card) => {
+            const element = document.createElement("div");
+            const diffLower = card.difficulty.toLowerCase().trim();
+            element.className = `card ${diffLower}`;
+
+            const totalChars = (card.front_pt + card.front_en + card.back)
+              .length;
+
+            if (totalChars < 140) {
+              element.classList.add("scale-xl");
+            } else if (totalChars < 210) {
+              element.classList.add("scale-lg");
+            } else if (totalChars < 300) {
+              element.classList.add("scale-md");
+            } else {
+              element.classList.add("scale-sm");
+            }
+
+            element.innerHTML = `
+              <div class="header">
+                  <span class="id-label">#${card.id}</span>
+                  <span class="difficulty badge-${diffLower}">${card.difficulty}</span>
+              </div>
+              <div class="front-pt">${card.front_pt}</div>
+              <div class="front-en">${card.front_en}</div>
+              <div class="back">${card.back}</div>
+            `;
+            container.appendChild(element);
+          });
+        })
+        .catch((error) => console.error("Erro:", error));
+    </script>
+  </body>
+</html>

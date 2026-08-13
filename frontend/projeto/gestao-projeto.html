@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestão de Projetos - Churrasco da Turma</title>
+    <style>
+      :root {
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --text-main: #e0e0e0;
+        --primary-blue: #bb86fc;
+        --border-color: #333;
+      }
+      [data-theme="light"] {
+        --bg-color: #f4f4f9;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+        --primary-blue: #6200ee;
+        --border-color: #ddd;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        padding: 24px;
+        font-family: sans-serif;
+        transition: 0.3s;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        padding: 24px;
+        border-radius: 12px;
+        overflow-x: auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .subtitle {
+        color: #888;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        min-width: 900px;
+      }
+      th {
+        color: #888;
+        font-size: 11px;
+        text-transform: uppercase;
+        padding: 12px;
+        border-bottom: 2px solid var(--border-color);
+        text-align: left;
+      }
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 14px;
+      }
+      tr:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+      }
+
+      .badge {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        color: #fff;
+        display: inline-block;
+        text-align: center;
+        min-width: 90px;
+      }
+      .bg-green {
+        background: #00c875;
+        color: #000;
+      }
+      .bg-red {
+        background: #e2445c;
+      }
+      .bg-orange {
+        background: #fdab3d;
+        color: #000;
+      }
+      .bg-blue {
+        background: #579bfc;
+      }
+      .bg-purple {
+        background: #784bd1;
+      }
+      .bg-dark {
+        background: #333333;
+      }
+
+      /* Barra de progresso */
+      .progress-box {
+        width: 100px;
+        height: 8px;
+        background: #444;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: #00c875;
+      }
+      .timeline-bar {
+        background-color: var(--primary-blue);
+        height: 10px;
+        border-radius: 6px;
+        width: 60px;
+      }
+    </style>
+  </head>
+  <body data-theme="dark">
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1>Gestão de Projeto: O Churrasco</h1>
+          <div class="subtitle">
+            Aprenda gestão de projetos na prática com o planejamento do evento
+          </div>
+        </div>
+      </div>
+
+      <table id="tabela-projetos">
+        <thead>
+          <tr>
+            <th>Etapa / Atividade</th>
+            <th>Responsável</th>
+            <th>Saúde do Escopo</th>
+            <th>Progresso</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th>Cronograma</th>
+          </tr>
+        </thead>
+        <tbody id="corpo-tabela"></tbody>
+      </table>
+    </div>
+
+    <script>
+      const atividadesChurrasco = [
+        {
+          nome: "Definir orçamento e lista de convidados",
+          resp: "Project Manager",
+          saude: "Dentro do prazo",
+          progresso: 100,
+          prioridade: "Crítica",
+          status: "Concluído",
+        },
+        {
+          nome: "Pesquisa de preços de carnes e bebidas",
+          resp: "Comprador",
+          saude: "Dentro do prazo",
+          progresso: 80,
+          prioridade: "Alta",
+          status: "Em andamento",
+        },
+        {
+          nome: "Compra de carnes (Picanha, Fraldinha, Linguiça)",
+          resp: "Comprador",
+          saude: "Em risco",
+          progresso: 30,
+          prioridade: "Crítica",
+          status: "Em andamento",
+        },
+        {
+          nome: "Compra de bebidas (Cerveja, Refrigerante, Gelo)",
+          resp: "Logística",
+          saude: "Dentro do prazo",
+          progresso: 50,
+          prioridade: "Alta",
+          status: "Em andamento",
+        },
+        {
+          nome: "Provisão de carvão, sal grosso e espetos",
+          resp: "Suprimentos",
+          saude: "Dentro do prazo",
+          progresso: 100,
+          prioridade: "Média",
+          status: "Concluído",
+        },
+        {
+          nome: "Limpeza e organização da churrasqueira",
+          resp: "Facilities",
+          saude: "Monitorar",
+          progresso: 0,
+          prioridade: "Baixa",
+          status: "Não iniciado",
+        },
+        {
+          nome: "Acender o fogo (Início da Execução)",
+          resp: "Churrasqueiro Chefe",
+          saude: "Dentro do prazo",
+          progresso: 0,
+          prioridade: "Crítica",
+          status: "Não iniciado",
+        },
+        {
+          nome: "Servir as carnes e acompanhamentos",
+          resp: "Equipe de Apoio",
+          saude: "Dentro do prazo",
+          progresso: 0,
+          prioridade: "Alta",
+          status: "Não iniciado",
+        },
+        {
+          nome: "Pós-evento: Lavar louça e organizar o espaço",
+          resp: "Mutirão",
+          saude: "Dentro do prazo",
+          progresso: 0,
+          prioridade: "Baixa",
+          status: "Não iniciado",
+        },
+      ];
+
+      function renderizarTabela() {
+        const corpo = document.getElementById("corpo-tabela");
+
+        corpo.innerHTML = atividadesChurrasco
+          .map((p) => {
+            let corSaude = "bg-green";
+            if (p.saude === "Escalado") corSaude = "bg-red";
+            else if (p.saude === "Em risco") corSaude = "bg-orange";
+            else if (p.saude === "Monitorar") corSaude = "bg-purple";
+
+            let corPrioridade = "bg-blue";
+            if (p.prioridade === "Crítica") corPrioridade = "bg-dark";
+            else if (p.prioridade === "Alta") corPrioridade = "bg-purple";
+
+            let corStatus =
+              p.status === "Concluído"
+                ? "bg-green"
+                : p.status === "Em andamento"
+                  ? "bg-orange"
+                  : "bg-dark";
+
+            return `
+                    <tr>
+                        <td>${p.nome}</td>
+                        <td>${p.resp}</td>
+                        <td><span class="badge ${corSaude}">${p.saude}</span></td>
+                        <td>
+                            <div class="progress-box">
+                                <div class="progress-fill" style="width: ${p.progresso}%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge ${corPrioridade}">${p.prioridade}</span></td>
+                        <td><span class="badge ${corStatus}">${p.status}</span></td>
+                        <td><div class="timeline-bar"></div></td>
+                    </tr>
+                `;
+          })
+          .join("");
+      }
+
+      renderizarTabela();
+    </script>
+  </body>
+</html>

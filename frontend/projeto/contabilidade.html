@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contabilidade do Churrasco (Partidas Dobradas)</title>
+    <style>
+      :root {
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --text-main: #e0e0e0;
+        --text-muted: #a0a0a0;
+        --primary-color: #bb86fc;
+        --border-color: #333333;
+        --table-hover: #2a2a2a;
+        --success-color: #03dac6;
+      }
+
+      [data-theme="light"] {
+        --bg-color: #f4f4f9;
+        --card-bg: #ffffff;
+        --text-main: #333333;
+        --text-muted: #666666;
+        --primary-color: #6200ee;
+        --border-color: #dddddd;
+        --table-hover: #f9f9f9;
+        --success-color: #018786;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        padding: 24px;
+      }
+
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        padding: 24px;
+        overflow-x: auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 15px;
+      }
+
+      h1 {
+        font-size: 24px;
+        color: var(--primary-color);
+      }
+
+      .theme-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        background-color: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+      }
+
+      /* Abas */
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .tab-btn {
+        padding: 10px 20px;
+        background: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .tab-btn.active {
+        background-color: var(--primary-color);
+        color: #fff;
+        border-color: var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Tabelas */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th {
+        color: var(--text-muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        padding: 12px;
+        border-bottom: 2px solid var(--border-color);
+        text-align: left;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 14px;
+      }
+
+      tr:hover {
+        background-color: var(--table-hover);
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      .summary-card {
+        background: rgba(187, 134, 252, 0.05);
+        border: 1px solid var(--primary-color);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body data-theme="dark">
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1>Contabilidade do Churrasco (Partidas Dobradas)</h1>
+          <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px">
+            Evento para 50 pessoas - Custos reais estimados
+          </p>
+        </div>
+        <button class="theme-btn" onclick="toggleTheme()">Alternar Tema</button>
+      </div>
+
+      <!-- Abas -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('diario')">
+          Livro Diário
+        </button>
+        <button class="tab-btn" onclick="switchTab('razao')">
+          Livro Razão
+        </button>
+      </div>
+
+      <!-- Conteúdo Diário -->
+      <div id="tab-diario" class="tab-content active">
+        <h2>Lançamentos Contábeis (Partidas Dobradas)</h2>
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 8px 0 15px 0;
+          "
+        >
+          Registro cronológico onde cada débito em uma conta de despesa/ativo
+          corresponde a um crédito em Caixa/Passivo.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Histórico / Descrição</th>
+              <th>Débito (Conta)</th>
+              <th>Crédito (Conta)</th>
+              <th class="text-right">Valor (R$)</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-diario"></tbody>
+        </table>
+      </div>
+
+      <!-- Conteúdo Razão -->
+      <div id="tab-razao" class="tab-content">
+        <h2>Movimentação por Conta (Livro Razão)</h2>
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 8px 0 15px 0;
+          "
+        >
+          Saldo acumulado e detalhamento por rubrica contábil.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Conta Contábil</th>
+              <th>Classificação</th>
+              <th class="text-right">Total Débitos (R$)</th>
+              <th class="text-right">Total Créditos (R$)</th>
+              <th class="text-right">Saldo Final (R$)</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-razao"></tbody>
+        </table>
+
+        <div class="summary-card">
+          <div>
+            Custo Total do Evento:
+            <span id="lbl-total" style="color: var(--success-color)"
+              >R$ 0,00</span
+            >
+          </div>
+          <div>
+            Custo por Pessoa (50 convidados):
+            <span id="lbl-pessoa" style="color: var(--success-color)"
+              >R$ 0,00</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const dadosContabilidade = {
+        lancamentosDiario: [
+          {
+            data: "2026-08-10",
+            historico:
+              "Compra de Carnes (Picanha, Fraldinha, Linguiça, Frango)",
+            debito: "Estoque de Carnes (Ativo)",
+            credito: "Caixa / Rateio Convidados",
+            valor: 855.0,
+          },
+          {
+            data: "2026-08-11",
+            historico: "Compra de Bebidas (Cerveja e Refrigerantes)",
+            debito: "Estoque de Bebidas (Ativo)",
+            credito: "Caixa / Rateio Convidados",
+            valor: 1380.0,
+          },
+          {
+            data: "2026-08-12",
+            historico: "Compra de Acompanhamentos (Arroz, Salada, Pão)",
+            debito: "Despesa com Acompanhamentos",
+            credito: "Caixa / Rateio Convidados",
+            valor: 300.0,
+          },
+          {
+            data: "2026-08-13",
+            historico: "Aluguel de Mesas e Cadeiras (Mobiliário)",
+            debito: "Despesa com Locação",
+            credito: "Caixa / Rateio Convidados",
+            valor: 356.0,
+          },
+          {
+            data: "2026-08-14",
+            historico: "Contratação de Churrasqueiro (6 horas)",
+            debito: "Despesa com Serviços Terceiros",
+            credito: "Caixa / Rateio Convidados",
+            valor: 600.0,
+          },
+          {
+            data: "2026-08-14",
+            historico: "Contratação de Auxiliar de Limpeza (4 horas)",
+            debito: "Despesa com Serviços Terceiros",
+            credito: "Caixa / Rateio Convidados",
+            valor: 200.0,
+          },
+        ],
+        contasRazao: [
+          {
+            conta: "Estoque de Carnes",
+            tipo: "Ativo / Insumo",
+            debitos: 855.0,
+            creditos: 0.0,
+          },
+          {
+            conta: "Estoque de Bebidas",
+            tipo: "Ativo / Insumo",
+            debitos: 1380.0,
+            creditos: 0.0,
+          },
+          {
+            conta: "Despesa com Acompanhamentos",
+            tipo: "Despesa Operacional",
+            debitos: 300.0,
+            creditos: 0.0,
+          },
+          {
+            conta: "Despesa com Locação",
+            tipo: "Despesa Operacional",
+            debitos: 356.0,
+            creditos: 0.0,
+          },
+          {
+            conta: "Despesa com Serviços Terceiros",
+            tipo: "Despesa Operacional",
+            debitos: 800.0,
+            creditos: 0.0,
+          },
+          {
+            conta: "Caixa / Rateio Convidados",
+            tipo: "Passivo / Arrecadação",
+            debitos: 0.0,
+            creditos: 3699.0,
+          },
+        ],
+      };
+
+      function formatarMoeda(valor) {
+        return valor.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+      }
+
+      function carregarDados() {
+        const corpoDiario = document.getElementById("corpo-diario");
+        corpoDiario.innerHTML = dadosContabilidade.lancamentosDiario
+          .map(
+            (l) => `
+                <tr>
+                    <td>${l.data}</td>
+                    <td>${l.historico}</td>
+                    <td><strong style="color: var(--primary-color);">${l.debito}</strong></td>
+                    <td>${l.credito}</td>
+                    <td class="text-right">${formatarMoeda(l.valor)}</td>
+                </tr>
+            `,
+          )
+          .join("");
+
+        const corpoRazao = document.getElementById("corpo-razao");
+        let totalGeral = 0;
+
+        corpoRazao.innerHTML = dadosContabilidade.contasRazao
+          .map((r) => {
+            let saldo = r.debitos - r.creditos;
+            if (r.tipo.includes("Ativo") || r.tipo.includes("Despesa")) {
+              totalGeral += r.debitos;
+            }
+            return `
+                    <tr>
+                        <td><strong>${r.conta}</strong></td>
+                        <td>${r.tipo}</td>
+                        <td class="text-right">${formatarMoeda(r.debitos)}</td>
+                        <td class="text-right">${formatarMoeda(r.creditos)}</td>
+                        <td class="text-right"><strong>${formatarMoeda(Math.abs(saldo))}</strong></td>
+                    </tr>
+                `;
+          })
+          .join("");
+
+        const custoPorPessoa = totalGeral / 50;
+        document.getElementById("lbl-total").innerText =
+          formatarMoeda(totalGeral);
+        document.getElementById("lbl-pessoa").innerText =
+          formatarMoeda(custoPorPessoa);
+      }
+
+      function switchTab(tabName) {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((el) => el.classList.remove("active"));
+
+        if (tabName === "diario") {
+          document.getElementById("tab-diario").classList.add("active");
+          event.currentTarget.classList.add("active");
+        } else {
+          document.getElementById("tab-razao").classList.add("active");
+          event.currentTarget.classList.add("active");
+        }
+      }
+
+      function toggleTheme() {
+        const body = document.body;
+        body.setAttribute(
+          "data-theme",
+          body.getAttribute("data-theme") === "dark" ? "light" : "dark",
+        );
+      }
+
+      carregarDados();
+    </script>
+  </body>
+</html>
