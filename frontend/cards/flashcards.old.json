@@ -1,0 +1,318 @@
+[
+    {
+        "id": 1,
+        "front_pt": "Fale um pouco sobre você.",
+        "front_en": "Tell me about yourself.",
+        "back": "I’m a software developer with experience in Java and backend development. I enjoy solving problems and learning new technologies.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 2,
+        "front_pt": "Por que você quer trabalhar aqui?",
+        "front_en": "Why do you want to work here?",
+        "back": "I’m interested in this position because I believe my skills match the role, and I’d like to grow professionally with the company.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 3,
+        "front_pt": "Quais são seus pontos fortes?",
+        "front_en": "What are your strengths?",
+        "back": "I’m organized, responsible, and I’m always willing to learn. I’m also good at solving problems.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 4,
+        "front_pt": "Quais são seus pontos fracos?",
+        "front_en": "What are your weaknesses?",
+        "back": "Sometimes I focus too much on details, but I’ve been learning how to manage my time better.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 5,
+        "front_pt": "Por que devemos contratar você?",
+        "front_en": "Why should we hire you?",
+        "back": "Because I’m motivated, I learn quickly, and I’m committed to delivering good results.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 6,
+        "front_pt": "Por que você deixou seu último emprego?",
+        "front_en": "Why did you leave your last job?",
+        "back": "I was looking for a new challenge and an opportunity to grow professionally.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 7,
+        "front_pt": "Onde você se vê daqui a cinco anos?",
+        "front_en": "Where do you see yourself in five years?",
+        "back": "I see myself in a more senior position, taking on greater responsibilities and continuing to develop my skills.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 8,
+        "front_pt": "Como você trabalha em equipe?",
+        "front_en": "How do you work in a team?",
+        "back": "I communicate clearly, listen to other people, and try to contribute to the team’s goals.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 9,
+        "front_pt": "Como você lida com pressão?",
+        "front_en": "How do you handle pressure?",
+        "back": "I try to stay calm, prioritize my tasks, and focus on solving one problem at a time.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 10,
+        "front_pt": "Conte sobre um problema que você resolveu.",
+        "front_en": "Tell me about a problem you solved.",
+        "back": "I had a difficult technical problem, so I analyzed the situation, researched possible solutions, and worked with my team to fix it.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 11,
+        "front_pt": "Qual foi seu maior desafio profissional?",
+        "front_en": "What was your biggest professional challenge?",
+        "back": "One of my biggest challenges was learning a new technology in a short period of time. I studied, practiced, and successfully completed the project.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 12,
+        "front_pt": "Como você lida com críticas?",
+        "front_en": "How do you handle criticism?",
+        "back": "I try to see criticism as an opportunity to improve. I listen carefully and use the feedback to improve my work.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 13,
+        "front_pt": "Você prefere trabalhar sozinho ou em equipe?",
+        "front_en": "Do you prefer working alone or in a team?",
+        "back": "I’m comfortable with both. It depends on the task, but I enjoy collaborating with a team.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 14,
+        "front_pt": "Como você organiza suas tarefas?",
+        "front_en": "How do you organize your tasks?",
+        "back": "I prioritize my tasks based on urgency and importance, and I use a task list to stay organized.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 15,
+        "front_pt": "Como você aprende uma nova tecnologia?",
+        "front_en": "How do you learn a new technology?",
+        "back": "I usually start with the official documentation, then I practice by building small projects.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 16,
+        "front_pt": "Qual é sua expectativa salarial?",
+        "front_en": "What are your salary expectations?",
+        "back": "I’m open to discussing the compensation based on the responsibilities of the position and the overall benefits package.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 17,
+        "front_pt": "Você está disposto a trabalhar remotamente?",
+        "front_en": "Are you comfortable working remotely?",
+        "back": "Yes. I’m comfortable working remotely and I’m used to communicating with teammates online.",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 18,
+        "front_pt": "Você tem experiência trabalhando com equipes internacionais?",
+        "front_en": "Do you have experience working with international teams?",
+        "back": "I’m comfortable communicating in English and I’m interested in working with people from different countries and cultures.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 19,
+        "front_pt": "Como você lida com prazos apertados?",
+        "front_en": "How do you handle tight deadlines?",
+        "back": "I prioritize the most important tasks, communicate with my team, and focus on delivering the most important requirements first.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 20,
+        "front_pt": "Você tem alguma pergunta para nós?",
+        "front_en": "Do you have any questions for us?",
+        "back": "Yes. Could you tell me more about the team and what a typical day in this position looks like?",
+        "difficulty": "Easy"
+    },
+    {
+        "id": 21,
+        "front_pt": "Como você lida com a pressão?",
+        "front_en": "How do you handle pressure?",
+        "back": "I try to stay calm, prioritize my tasks, and focus on solving one problem at a time.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 22,
+        "front_pt": "Como você trabalha em equipe?",
+        "front_en": "How do you work in a team?",
+        "back": "I communicate clearly, listen to other people, and try to contribute to the team’s goals.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 23,
+        "front_pt": "Conte-me sobre um desafio que você enfrentou.",
+        "front_en": "Tell me about a challenge you faced.",
+        "back": "I faced a difficult technical challenge, so I studied the problem, researched possible solutions, and worked with my team to solve it.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 24,
+        "front_pt": "Como você organiza suas tarefas?",
+        "front_en": "How do you organize your tasks?",
+        "back": "I prioritize my tasks based on urgency and importance, and I use a task list to stay organized.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 25,
+        "front_pt": "Por que deveríamos contratar você?",
+        "front_en": "Why should we hire you?",
+        "back": "Because I’m motivated, I learn quickly, and I’m committed to delivering good results and contributing to the team.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 26,
+        "front_pt": "Conte-me sobre uma ocasião em que você cometeu um erro.",
+        "front_en": "Tell me about a time you made a mistake.",
+        "back": "I once made a mistake because I didn’t check all the requirements carefully. I learned from it and became more careful about reviewing my work.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 27,
+        "front_pt": "Descreva uma decisão difícil que você teve que tomar.",
+        "front_en": "Describe a difficult decision you had to make.",
+        "back": "I had to choose between two possible solutions for a project. I analyzed the advantages and disadvantages and chose the option that was more reliable and easier to maintain.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 28,
+        "front_pt": "Conte-me sobre um conflito com um colega de trabalho.",
+        "front_en": "Tell me about a conflict with a coworker.",
+        "back": "We had different opinions about how to solve a problem. We discussed the situation calmly, listened to each other, and agreed on the best solution for the project.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 29,
+        "front_pt": "Como você lidaria com uma discordância com seu gerente?",
+        "front_en": "How would you handle a disagreement with your manager?",
+        "back": "I would explain my point of view respectfully, listen to my manager’s perspective, and try to find a solution that is best for the team and the company.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 30,
+        "front_pt": "Conte-me sobre um projeto que fracassou e o que você aprendeu com ele.",
+        "front_en": "Tell me about a project that failed and what you learned from it.",
+        "back": "A project I worked on did not achieve all its goals because we underestimated the complexity. I learned the importance of planning, communication, and identifying risks early.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 31,
+        "front_pt": "Como você prioriza suas tarefas quando tudo é urgente?",
+        "front_en": "How do you prioritize your tasks when everything is urgent?",
+        "back": "I look at deadlines, business impact, and dependencies. Then I focus on the most critical tasks first and communicate if priorities need to change.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 32,
+        "front_pt": "Como você reage quando recebe uma tarefa que não sabe fazer?",
+        "front_en": "How do you react when you are given a task you don’t know how to do?",
+        "back": "I first try to understand the problem, research the topic, and ask questions when necessary. I see it as an opportunity to learn something new.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 33,
+        "front_pt": "Como você lida com mudanças de última hora?",
+        "front_en": "How do you handle last-minute changes?",
+        "back": "I try to stay flexible, understand the reason for the change, and adjust my priorities to meet the new requirements.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 34,
+        "front_pt": "Conte-me sobre uma vez em que você trabalhou sob um prazo apertado.",
+        "front_en": "Tell me about a time you worked under a tight deadline.",
+        "back": "We had a short deadline for a project, so I focused on the most important requirements, communicated with my team, and worked efficiently to deliver the project on time.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 35,
+        "front_pt": "Como você resolve problemas difíceis?",
+        "front_en": "How do you solve difficult problems?",
+        "back": "I break the problem into smaller parts, analyze the possible causes, research solutions, and test the best option.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 36,
+        "front_pt": "O que você faz quando discorda da decisão da sua equipe?",
+        "front_en": "What do you do when you disagree with your team’s decision?",
+        "back": "I explain my concerns respectfully, listen to the team’s opinions, and try to understand the reasoning behind the decision.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 37,
+        "front_pt": "Como você recebe feedback do seu gerente?",
+        "front_en": "How do you respond to feedback from your manager?",
+        "back": "I listen carefully and try to understand what I can improve. I appreciate constructive feedback because it helps me grow professionally.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 38,
+        "front_pt": "Conte-me sobre algo novo que você aprendeu recentemente.",
+        "front_en": "Tell me about something new you learned recently.",
+        "back": "Recently, I learned more about a new technology. I studied the documentation and built a small project to practice what I learned.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 39,
+        "front_pt": "O que você faria se não soubesse a resposta para uma pergunta?",
+        "front_en": "What would you do if you didn’t know the answer to a question?",
+        "back": "I would be honest about it, explain what I know, and look for reliable information to find the correct answer.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 40,
+        "front_pt": "Como você define um trabalho bem-sucedido?",
+        "front_en": "How do you define successful work?",
+        "back": "I consider work successful when the goals are achieved, the quality is good, and the solution provides value to the team or the company.",
+        "difficulty": "Hard"
+    },
+[
+    {
+        "id": 41,
+        "front_pt": "Como você lida com a clássica mensagem de feedback negativo da Gupy?",
+        "front_en": "How do you handle the classic Gupy negative feedback message?",
+        "back": "I remember it’s about the profile match, not my competence, keep my talent pool updated, and try again!",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 42,
+        "front_pt": "O que fazer quando seu perfil fica ativo no banco de talentos da Gupy para sempre?",
+        "front_en": "What do you do when your profile stays active in the Gupy talent pool forever?",
+        "back": "I keep smiling, updating my skills, and preparing for the next automated opportunity.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 43,
+        "front_pt": "Como explicar que você foi reprovado pela inteligência artificial da Gupy?",
+        "front_en": "How do you explain that you were rejected by Gupy's AI?",
+        "back": "I just say the algorithm was looking for someone else, but my code and motivation remain top-notch.",
+        "difficulty": "Intermediate"
+    },
+    {
+        "id": 44,
+        "front_pt": "Qual é a sua estratégia após receber o e-mail: 'Neste momento nossa decisão seguirá com outros candidatos'?",
+        "front_en": "What is your strategy after receiving the email: 'At this moment our decision will follow with other candidates'?",
+        "back": "I take a deep breath, review my resume, enjoy a cup of coffee, and apply for the next challenge.",
+        "difficulty": "Hard"
+    },
+    {
+        "id": 45,
+        "front_pt": "Como manter o otimismo após dezenas de testes de fit cultural e testes técnicos longos?",
+        "front_en": "How to stay optimistic after dozens of cultural fit tests and long technical assessments?",
+        "back": "I treat every application as practice, learn from the process, and trust that the right door will open.",
+        "difficulty": "Hard"
+    }
+]
